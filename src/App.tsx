@@ -1,10 +1,10 @@
 import "./App.css";
-import Main from "./components/main/main";
+import Login from "./routes/login/login";
 
 function App() {
   return (
     <>
-      <Main />
+      <Login />
     </>
   );
 }
