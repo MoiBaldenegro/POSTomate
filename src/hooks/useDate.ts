@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 
 export default function useDate() {
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
-    const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const opcionesHora = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
-
+    const opcionesFecha = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    const opcionesHora = { hour: "numeric", minute: "numeric", second: "numeric" };
     useEffect(() => {
         const intervalId = setInterval(() => {
             const newDateTime = new Date();

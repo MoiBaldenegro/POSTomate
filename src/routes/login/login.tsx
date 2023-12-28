@@ -20,7 +20,7 @@ export default function Login() {
 
     const elements = [".", ".", ".", ".", ".", "."]
     // Date
-    const { currentDateTime, opcionesFecha, opcionesHora } = useDate();
+    const { currentDateTime, opcionesFecha, opcionesHora }: any = useDate();
     const formattedFecha = currentDateTime.toLocaleDateString('es-ES', opcionesFecha);
     const formattedHora = currentDateTime.toLocaleTimeString('es-ES', opcionesHora);
 
@@ -37,7 +37,7 @@ export default function Login() {
                 </section>
                 <section>
                     <h4>ingresar código</h4>
-                    <div className={styles.nums}>{elements.map((item) => (
+                    <div className={styles.nums}>{elements.map((_item) => (
                         <img src={point} alt="point" />
                     ))}</div>
                     <Pinboard />
