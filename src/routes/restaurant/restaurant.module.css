@@ -1,0 +1,26 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    width: 100vw;
+    background: #353639;
+}
+
+.footer div {
+    display: flex;
+    gap: 16px;
+    margin-left: 16px;
+}
+
+.footer div span {
+    display: flex;
+    gap: 8px;
+}

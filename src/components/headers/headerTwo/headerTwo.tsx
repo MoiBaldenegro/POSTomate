@@ -1,3 +1,6 @@
+// styles
+import styles from "./headerTwo.module.css";
+// Icons 
 import logo from "../../../assets/icon/logo.svg";
 import logoDivider from "../../../assets/icon/logoDivider.svg";
 import bulletIcon from "../../../assets/icon/bullet.svg";
@@ -5,14 +8,17 @@ import dividerIcon from "../../../assets/icon/dividerBtn.svg";
 import signal from "../../../assets/icon/signal.svg";
 import useDate from "../../../hooks/useDate";
 
-export default function HeaderOne() {
+
+
+export default function HeaderTwo() {
+
     // Date
     const { currentDateTime, opcionesFecha, opcionesHora }: any = useDate();
     const formattedFecha = currentDateTime.toLocaleDateString('es-ES', opcionesFecha);
     const formattedHora = currentDateTime.toLocaleTimeString('es-ES', opcionesHora);
     return (
-        <header>
-            <div>
+        <header className={styles.head}>
+            <div >
                 <img src={logo} alt="logo" />
                 <img src={logoDivider} alt="logo-divider" />
                 <h3>PUNTO DE VENTA</h3>

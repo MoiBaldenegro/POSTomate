@@ -2,7 +2,6 @@
 import styles from "./login.module.css";
 import "../../styles/global/global.css";
 // Hooks
-import useDate from "../../hooks/useDate";
 // Icons 
 import posLogo from "../../assets/icon/tomatePOSlogo.svg"
 import fingerprintIco from "../../assets/icon/fingerprint.svg";
@@ -16,13 +15,10 @@ import Pinboard from "../../components/tools/keyboard/Pinboard";
 
 
 
-export default function Login() {
+export default function Login({ formattedFecha, formattedHora }: any) {
 
     const elements = [".", ".", ".", ".", ".", "."]
-    // Date
-    const { currentDateTime, opcionesFecha, opcionesHora }: any = useDate();
-    const formattedFecha = currentDateTime.toLocaleDateString('es-ES', opcionesFecha);
-    const formattedHora = currentDateTime.toLocaleTimeString('es-ES', opcionesHora);
+
 
 
     return (
@@ -31,11 +27,11 @@ export default function Login() {
                 <p>{formattedFecha}{"   "}{formattedHora}</p>
             </div>
             <main className={styles.mainSection}>
-                <section>
+                <section className={styles.sectionOne}>
                     <h2>Bienvenido</h2>
                     <img src={posLogo} alt="pos-logo" />
                 </section>
-                <section>
+                <section className={styles.sectionTwo}>
                     <h4>ingresar código</h4>
                     <div className={styles.nums}>{elements.map((_item) => (
                         <img src={point} alt="point" />
@@ -43,7 +39,7 @@ export default function Login() {
                     <Pinboard />
                 </section>
             </main>
-            <footer>
+            <footer className={styles.footer}>
                 <div>
                     <button><img src={fingerprintIco} alt="fingerprint-icon" /></button>
                     <img src={dividerBtn} alt="divider-icon" />

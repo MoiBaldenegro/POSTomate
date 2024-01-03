@@ -2,42 +2,32 @@
 import "../../styles/global/global.css";
 import styles from "./restaurant.module.css";
 // Icons
-import logo from "../../assets/icon/logo.svg";
-import logoDivider from "../../assets/icon/logoDivider.svg";
-import bulletIcon from "../../assets/icon/bullet.svg";
-import dividerIcon from "../../assets/icon/dividerBtn.svg";
-import useDate from "../../hooks/useDate";
-import signal from "../../assets/icon/signal.svg";
-import filas from "../../assets/icon/Filas.svg";
+
+
+import pendingIcon from "../../assets/icon/pending.svg";
+import enableIcon from "../../assets/icon/enableIcon.svg"
+import paymentIcon from "../../assets/icon/paymentIcon.svg"
+import freeIcon from "../../assets/icon/freeIcon.svg";
+import HeaderTwo from "../../components/headers/headerTwo/headerTwo";
 
 
 export default function Restaurant() {
-    // Date
-    const { currentDateTime, opcionesFecha, opcionesHora }: any = useDate();
-    const formattedFecha = currentDateTime.toLocaleDateString('es-ES', opcionesFecha);
-    const formattedHora = currentDateTime.toLocaleTimeString('es-ES', opcionesHora);
+
     return (
-        <div>
-            <header>
+        <div className={styles.container}>
+            <HeaderTwo />
+            <main className={styles.mainSection}>
+
+
+            </main>
+            <footer className={styles.footer}>
                 <div>
-                    <img src={logo} alt="logo" />
-                    <img src={logoDivider} alt="logo-divider" />
-                    <h3>PUNTO DE VENTA</h3>
+                    <span><img src={pendingIcon} alt="pending-icon" />En espera</span>
+                    <span><img src={enableIcon} alt="enable-icon" />Activa</span>
+                    <span><img src={paymentIcon} alt="payment-icon" />Por pagar</span>
+                    <span><img src={freeIcon} alt="free-icon" />Libre</span>
                 </div>
-                <div>
-                    <h3>1038</h3>
-                    <h3>Moises B.</h3>
-                    <img src={bulletIcon} alt="bullet-icon" />
-                    <h3>Develop</h3>
-                    <img src={dividerIcon} alt="divider-icon" />
-                    <p>{formattedFecha}</p>
-                    <img src={dividerIcon} alt="divider-icon" />
-                    <p>{formattedHora}</p>
-                    <img src={dividerIcon} alt="divider-icon" />
-                    <img src={signal} alt="signal-icon" />
-                </div>
-            </header>
-            <img src={filas} alt="" />
+            </footer>
         </div>
     )
 }

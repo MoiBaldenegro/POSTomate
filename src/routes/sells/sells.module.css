@@ -24,11 +24,14 @@ header div {
     align-items: center;
 }
 
-main {
+.mainSectionSell {
     width: 1920px;
     height: 920px;
     padding: 32px;
     gap: 16px;
+    display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
 }
 
 footer {
@@ -55,13 +58,7 @@ footer div {
     gap: 8px;
 }
 
-main {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-}
-
-main section {
+.mainSectionSell section {
     width: 920px;
     height: 420px;
     border-radius: 8px;
@@ -75,31 +72,31 @@ main section {
 
 }
 
-main section:nth-child(2) {
+.mainSectionSell section:nth-child(2) {
     background: #C18333;
 }
 
-main section:nth-child(3) {
+.mainSectionSell section:nth-child(3) {
     background: #999100;
 
 }
 
-main section:last-child {
+.mainSectionSell section:last-child {
     background: #A75C39;
 
 
 }
 
-main section:hover {
+.mainSectionSell section:hover {
     transform: scale(.995);
 }
 
-main section h2 {
+.mainSectionSell section h2 {
     margin-top: 23vh;
     font-size: var(--font-size-large);
 }
 
-main section div {
+.mainSectionSell section div {
     width: 100%;
     height: 96px;
     background: #F9F9F933;

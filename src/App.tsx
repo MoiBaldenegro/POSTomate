@@ -1,12 +1,11 @@
 import "./App.css";
-import Login from "./routes/login/login";
-import Restaurant from "./routes/restaurant/restaurant";
-import Sells from "./routes/sells/sells";
+import Order from "./routes/order/order";
 
 function App() {
+
   return (
     <>
-      <Restaurant />
+      <Order />
     </>
   );
 }
