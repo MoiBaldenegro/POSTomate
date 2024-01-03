@@ -11,13 +11,13 @@ import burgerMenu from "../../assets/icon/burgerMenu.svg";
 // Hooks
 import HeaderOne from "../../components/headers/headerOne/headerOne";
 
-export default function Sells({ formattedFecha, formattedHora }: any) {
+export default function Sells() {
 
     const sells = ["Restaurante", "Para llevar", "Telefonico", "Rappi"]
     return (
         <div className={styles.container}>
 
-            <HeaderOne formattedFecha={formattedFecha} formattedHora={formattedHora} />
+            <HeaderOne />
             <main className={styles.mainSectionSell}>
                 {sells.map((item) => (
                     <section>

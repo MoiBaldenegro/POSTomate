@@ -17,7 +17,11 @@ export default function Order() {
             <HeaderTwo />
             <main className={styles.mainSection}>
                 <section>
-                    <div></div>
+                    <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                     <div>
                         <button>m</button>
                         <button>m</button>
