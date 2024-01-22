@@ -10,7 +10,7 @@ import Cashier from "./routes/cashier/cashier.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Order />,
+    element: <Login />,
   },
   {
     path: "/sell-types",
