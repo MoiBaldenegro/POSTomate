@@ -12,10 +12,13 @@ import bullet from "../../assets/icon/bullet.svg";
 import point from "../../assets/icon/point.svg";
 // Components
 import Pinboard from "../../components/tools/keyboard/Pinboard";
+import HeaderOne from "../../components/headers/headerOne/headerOne";
+// Dependencies
+import { NavLink } from "react-router-dom";
 
 
 
-export default function Login({ formattedFecha, formattedHora }: any) {
+export default function Login() {
 
     const elements = [".", ".", ".", ".", ".", "."]
 
@@ -23,9 +26,7 @@ export default function Login({ formattedFecha, formattedHora }: any) {
 
     return (
         <div className={styles.container}>
-            <div className={styles.head}>
-                <p>{formattedFecha}{"   "}{formattedHora}</p>
-            </div>
+            <HeaderOne />
             <main className={styles.mainSection}>
                 <section className={styles.sectionOne}>
                     <h2>Bienvenido</h2>
@@ -52,8 +53,6 @@ export default function Login({ formattedFecha, formattedHora }: any) {
                     <h3>LOC Terraza</h3>
                     <img src={bullet} alt="bullet-icon" />
                     <h3>v-Develop</h3>
-
-
                 </div>
             </footer>
 

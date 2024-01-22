@@ -24,3 +24,8 @@
     display: flex;
     gap: 8px;
 }
+.mainSection {
+    display: flex;
+    gap: 16px;
+    align-items: start;
+}

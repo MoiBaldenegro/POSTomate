@@ -33,51 +33,172 @@
 
 .mainSection {
     display: flex;
+    justify-content: space-around;
+        align-items: center;
     width: 1920px;
     height: 906px;
 }
 
-.mainSection section:first-child {
+.mainSection>section:first-child {
     display: flex;
-    width: 672px;
-    height: 842px;
+    align-items: end;
     gap: 16px;
 }
 
-.mainSection section:last-child {
+.mainSection>section:last-child {
+    background: #494A4C;
+    box-shadow: 5px 5px 10px 0px #0000001A;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    width: 1168px;
-    height: 842px;
-    border: 1px solid #f9f9f9;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-rows: repeat(9, 1fr);
+        width: 1096px;
+        height: 856px;
+        padding: 16px;
+        border-radius: 16px;
+        gap: 15px;
 }
 
-.mainSection section div:first-child {
+.mainSection>section>div:first-child {
     display: flex;
-    width: 576px;
-    height: 842px;
+    flex-direction: column;
+    justify-content: space-around;
+        align-items: center;
+    width: 634px;
+        height: 856px;
     padding: 24px 0px 24px 0px;
     border-radius: 16px;
     gap: 16px;
-    background: #494A4C;
 }
 
-.mainSection section div:last-child {
+.mainSection>section>div:last-child {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 80px;
-    height: 842px;
+    height: 800px;
     padding: 16px;
     border-radius: 16px;
     background: #494A4C;
 }
 
-.mainSection section div button {
+.mainSection>section div>button {
     width: 48px;
     height: 48px;
     border-radius: 8px;
     background: #98989A;
     box-shadow: 2px 2px 8px 0px #00000040;
+}
+.mainSection>section>div:first-child>div:last-child {
+    display: flex;
+    flex-direction: column;
+        box-shadow: 2px 2px 8px 0px #00000040;
+        background: #494A4C;
+        width: 634px;
+        height: 800px;
+        padding: 16px;
+        border-radius: 16px;
+        gap: 16px;
+    }
+    
+    .mainSection>section>div:first-child>div:last-child>div:first-child {
+        background: #5C5D60;
+        width: 602px;
+            height: 608px;
+            padding: 16px;
+            border-radius: 8px;
+            gap: 8px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+            
+/* ScrollingBar*/
+
+.mainSection>section>div:first-child>div:last-child>div:first-child::-webkit-scrollbar {
+    width: 0.001em;
+}
+                        
+                                                                                                .mainSection>section>div:first-child>div:last-child>div:first-child::-webkit-scrollbar-thumb {
+                                                                                                    background-color: #7D7E80;
+}
+
+.mainSection>section>div:first-child>div:last-child>div:first-child::-webkit-scrollbar-track {
+    background-color: #5C5D60;
+}
+
+.mainSection>section>div:first-child>div:last-child>div:last-child {
+    background: #5C5D60;
+    width: 602px;
+    height: 144px;
+    padding: 16px;
+    border-radius: 8px;
+    gap: 8px;
+}
+
+.headAccount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headAccount span {
+    margin-right: 50%;
+}
+
+.btn {
+    height: 36px;
+}
+.containerProduct {
+    display: grid;
+    place-content: center;
+    min-width: 200px;
+    height: 80px;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: rgba(255, 166, 0, 0.692);
+    transition: 200ms;
+}
+
+.containerProduct:hover {
+    transform: scale(1.01);
+    filter: brightness(0.90);
+}
+
+.productContainer {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px;
+}
+
+.productContainer button {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.productContainer>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.productContainer>div span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 41px;
+    height: 40px;
+    padding: 8px 24px 8px 16px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px #353639bd;
+}
+
+
+.Total {
+    font-size: 30px;
+    font-weight: 400;
 }

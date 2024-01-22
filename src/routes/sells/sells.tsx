@@ -10,17 +10,24 @@ import cashSignal from "../../assets/icon/cashSignal.svg";
 import burgerMenu from "../../assets/icon/burgerMenu.svg";
 // Hooks
 import HeaderOne from "../../components/headers/headerOne/headerOne";
+import HeaderTwo from "../../components/headers/headerTwo/headerTwo";
+//Dependencies
+import { useNavigate } from "react-router-dom";
 
 export default function Sells() {
+    const navigate = useNavigate();
+    const handleclick = () => {
+        navigate("/tables")
+    }
 
     const sells = ["Restaurante", "Para llevar", "Telefonico", "Rappi"]
     return (
         <div className={styles.container}>
 
-            <HeaderOne />
+            <HeaderTwo />
             <main className={styles.mainSectionSell}>
                 {sells.map((item) => (
-                    <section>
+                    <section onClick={handleclick}>
                         <h2>{item}</h2>
                         <div></div>
                     </section>

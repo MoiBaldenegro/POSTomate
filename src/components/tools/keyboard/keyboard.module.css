@@ -9,7 +9,8 @@
     gap: 8px;
 }
 
-.container button {
+.container button,
+.check {
     display: grid;
     width: 80px;
     height: 80px;

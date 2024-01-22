@@ -2,6 +2,8 @@ import styles from "./keyboard.module.css"
 // Icons
 import returnIcon from "../../../assets/icon/returnIcon.svg";
 import checkIcon from "../../../assets/icon/checkIcon.svg";
+// Dependencies 
+import { NavLink } from "react-router-dom";
 
 
 
@@ -20,7 +22,7 @@ export default function Pinboard() {
             <button>9</button>
             <button><img src={returnIcon} alt="return-icon" /></button>
             <button>0</button>
-            <button><img src={checkIcon} alt="check-Icon" /></button>
+            <NavLink to={"/sell-types"} className={styles.check}><img src={checkIcon} alt="check-Icon" /></NavLink>
         </div>
     )
 }
