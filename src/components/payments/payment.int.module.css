@@ -220,7 +220,6 @@
     font-size: var(--font-size-medium);
 }
 .addPayContainer{
-    border: 1px solid #5E8708;
     width: 298px;
     height: 340px;
     padding: 16px 0px 16px 0px;

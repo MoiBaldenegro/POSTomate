@@ -131,8 +131,7 @@ export default function PaymentInterface({
                 <h4>$0.00</h4>
               </div>
             </div>
-
-            <button className={styles.payBtn}>
+            <button className={styles.payBtn} onClick={handleImprimirTicket}>
               <img src={cashIconMedium} alt="cash-icon-medium" />
               Pagar
             </button>
