@@ -1,6 +1,10 @@
-import { Bill } from "../../types/account"
+interface table {
+  tableNum: string;
+  server: string;
+  status: string;
+}
 
 export interface Props {
-    item: Bill,
-    route: string
+  item: table;
+  route: string;
 }

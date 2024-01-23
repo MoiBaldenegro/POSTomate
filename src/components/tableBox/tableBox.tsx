@@ -6,9 +6,11 @@ import tableFree from "../../assets/icon/tableFree.svg";
 // types
 import { Props } from "./types";
 import { useState } from "react";
+
 export default function TableBox({ item, route }: Props) {
   const { createAccount, loading, newAccount }: any = useAccount();
   const navigate = useNavigate();
+
   // Local state´s
   const [account, setAccount] = useState({
     sellType: "onSite",
@@ -17,10 +19,11 @@ export default function TableBox({ item, route }: Props) {
     status: "enabled",
     paymentDate: "2024-01-08T12:00:00Z",
   });
+
   const handleclick = () => {
     createAccount(account);
     setAccount(newAccount);
-    navigate(route);
+    navigate(route, { state: { numTable: item.tableNum } });
   };
   if (!loading && newAccount?.code === 200) handleclick;
   return (

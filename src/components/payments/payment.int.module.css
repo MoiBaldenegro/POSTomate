@@ -237,12 +237,12 @@
 
     /* Estilos específicos para la impresión */
     body {
-        font-family: Arial, sans-serif;
         margin: 400px;
         padding: 0;
     }
 
     .ticket {
+        font-size: 72px;
         width: 200px;
         padding: 10px;
         border: 1px solid #000;

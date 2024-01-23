@@ -10,14 +10,14 @@ import Cashier from "./routes/cashier/cashier.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Login />,
+    element: <Cashier />,
   },
   {
     path: "/sell-types",
     element: <Sells />,
   },
   {
-    path: "/restaurant-order",
+    path: "/restaurant-order/:item",
     element: <Order />,
   },
   {

@@ -22,20 +22,25 @@ import { useEffect, useState } from "react";
 import { Product } from "../../types/products";
 import { Bill } from "../../types/account";
 import UseAccount from "../../hooks/useAccount";
+import { useLocation } from "react-router-dom";
+
 export default function Order() {
+  const location = useLocation();
+  const { numTable } = location.state || {};
+
   const [prods, setProds] = useState<Product[]>([]);
   const sumr = prods
     .reduce((a, b) => a + parseFloat(b.priceInSite), 0)
     .toFixed(2);
+
   const [form, setForm] = useState<Bill>({
-    billCode: "001",
     sellType: "onSite",
     user: "Moises",
     checkTotal: "0.00",
     products: [],
     status: "pending",
     paymentDate: "Fecha",
-    tableNum: "16",
+    tableNum: "s/N",
   });
 
   const addToForm = (item: Product) => {
@@ -47,6 +52,7 @@ export default function Order() {
         : prevForm.products.reduce((a, b) => a + parseFloat(b.priceInSite), 0) +
           parseFloat(item.priceInSite)
       ).toFixed(2),
+      tableNum: numTable,
     }));
   };
 
@@ -71,7 +77,7 @@ export default function Order() {
         <section>
           <div>
             <div className={styles.headAccount}>
-              <span>Cuenta 001</span>
+              <span>Cuenta: 0{numTable}</span>
               <div>
                 <button>
                   <img src={personIcon} alt="person-icon" />
@@ -83,7 +89,7 @@ export default function Order() {
               </div>
             </div>
             <div>
-              {form.products?.map((item) => (
+              {form.products?.map((element) => (
                 <div className={styles.productContainer}>
                   <div>
                     <button>
@@ -94,8 +100,8 @@ export default function Order() {
                       <img src={sum} alt="sumar-icon" />
                     </button>
                   </div>
-                  <span>{item.productName}</span>
-                  <p>$ {item.priceInSite}</p>
+                  <span>{element.productName}</span>
+                  <p>$ {element.priceInSite}</p>
                 </div>
               ))}
             </div>

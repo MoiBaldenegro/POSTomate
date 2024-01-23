@@ -16,6 +16,7 @@ import useDate from "../../hooks/useDate";
 import { useRef } from "react";
 // Utils
 import { denominations, keyboard } from "./utils/denominations";
+import TicketComponent from "../tickets/ventas/mainTicket/mainTicket";
 interface Props {
   openModal: any;
   isOpen: any;
@@ -59,6 +60,7 @@ export default function PaymentInterface({
           </button>
         </div>
         <div ref={ticketRef}>
+          <TicketComponent />
           <div>
             <h3>Cuenta 000</h3>
             {/* Aca pondremos un select con las notas en caso de que alla notas
