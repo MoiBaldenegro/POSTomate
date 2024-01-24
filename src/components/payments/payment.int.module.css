@@ -232,19 +232,3 @@
     justify-content: space-between;
     align-items: center;
 }
-
-@media print {
-
-    /* Estilos específicos para la impresión */
-    body {
-        margin: 400px;
-        padding: 0;
-    }
-
-    .ticket {
-        font-size: 72px;
-        width: 200px;
-        padding: 10px;
-        border: 1px solid #000;
-    }
-}

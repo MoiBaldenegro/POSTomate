@@ -17,6 +17,7 @@ import { useRef } from "react";
 // Utils
 import { denominations, keyboard } from "./utils/denominations";
 import TicketComponent from "../tickets/ventas/mainTicket/mainTicket";
+import PrintButton from "../buttons/printerButton/printButton";
 interface Props {
   openModal: any;
   isOpen: any;
@@ -38,12 +39,15 @@ export default function PaymentInterface({
   );
   const ticketRef = useRef(null);
 
+  // Llamar a Print.js para imprimir el contenido
   const handleImprimirTicket = () => {
-    printJS({
-      printable: ticketRef.current,
-      type: "html",
-      targetStyles: ["*"],
-    });
+    if (ticketRef.current) {
+      printJS({
+        printable: ticketRef.current,
+        type: "html",
+        targetStyles: ["*"],
+      });
+    }
   };
 
   return (
@@ -59,13 +63,9 @@ export default function PaymentInterface({
             <img src={closeIcon} alt="close-icon" />
           </button>
         </div>
-        <div ref={ticketRef}>
+        <div ref={ticketRef} className={styles.ticket}>
           <TicketComponent />
-          <div>
-            <h3>Cuenta 000</h3>
-            {/* Aca pondremos un select con las notas en caso de que alla notas
-            disponibles */}
-          </div>
+
           <div>
             <h3>Total: $00.00</h3>
             <button className={styles.actionBtn}>
@@ -133,10 +133,7 @@ export default function PaymentInterface({
                 <h4>$0.00</h4>
               </div>
             </div>
-            <button className={styles.payBtn} onClick={handleImprimirTicket}>
-              <img src={cashIconMedium} alt="cash-icon-medium" />
-              Pagar
-            </button>
+            <PrintButton />
           </div>
         </div>
       </section>
