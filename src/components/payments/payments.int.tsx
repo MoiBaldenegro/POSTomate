@@ -64,8 +64,6 @@ export default function PaymentInterface({
           </button>
         </div>
         <div ref={ticketRef} className={styles.ticket}>
-          <TicketComponent />
-
           <div>
             <h3>Total: $00.00</h3>
             <button className={styles.actionBtn}>
