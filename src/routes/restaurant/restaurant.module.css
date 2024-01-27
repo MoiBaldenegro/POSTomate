@@ -25,7 +25,24 @@
     gap: 8px;
 }
 .mainSection {
-    display: flex;
-    gap: 16px;
-    align-items: start;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    overflow-x: hidden;
+    padding: 5px;
+  }
+              
+/* ScrollingBar*/
+
+.mainSection::-webkit-scrollbar{
+    width: 0.001em;
 }
+                        
+.mainSection::-webkit-scrollbar-thumb {
+    background-color: #7D7E80;
+}
+
+.mainSection::-webkit-scrollbar-track {
+    background-color: #5C5D60;
+}
+
+ 

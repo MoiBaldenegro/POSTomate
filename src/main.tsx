@@ -1,16 +1,16 @@
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./routes/login/login.tsx";
 import Sells from "./routes/sells/sells.tsx";
 import Order from "./routes/order/order.tsx";
 import Restaurant from "./routes/restaurant/restaurant.tsx";
 import Cashier from "./routes/cashier/cashier.tsx";
+import Login from "./routes/login/login.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Cashier />,
+    element: <Login />,
   },
   {
     path: "/sell-types",

@@ -23,6 +23,7 @@ import { Product } from "../../types/products";
 import { Bill } from "../../types/account";
 import UseAccount from "../../hooks/useAccount";
 import { useLocation } from "react-router-dom";
+import UseOrder from "../../hooks/useOrder";
 
 export default function Order() {
   const location = useLocation();
@@ -65,7 +66,8 @@ export default function Order() {
      };*/
 
   const { productsArray, getProducts } = useProducts();
-  const { createAccount } = UseAccount();
+  const { createAccount, handlePrint: handlePrintBill } = UseAccount();
+  const { handlePrint } = UseOrder();
 
   useEffect(() => {
     getProducts();
@@ -159,12 +161,20 @@ export default function Order() {
             <img src={printIcon} alt="print-icon" />
             Imprimir
           </button>
-          <button>
+          <button
+            onClick={() => {
+              handlePrintBill("billPrint");
+            }}
+          >
             <img src={tillIcon} alt="till-icon" />
             Cobrar
           </button>
         </div>
-        <button onClick={() => createAccount(form)}>
+        <button
+          onClick={() => {
+            createAccount(form), handlePrint(form);
+          }}
+        >
           <img src={sendIcon} alt="send-icon" />
           Enviar
         </button>

@@ -18,9 +18,9 @@ export default function Restaurant() {
       <HeaderTwo />
       <main className={styles.mainSection}>
         {tables?.map((item) => (
-          <>
+          <div className={styles.grid}>
             <TableBox item={item} route={"/restaurant-order/:item"} />
-          </>
+          </div>
         ))}
       </main>
       <footer className={styles.footer}>
