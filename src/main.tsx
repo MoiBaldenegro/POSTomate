@@ -6,10 +6,15 @@ import Order from "./routes/order/order.tsx";
 import Restaurant from "./routes/restaurant/restaurant.tsx";
 import Cashier from "./routes/cashier/cashier.tsx";
 import Login from "./routes/login/login.tsx";
+import Host from "./routes/host/host.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Host />,
+  },
+  {
+    path: "/host",
     element: <Login />,
   },
   {

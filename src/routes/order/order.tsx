@@ -22,10 +22,12 @@ import { useEffect, useState } from "react";
 import { Product } from "../../types/products";
 import { Bill } from "../../types/account";
 import UseAccount from "../../hooks/useAccount";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UseOrder from "../../hooks/useOrder";
+import UseTables from "../../hooks/useTables";
 
 export default function Order() {
+  const navigate = useNavigate();
   const location = useLocation();
   const { numTable } = location.state || {};
 
@@ -68,6 +70,7 @@ export default function Order() {
   const { productsArray, getProducts } = useProducts();
   const { createAccount, handlePrint: handlePrintBill } = UseAccount();
   const { handlePrint } = UseOrder();
+  const { activeTable, updateForPaymentTable } = UseTables();
 
   useEffect(() => {
     getProducts();
@@ -157,22 +160,27 @@ export default function Order() {
             Mas acciones
           </button>
           <img src={dividerBtn} alt="divider-buttons" />
-          <button>
+          <button
+            onClick={() => {
+              handlePrintBill("billPrint"),
+                updateForPaymentTable(numTable),
+                navigate("/");
+            }}
+          >
             <img src={printIcon} alt="print-icon" />
             Imprimir
           </button>
-          <button
-            onClick={() => {
-              handlePrintBill("billPrint");
-            }}
-          >
+          <button>
             <img src={tillIcon} alt="till-icon" />
             Cobrar
           </button>
         </div>
         <button
           onClick={() => {
-            createAccount(form), handlePrint(form);
+            createAccount(form),
+              handlePrint(form),
+              activeTable(numTable),
+              navigate("/");
           }}
         >
           <img src={sendIcon} alt="send-icon" />
