@@ -7,21 +7,40 @@ import tablePending from "../../assets/icon/tablePending.svg";
 import tableEnable from "../../assets/icon/tableActive.svg";
 import tablePayment from "../../assets/icon/tableForPayment.svg";
 // types
-import { Props } from "./types";
-import { hostesAction } from "../../utils/roleActions/hostesAction";
+import UseTable from "../../hooks/useTable";
+import { useEffect } from "react";
 
-export default function TableBox({ item, route }: Props) {
+export default function TableBox(
+  { item, route }: any /* AJUSTAR EL TYPE DE PROPS DE MESA (TABLE) COMPLETO */
+) {
   const { loading, newAccount }: any = useAccount();
   const navigate = useNavigate();
   const location = useLocation();
   const pathName = location.pathname;
+  const { updateTable } = UseTable();
+  useEffect(() => {
+    console.log(item);
+  }, []);
 
   const handleclick = () => {
-    alert(pathName);
     if (pathName === "/") {
-      hostesAction(item.tableNum);
+      if (item.status !== "free") {
+        return;
+      }
+      updateTable("pending", item._id);
+      navigate(route);
+    } else if (pathName === "/tables") {
+      if (item.status === "free" || item.status === "forPayment") {
+        return;
+      }
+      if (item.status === "enable") {
+        navigate(route, { state: { numTable: item.tableNum, _id: item._id } });
+        return; // aca recuperaremos la cuenta activa
+      }
+      navigate(route, { state: { numTable: item.tableNum, _id: item._id } });
+    } else {
+      return;
     }
-    navigate(route, { state: { numTable: item.tableNum } });
   };
   if (!loading && newAccount?.code === 200) handleclick;
   return (

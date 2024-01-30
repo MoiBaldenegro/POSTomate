@@ -8,16 +8,21 @@ import paymentIcon from "../../assets/icon/paymentIcon.svg";
 import freeIcon from "../../assets/icon/freeIcon.svg";
 import HeaderTwo from "../../components/headers/headerTwo/headerTwo";
 // Vars
-import { tables } from "../../mocks/tables";
 import TableBox from "../../components/tableBox/tableBox";
+import { useEffect } from "react";
+import UseTable from "../../hooks/useTable";
 // Dependecies
 
 export default function Restaurant() {
+  const { getTables, tablesArray } = UseTable();
+  useEffect(() => {
+    getTables();
+  }, []);
   return (
     <div className={styles.container}>
       <HeaderTwo />
       <main className={styles.mainSection}>
-        {tables?.map((item) => (
+        {tablesArray?.map((item: any) => (
           <div className={styles.grid}>
             <TableBox item={item} route={"/restaurant-order/:item"} />
           </div>

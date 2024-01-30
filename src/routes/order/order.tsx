@@ -24,12 +24,12 @@ import { Bill } from "../../types/account";
 import UseAccount from "../../hooks/useAccount";
 import { useLocation, useNavigate } from "react-router-dom";
 import UseOrder from "../../hooks/useOrder";
-import UseTables from "../../hooks/useTables";
+import UseTable from "../../hooks/useTable";
 
 export default function Order() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { numTable } = location.state || {};
+  const { numTable, _id } = location.state || {};
 
   const [prods, setProds] = useState<Product[]>([]);
   const sumr = prods
@@ -70,7 +70,7 @@ export default function Order() {
   const { productsArray, getProducts } = useProducts();
   const { createAccount, handlePrint: handlePrintBill } = UseAccount();
   const { handlePrint } = UseOrder();
-  const { activeTable, updateForPaymentTable } = UseTables();
+  const { activeTable, updateTable } = UseTable();
 
   useEffect(() => {
     getProducts();
@@ -146,7 +146,7 @@ export default function Order() {
         </section>
       </main>
       <footer className={styles.footer}>
-        <button>
+        <button onClick={() => navigate("/tables")}>
           <img src={backIcon} alt="back-icon" />
           Atrás
         </button>
@@ -162,9 +162,8 @@ export default function Order() {
           <img src={dividerBtn} alt="divider-buttons" />
           <button
             onClick={() => {
-              handlePrintBill("billPrint"),
-                updateForPaymentTable(numTable),
-                navigate("/");
+              handlePrintBill("billPrint"), updateTable("forPayment", _id);
+              navigate("/host");
             }}
           >
             <img src={printIcon} alt="print-icon" />
@@ -177,10 +176,8 @@ export default function Order() {
         </div>
         <button
           onClick={() => {
-            createAccount(form),
-              handlePrint(form),
-              activeTable(numTable),
-              navigate("/");
+            createAccount(form), handlePrint(form), navigate("/host");
+            updateTable("enable", _id);
           }}
         >
           <img src={sendIcon} alt="send-icon" />

@@ -1,10 +1,10 @@
-interface table {
+export interface Table {
   tableNum: string;
   server: string;
   status: string;
 }
 
 export interface Props {
-  item: table;
+  item: Table;
   route: string;
 }

@@ -1,7 +1,7 @@
-import UseTables from "../../hooks/useTables";
+import UseTable from "../../hooks/useTable";
 
-const { updateTable } = UseTables();
-
-export const hostesAction = (tableId: string) => {
-  updateTable(tableId);
+export const hostesAction = (status: string, id: string) => {
+  const { updateTable } = UseTable();
+  updateTable(status, id);
+  return;
 };

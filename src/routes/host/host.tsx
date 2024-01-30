@@ -8,22 +8,24 @@ import paymentIcon from "../../assets/icon/paymentIcon.svg";
 import freeIcon from "../../assets/icon/freeIcon.svg";
 import HeaderTwo from "../../components/headers/headerTwo/headerTwo";
 // Vars
-import { tables } from "../../mocks/tables";
 import TableBox from "../../components/tableBox/tableBox";
+import UseTable from "../../hooks/useTable";
+import { useEffect } from "react";
 // Dependecies
 
 export default function Host() {
+  const { tablesArray, getTables } = UseTable();
+
+  useEffect(() => {
+    getTables();
+  }, []);
   return (
     <div className={styles.container}>
       <HeaderTwo />
       <main className={styles.mainSection}>
-        {tables?.map((item) => {
-          const newItem = {
-            ...item,
-            status: "pending",
-          };
+        {tablesArray?.map((item: any, index: any) => {
           return (
-            <div className={styles.grid} key={item.tableNum}>
+            <div className={styles.grid} key={index}>
               <TableBox item={item} route={"/host"} />
             </div>
           );

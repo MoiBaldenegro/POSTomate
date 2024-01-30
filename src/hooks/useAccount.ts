@@ -42,7 +42,7 @@ export default function UseAccount() {
       return accounts;
     } catch (error) {
       setIsLoading(false);
-      throw new Error("Ha ocurrido algo inesperado");
+      console.error(error);
     }
   }
 
