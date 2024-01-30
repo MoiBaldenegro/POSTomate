@@ -19,9 +19,8 @@ export default function TableBox(
   const pathName = location.pathname;
   const { updateTable } = UseTable();
   useEffect(() => {
-    console.log(item);
-  }, []);
-
+    console.log(`El ID en tablke box es${item._id}`);
+  });
   const handleclick = () => {
     if (pathName === "/") {
       if (item.status !== "free") {
@@ -33,11 +32,21 @@ export default function TableBox(
       if (item.status === "free" || item.status === "forPayment") {
         return;
       }
-      if (item.status === "enable") {
-        navigate(route, { state: { numTable: item.tableNum, _id: item._id } });
+      if (item.status === "pending") {
+        navigate(route, {
+          state: {
+            numTable: item.tableNum,
+            _id: item._id,
+            status: item.status,
+          },
+        });
         return; // aca recuperaremos la cuenta activa
       }
-      navigate(route, { state: { numTable: item.tableNum, _id: item._id } });
+      navigate(route, {
+        state: {
+          numTable: item.tableNum,
+        },
+      });
     } else {
       return;
     }
@@ -52,7 +61,17 @@ export default function TableBox(
           04
         </span>
       </div>
-      {item.status === "pending" ? (
+      {item && item.status === "pending" ? (
+        <img src={tablePending} alt="table-pending" />
+      ) : item && item.status === "enable" ? (
+        <img src={tableEnable} alt="table-enable" />
+      ) : item && item.status === "forPayment" ? (
+        <img src={tablePayment} alt="table-for-payment" />
+      ) : (
+        <img src={tableFree} alt="table-free" />
+      )}
+
+      {/*item.status === "pending" ? (
         <img src={tablePending} alt="table-pending" />
       ) : item.status === "enable" ? (
         <img src={tableEnable} alt="table-enable" />
@@ -60,8 +79,7 @@ export default function TableBox(
         <img src={tablePayment} alt="table-for-payment" />
       ) : (
         <img src={tableFree} alt="table-free" />
-      )}
-
+      ) */}
       <p>{item.tableNum}</p>
       <span>{item.server}</span>
       <div>

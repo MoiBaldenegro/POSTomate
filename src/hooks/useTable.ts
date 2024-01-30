@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import { Table } from "../components/tableBox/types";
 import { tables } from "../mocks/tables";
 
 export default function UseTable() {
@@ -33,7 +32,6 @@ export default function UseTable() {
       if (item.tableNum === tableId) {
       }
     });  */
-    console.log(id, statusChange);
     try {
       const res = await axios.patch(
         `https://tomate-server.onrender.com/tables/${id}`,

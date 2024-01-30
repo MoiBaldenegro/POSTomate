@@ -29,7 +29,7 @@ import UseTable from "../../hooks/useTable";
 export default function Order() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { numTable, _id } = location.state || {};
+  const { numTable, _id, status } = location.state || {};
 
   const [prods, setProds] = useState<Product[]>([]);
   const sumr = prods
@@ -56,6 +56,7 @@ export default function Order() {
           parseFloat(item.priceInSite)
       ).toFixed(2),
       tableNum: numTable,
+      status: status,
     }));
   };
 
@@ -69,8 +70,9 @@ export default function Order() {
 
   const { productsArray, getProducts } = useProducts();
   const { createAccount, handlePrint: handlePrintBill } = UseAccount();
+  const { addBill, updateBill } = UseAccount();
   const { handlePrint } = UseOrder();
-  const { activeTable, updateTable } = UseTable();
+  const { updateTable } = UseTable();
 
   useEffect(() => {
     getProducts();
@@ -162,7 +164,7 @@ export default function Order() {
           <img src={dividerBtn} alt="divider-buttons" />
           <button
             onClick={() => {
-              handlePrintBill("billPrint"), updateTable("forPayment", _id);
+              handlePrintBill("billPrint"), updateBill("forPayment", _id);
               navigate("/host");
             }}
           >
@@ -175,9 +177,26 @@ export default function Order() {
           </button>
         </div>
         <button
-          onClick={() => {
-            createAccount(form), handlePrint(form), navigate("/host");
-            updateTable("enable", _id);
+          onClick={async () => {
+            // CONTINUAREMOS AGREGANDO MAS FUNCIONES EN LA PARTE DE LA CREACION DE LAS CUENTAS AL ENVIAR LAS COMANDAS -
+            // YA CAMBIA EL STATUS A ACTIVA HAY QUE IMPRIMIR LAS COMANDAS, CLAVAR EL ID DE LÑA CUENTA CREADA  ALA MESA Y
+            // REDIRECCIONAR AL LOGIN PARA CONTINUAR CON LAS ACCIONES DONDE LE MESERO ENTRA A UNA MESA YA CON UNA CUENTA ACTIVA EN VERDE
+            try {
+              const newBill = await createAccount(form);
+              console.log(
+                `nueva cuenta creada: ${newBill._id}, ${newBill.products}`
+              );
+              console.log(`el id es ${_id}`);
+              updateTable("enable", _id);
+              return;
+              //navigate("/host");
+              //handlePrint(form);
+
+              //addBill(newBill.bill, newBill._id);
+            } catch (error) {
+              // Manejar errores si es necesario
+              console.error("Error:", error);
+            }
           }}
         >
           <img src={sendIcon} alt="send-icon" />

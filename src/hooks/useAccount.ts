@@ -6,6 +6,7 @@ export default function UseAccount() {
   const [isLoading, setIsLoading] = useState(false);
   const [accountArray, setAccountArray] = useState<Bill[]>();
   const [newAccount, setNewAccount] = useState([]);
+  const [errors, setErrors] = useState(false);
 
   async function createAccount(account: Bill) {
     setIsLoading(true);
@@ -45,6 +46,54 @@ export default function UseAccount() {
       console.error(error);
     }
   }
+  async function updateBill(statusChange: string, id: string) {
+    /*   tables.map((item) => {
+      if (item.tableNum === tableId) {
+      }
+    });  */
+    try {
+      const res = await axios.put(
+        `https://tomate-server.onrender.com/bills/${id}`,
+        { status: statusChange }
+      );
+      if (!res.data) {
+        setIsLoading(false);
+        setErrors(true);
+        alert("No se ha podido encontrar la informacion de las mesas");
+      }
+      setIsLoading(false);
+      alert(res.data);
+      return res.data;
+    } catch (error) {
+      setIsLoading(false);
+      setErrors(true);
+      console.error(`Ha ocurrido algo inesperado: ${error}`);
+    }
+  }
+  async function addBill(statusChange: string, id: string) {
+    /*   tables.map((item) => {
+      if (item.tableNum === tableId) {
+      }
+    });  */
+    try {
+      const res = await axios.put(
+        `https://tomate-server.onrender.com/bills/${id}`,
+        { bill: statusChange }
+      );
+      if (!res.data) {
+        setIsLoading(false);
+        setErrors(true);
+        alert("No se ha podido encontrar la informacion de las mesas");
+      }
+      setIsLoading(false);
+      alert(res.data);
+      return res.data;
+    } catch (error) {
+      setIsLoading(false);
+      setErrors(true);
+      console.error(`Ha ocurrido algo inesperado: ${error}`);
+    }
+  }
 
   const handlePrint = async (process: string) => {
     const printers = ["192.168.1.88", "192.168.1.82"];
@@ -82,5 +131,7 @@ export default function UseAccount() {
     getAccount,
     accountArray,
     handlePrint,
+    updateBill,
+    addBill,
   };
 }
