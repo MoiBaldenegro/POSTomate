@@ -1,4 +1,4 @@
-// styles
+// styles //
 import "../../styles/global/global.css";
 import styles from "./order.module.css";
 // Icons
