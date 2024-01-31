@@ -43,7 +43,7 @@ export default function TableBox(
         navigate(route, {
           state: {
             numTable: item.tableNum,
-            _id: item.bill,
+            _id: item._id,
             status: item.status,
             billCurrent: item.bill[0],
           },

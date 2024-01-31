@@ -10,19 +10,19 @@ import transferIcon from "../../assets/icon/transferIcon.svg";
 import checkLarge from "../../assets/icon/checkLarge.svg";
 import backLarge from "../../assets/icon/backLarge.svg";
 import blueDivider from "../../assets/icon/blueDivider.svg";
-import cashIconMedium from "../../assets/icon/cashSignalMedium.svg";
 // Hooks
 import useDate from "../../hooks/useDate";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 // Utils
 import { denominations, keyboard } from "./utils/denominations";
-import TicketComponent from "../tickets/ventas/mainTicket/mainTicket";
 import PrintButton from "../buttons/printerButton/printButton";
+import { Bill } from "../../types/account";
 interface Props {
   openModal: any;
   isOpen: any;
   onClose: any;
   children: any;
+  currentBill: Bill | undefined;
 }
 
 export default function PaymentInterface({
@@ -30,6 +30,7 @@ export default function PaymentInterface({
   isOpen,
   onClose,
   children,
+  currentBill,
 }: Props) {
   // Date
   const { currentDateTime, opcionesFecha }: any = useDate();
@@ -49,6 +50,12 @@ export default function PaymentInterface({
       });
     }
   };
+
+  useEffect(() => {
+    console.log(`La cuenta por pagar es la: ${currentBill}`);
+    console.log(currentBill?.products);
+    console.log(currentBill?.checkTotal);
+  }, []);
 
   return (
     <div className={styles.screen}>
@@ -131,7 +138,7 @@ export default function PaymentInterface({
                 <h4>$0.00</h4>
               </div>
             </div>
-            <PrintButton />
+            <PrintButton currentBill={currentBill} />
           </div>
         </div>
       </section>

@@ -7,9 +7,11 @@ export default function CashierBox({
   openModal,
   item,
   route,
+  setting,
 }: CashierBoxProps) {
   const handleclick = () => {
     openModal();
+    setting(item);
   };
   return (
     <div className={styles.table} onClick={handleclick}>

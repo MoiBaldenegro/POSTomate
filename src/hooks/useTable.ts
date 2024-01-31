@@ -28,6 +28,9 @@ export default function UseTable() {
     }
   }
   async function updateTable(statusChange: string, id: string) {
+    console.log(
+      `Me ejecute con el primero argumento: ${statusChange} y el id: ${id.toString()}`
+    );
     /*   tables.map((item) => {
       if (item.tableNum === tableId) {
       }
@@ -43,7 +46,6 @@ export default function UseTable() {
         alert("No se ha podido encontrar la informacion de las mesas");
       }
       setIsLoading(false);
-      alert(res.data);
       return res.data;
     } catch (error) {
       setIsLoading(false);

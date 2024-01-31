@@ -90,6 +90,7 @@ export default function Order() {
   const { updateTable } = UseTable();
 
   useEffect(() => {
+    console.log(`consologueando al : ${_id}`);
     getProducts();
     setForm({ ...form, products: billCurrent?.products });
   }, []);
@@ -180,7 +181,9 @@ export default function Order() {
           <img src={dividerBtn} alt="divider-buttons" />
           <button
             onClick={() => {
-              handlePrintBill("billPrint"), updateBill("forPayment", _id);
+              handlePrintBill("billPrint"),
+                updateBill("forPayment", billCurrent, form);
+              updateTable("forPayment", _id);
               navigate("/host");
             }}
           >
@@ -197,14 +200,13 @@ export default function Order() {
             try {
               if (!billCurrent) {
                 const newBill = await createAccount(form);
-
                 updateTable("enable", _id);
                 navigate("/host");
                 handlePrint(form);
                 addBill(newBill._id, _id);
                 return;
               }
-              updateBill("enable", billCurrent._id, form.products);
+              updateBill("enable", billCurrent, form);
               handlePrint(form);
               navigate("/host");
             } catch (error) {

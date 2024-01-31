@@ -13,14 +13,16 @@ import UseAccount from "../../hooks/useAccount";
 import PaymentInterface from "../../components/payments/payments.int";
 // Components
 import CashierBox from "../../components/cashierBox/cashierBox";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Bill } from "../../types/account";
 
 export default function Cashier() {
   const paymentInterface = useModal("paymentInterface");
-  const { getAccount, accountArray } = UseAccount();
+  const { accountArray, getBills } = UseAccount();
+  const [currentBill, setCurrentBill] = useState<Bill>();
 
   useEffect(() => {
-    getAccount();
+    getBills();
   }, []);
   return (
     <div className={styles.container}>
@@ -30,6 +32,7 @@ export default function Cashier() {
           item.status === "forPayment" ? (
             <div>
               <CashierBox
+                setting={setCurrentBill}
                 openModal={paymentInterface.openModal}
                 item={item}
                 route={"/"}
@@ -42,6 +45,7 @@ export default function Cashier() {
         {paymentInterface.isOpen &&
         paymentInterface.modalName === "paymentInterface" ? (
           <PaymentInterface
+            currentBill={currentBill}
             openModal={paymentInterface.openModal}
             isOpen={paymentInterface.isOpen}
             onClose={paymentInterface.closeModal}

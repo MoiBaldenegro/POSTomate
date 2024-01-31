@@ -29,6 +29,23 @@ export default function UseAccount() {
       throw new Error("Ha ocurrido un error inesperado");
     }
   }
+  async function getBills() {
+    setIsLoading(true);
+    try {
+      const res = await axios(`https://tomate-server.onrender.com/bills`);
+      if (!res.data) {
+        setIsLoading(false);
+        throw new Error("No se encontraron cuentas");
+      }
+      setIsLoading(false);
+      const accounts = res.data;
+      setAccountArray(accounts);
+      return accounts;
+    } catch (error) {
+      setIsLoading(false);
+      console.error(error);
+    }
+  }
 
   async function getAccount(id: string) {
     setIsLoading(true);
@@ -47,22 +64,22 @@ export default function UseAccount() {
       console.error(error);
     }
   }
+
   async function updateBill(
     statusChange: string,
-    id: string,
-    newProducts?: any
+    currentBill: any,
+    form?: any
   ) {
-    console.log(
-      `Informacion para actualizar una cuenta creada: ${statusChange}, ${id}, ${newProducts}`
-    );
     /*   tables.map((item) => {
       if (item.tableNum === tableId) {
       }
     });  */
+    const id = currentBill._id;
+    const currentProducts = form?.products ?? currentBill.products;
     try {
       const res = await axios.put(
         `https://tomate-server.onrender.com/bills/${id}`,
-        { status: statusChange, products: newProducts }
+        { status: statusChange, products: currentProducts }
       );
       if (!res.data) {
         setIsLoading(false);
@@ -70,7 +87,6 @@ export default function UseAccount() {
         alert("No se ha podido encontrar la informacion de las mesas");
       }
       setIsLoading(false);
-      alert(res.data);
       return res.data;
     } catch (error) {
       setIsLoading(false);
@@ -94,7 +110,6 @@ export default function UseAccount() {
         alert("No se ha podido encontrar la informacion de las mesas");
       }
       setIsLoading(false);
-      alert(res.data);
       return res.data;
     } catch (error) {
       setIsLoading(false);
@@ -142,5 +157,6 @@ export default function UseAccount() {
     updateBill,
     addBill,
     currentBill,
+    getBills,
   };
 }
