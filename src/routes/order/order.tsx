@@ -29,7 +29,7 @@ import UseTable from "../../hooks/useTable";
 export default function Order() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { numTable, _id, status } = location.state || {};
+  const { numTable, _id, status, billCurrent } = location.state || {};
 
   const [prods, setProds] = useState<Product[]>([]);
   const sumr = prods
@@ -47,7 +47,29 @@ export default function Order() {
   });
 
   const addToForm = (item: Product) => {
+    setForm((prevForm) => {
+      const updatedProducts = prevForm.products?.length
+        ? [...prevForm.products, item]
+        : [item];
+
+      const checkTotal = updatedProducts
+        .reduce((a, b) => a + parseFloat(b.priceInSite), 0)
+        .toFixed(2);
+
+      return {
+        ...prevForm,
+        products: updatedProducts,
+        checkTotal,
+        tableNum: numTable,
+        status: status,
+      };
+    });
+  };
+
+  /*const addToForm = (item: Product) => {
+    
     setForm((prevForm) => ({
+      
       ...prevForm,
       products: [...prevForm.products, item],
       checkTotal: (prevForm.products.length === 0
@@ -59,14 +81,7 @@ export default function Order() {
       status: status,
     }));
   };
-
-  /* const addToForm = (item: Product) => {
-         setForm(prevForm => ({
-             ...prevForm,
-             products: [...prevForm.products, item],
-             checkTotal: (form.products.reduce((a, b) => a + parseFloat(b.priceInSite), 0).toFixed(2)).toString(),
-         }));
-     };*/
+*/
 
   const { productsArray, getProducts } = useProducts();
   const { createAccount, handlePrint: handlePrintBill } = UseAccount();
@@ -76,6 +91,7 @@ export default function Order() {
 
   useEffect(() => {
     getProducts();
+    setForm({ ...form, products: billCurrent?.products });
   }, []);
   return (
     <div className={styles.container}>
@@ -178,23 +194,20 @@ export default function Order() {
         </div>
         <button
           onClick={async () => {
-            // CONTINUAREMOS AGREGANDO MAS FUNCIONES EN LA PARTE DE LA CREACION DE LAS CUENTAS AL ENVIAR LAS COMANDAS -
-            // YA CAMBIA EL STATUS A ACTIVA HAY QUE IMPRIMIR LAS COMANDAS, CLAVAR EL ID DE LÑA CUENTA CREADA  ALA MESA Y
-            // REDIRECCIONAR AL LOGIN PARA CONTINUAR CON LAS ACCIONES DONDE LE MESERO ENTRA A UNA MESA YA CON UNA CUENTA ACTIVA EN VERDE
             try {
-              const newBill = await createAccount(form);
-              console.log(
-                `nueva cuenta creada: ${newBill._id}, ${newBill.products}`
-              );
-              console.log(`el id es ${_id}`);
-              updateTable("enable", _id);
-              return;
-              //navigate("/host");
-              //handlePrint(form);
+              if (!billCurrent) {
+                const newBill = await createAccount(form);
 
-              //addBill(newBill.bill, newBill._id);
+                updateTable("enable", _id);
+                navigate("/host");
+                handlePrint(form);
+                addBill(newBill._id, _id);
+                return;
+              }
+              updateBill("enable", billCurrent._id, form.products);
+              handlePrint(form);
+              navigate("/host");
             } catch (error) {
-              // Manejar errores si es necesario
               console.error("Error:", error);
             }
           }}

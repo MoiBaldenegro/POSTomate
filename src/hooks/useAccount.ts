@@ -7,6 +7,7 @@ export default function UseAccount() {
   const [accountArray, setAccountArray] = useState<Bill[]>();
   const [newAccount, setNewAccount] = useState([]);
   const [errors, setErrors] = useState(false);
+  const [currentBill, setCurrentBill] = useState();
 
   async function createAccount(account: Bill) {
     setIsLoading(true);
@@ -29,24 +30,31 @@ export default function UseAccount() {
     }
   }
 
-  async function getAccount() {
+  async function getAccount(id: string) {
     setIsLoading(true);
     try {
-      const res = await axios("https://tomate-server.onrender.com/bills");
+      const res = await axios(`https://tomate-server.onrender.com/bills/${id}`);
       if (!res.data) {
         setIsLoading(false);
         throw new Error("No se encontraron cuentas");
       }
       setIsLoading(false);
       const accounts = res.data;
-      setAccountArray(accounts);
+      setCurrentBill(accounts);
       return accounts;
     } catch (error) {
       setIsLoading(false);
       console.error(error);
     }
   }
-  async function updateBill(statusChange: string, id: string) {
+  async function updateBill(
+    statusChange: string,
+    id: string,
+    newProducts?: any
+  ) {
+    console.log(
+      `Informacion para actualizar una cuenta creada: ${statusChange}, ${id}, ${newProducts}`
+    );
     /*   tables.map((item) => {
       if (item.tableNum === tableId) {
       }
@@ -54,7 +62,7 @@ export default function UseAccount() {
     try {
       const res = await axios.put(
         `https://tomate-server.onrender.com/bills/${id}`,
-        { status: statusChange }
+        { status: statusChange, products: newProducts }
       );
       if (!res.data) {
         setIsLoading(false);
@@ -76,9 +84,9 @@ export default function UseAccount() {
       }
     });  */
     try {
-      const res = await axios.put(
-        `https://tomate-server.onrender.com/bills/${id}`,
-        { bill: statusChange }
+      const res = await axios.patch(
+        `https://tomate-server.onrender.com/tables/${id}`,
+        { bill: [statusChange] }
       );
       if (!res.data) {
         setIsLoading(false);
@@ -133,5 +141,6 @@ export default function UseAccount() {
     handlePrint,
     updateBill,
     addBill,
+    currentBill,
   };
 }

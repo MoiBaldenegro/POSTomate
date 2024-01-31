@@ -8,7 +8,6 @@ import tableEnable from "../../assets/icon/tableActive.svg";
 import tablePayment from "../../assets/icon/tableForPayment.svg";
 // types
 import UseTable from "../../hooks/useTable";
-import { useEffect } from "react";
 
 export default function TableBox(
   { item, route }: any /* AJUSTAR EL TYPE DE PROPS DE MESA (TABLE) COMPLETO */
@@ -18,9 +17,7 @@ export default function TableBox(
   const location = useLocation();
   const pathName = location.pathname;
   const { updateTable } = UseTable();
-  useEffect(() => {
-    console.log(`El ID en tablke box es${item._id}`);
-  });
+
   const handleclick = () => {
     if (pathName === "/") {
       if (item.status !== "free") {
@@ -42,11 +39,17 @@ export default function TableBox(
         });
         return; // aca recuperaremos la cuenta activa
       }
-      navigate(route, {
-        state: {
-          numTable: item.tableNum,
-        },
-      });
+      if (item.status === "enable") {
+        navigate(route, {
+          state: {
+            numTable: item.tableNum,
+            _id: item.bill,
+            status: item.status,
+            billCurrent: item.bill[0],
+          },
+        });
+        return;
+      }
     } else {
       return;
     }
