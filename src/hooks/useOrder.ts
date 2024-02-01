@@ -5,8 +5,11 @@ import { Bill } from "../types/account";
 export default function UseOrder() {
   const handlePrint = async (form: Bill) => {
     const printersArray = [
-      { printerId: "192.168.1.88", position: "salsa" },
-      { printerId: "192.168.1.82", position: "A" },
+      { printerId: "192.168.1.97", position: "Bebidas sin alcohol" },
+      { printerId: "192.168.1.95", position: "Medias ordenes" },
+      { printerId: "192.168.1.97", position: "Bebidas con alcohol" },
+      { printerId: "192.168.1.88", position: "caja" },
+      { printerId: "192.168.1.82", position: "comandas" },
     ];
 
     printersArray?.forEach(async (item) => {
