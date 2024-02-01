@@ -3,19 +3,22 @@ import UseAccount from "../../../hooks/useAccount";
 import UseTable from "../../../hooks/useTable";
 import styles from "./printButton.module.css";
 import { Bill } from "../../../types/account";
+import { useEffect } from "react";
 interface Props {
   currentBill: Bill | undefined;
 }
 const PrintButton = ({ currentBill }: Props) => {
   const { handlePrint } = UseAccount();
-  //const { updateTable } = UseTable();
+  const { updateTable, getOneTable, currentTable } = UseTable();
   const { updateBill } = UseAccount();
   const navigate = useNavigate();
-
+  useEffect(() => {
+    getOneTable(currentBill?.table);
+  }, []);
   return (
     <button
       onClick={() => {
-        // updateTable("free" /* aqui lcupoamos el ID de la mesa */),
+        updateTable("free", currentBill?.table, currentTable);
         updateBill("finished", currentBill),
           handlePrint("ticket"),
           navigate("/host");

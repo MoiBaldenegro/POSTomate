@@ -29,7 +29,7 @@ import UseTable from "../../hooks/useTable";
 export default function Order() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { numTable, _id, status, billCurrent } = location.state || {};
+  const { _id, status, billCurrent, tableItem } = location.state || {};
 
   const [prods, setProds] = useState<Product[]>([]);
   const sumr = prods
@@ -44,7 +44,13 @@ export default function Order() {
     status: "pending",
     paymentDate: "Fecha",
     tableNum: "s/N",
+    table: undefined,
   });
+  useEffect(() => {
+    console.log(
+      `e4stamos recibiendo la mesa con la informacion: ${tableItem._id} y ademas billCurrent es: ${billCurrent}`
+    );
+  }, []);
 
   const addToForm = (item: Product) => {
     setForm((prevForm) => {
@@ -60,8 +66,9 @@ export default function Order() {
         ...prevForm,
         products: updatedProducts,
         checkTotal,
-        tableNum: numTable,
+        tableNum: tableItem.tableNum,
         status: status,
+        table: tableItem._id,
       };
     });
   };
@@ -90,7 +97,6 @@ export default function Order() {
   const { updateTable } = UseTable();
 
   useEffect(() => {
-    console.log(`consologueando al : ${_id}`);
     getProducts();
     setForm({ ...form, products: billCurrent?.products });
   }, []);
@@ -101,7 +107,7 @@ export default function Order() {
         <section>
           <div>
             <div className={styles.headAccount}>
-              <span>Cuenta: 0{numTable}</span>
+              <span>Cuenta: 0{tableItem.tableNum}</span>
               <div>
                 <button>
                   <img src={personIcon} alt="person-icon" />

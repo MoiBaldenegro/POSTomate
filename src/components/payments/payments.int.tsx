@@ -55,6 +55,7 @@ export default function PaymentInterface({
     console.log(`La cuenta por pagar es la: ${currentBill}`);
     console.log(currentBill?.products);
     console.log(currentBill?.checkTotal);
+    console.log(currentBill?.table);
   }, []);
 
   return (

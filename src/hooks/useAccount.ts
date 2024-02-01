@@ -11,6 +11,7 @@ export default function UseAccount() {
 
   async function createAccount(account: Bill) {
     setIsLoading(true);
+    console.log(account);
     try {
       const response = await axios.post(
         "https://tomate-server.onrender.com/bills",
@@ -76,6 +77,8 @@ export default function UseAccount() {
     });  */
     const id = currentBill._id;
     const currentProducts = form?.products ?? currentBill.products;
+    console.log("ACA ACA");
+    console.log(currentBill.products);
     try {
       const res = await axios.put(
         `https://tomate-server.onrender.com/bills/${id}`,

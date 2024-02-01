@@ -6,7 +6,6 @@ import { CashierBoxProps } from "../../types/props/cashierBoxProps";
 export default function CashierBox({
   openModal,
   item,
-  route,
   setting,
 }: CashierBoxProps) {
   const handleclick = () => {

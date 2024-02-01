@@ -8,4 +8,5 @@ export interface Bill {
   status: "enabled" | "free" | "forPayment" | "pending";
   paymentDate: string;
   tableNum: string;
+  table: string | undefined;
 }

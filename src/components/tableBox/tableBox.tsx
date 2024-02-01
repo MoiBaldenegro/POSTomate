@@ -32,6 +32,7 @@ export default function TableBox(
       if (item.status === "pending") {
         navigate(route, {
           state: {
+            tableItem: item,
             numTable: item.tableNum,
             _id: item._id,
             status: item.status,
@@ -42,6 +43,7 @@ export default function TableBox(
       if (item.status === "enable") {
         navigate(route, {
           state: {
+            tableItem: item,
             numTable: item.tableNum,
             _id: item._id,
             status: item.status,

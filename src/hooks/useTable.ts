@@ -6,6 +6,7 @@ export default function UseTable() {
   const [isLoading, setIsLoading] = useState(false);
   const [tablesArray, setTablesArray] = useState<any>();
   const [errors, setErrors] = useState(false);
+  const [currentTable, setCurrentTable] = useState();
 
   async function getTables() {
     setIsLoading(true);
@@ -27,15 +28,47 @@ export default function UseTable() {
       console.error(`Ha ocurrido algo inesperado: ${error}`);
     }
   }
-  async function updateTable(statusChange: string, id: string) {
-    console.log(
-      `Me ejecute con el primero argumento: ${statusChange} y el id: ${id.toString()}`
-    );
+
+  async function getOneTable(id: string | undefined) {
+    setIsLoading(true);
+    try {
+      const res = await axios(
+        `https://tomate-server.onrender.com/tables/${id}`
+      );
+      if (!res.data) {
+        setIsLoading(false);
+        setErrors(true);
+        alert("No se ha podido encontrar la informacion de la mesa");
+      }
+      setIsLoading(false);
+      const tableArray = res.data;
+      setCurrentTable(tableArray);
+      return tableArray;
+    } catch (error) {
+      setIsLoading(false);
+      setErrors(true);
+      console.error(`Ha ocurrido algo inesperado: ${error}`);
+    }
+  }
+  async function updateTable(
+    statusChange: string,
+    id: string | undefined,
+    bill?: string[]
+  ) {
     /*   tables.map((item) => {
       if (item.tableNum === tableId) {
       }
     });  */
+
     try {
+      if (bill) {
+        const res = await axios.patch(
+          `https://tomate-server.onrender.com/tables/${id}`,
+          { status: statusChange, bill: [] }
+        );
+
+        return res.data;
+      }
       const res = await axios.patch(
         `https://tomate-server.onrender.com/tables/${id}`,
         { status: statusChange }
@@ -78,5 +111,7 @@ export default function UseTable() {
     updateForPaymentTable,
     updateTable,
     activeTable,
+    getOneTable,
+    currentTable,
   };
 }
