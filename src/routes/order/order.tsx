@@ -41,16 +41,11 @@ export default function Order() {
     user: "Moises",
     checkTotal: "0.00",
     products: [],
-    status: "pending",
+    status: "enable",
     paymentDate: "Fecha",
     tableNum: "s/N",
     table: undefined,
   });
-  useEffect(() => {
-    console.log(
-      `e4stamos recibiendo la mesa con la informacion: ${tableItem._id} y ademas billCurrent es: ${billCurrent}`
-    );
-  }, []);
 
   const addToForm = (item: Product) => {
     setForm((prevForm) => {
@@ -97,8 +92,15 @@ export default function Order() {
   const { updateTable } = UseTable();
 
   useEffect(() => {
+    console.log(form.status);
+    console.log(form.status);
+    console.log(form.status);
+
     getProducts();
-    setForm({ ...form, products: billCurrent?.products });
+    setForm({
+      ...form,
+      products: billCurrent?.products ?? [],
+    });
   }, []);
   return (
     <div className={styles.container}>
@@ -187,11 +189,13 @@ export default function Order() {
           <img src={dividerBtn} alt="divider-buttons" />
           <button
             onClick={() => {
-              handlePrintBill("billPrint"),
-                updateBill("forPayment", billCurrent, form);
+              //handlePrintBill("billPrint", form),
+              updateBill("forPayment", billCurrent, form);
               updateTable("forPayment", _id);
               navigate("/host");
             }}
+            disabled={!billCurrent?.products}
+            className={styles.printButton}
           >
             <img src={printIcon} alt="print-icon" />
             Imprimir
@@ -202,23 +206,26 @@ export default function Order() {
           </button>
         </div>
         <button
+          className={styles.printButton}
           onClick={async () => {
             try {
               if (!billCurrent) {
-                const newBill = await createAccount(form);
+                let newBill = await createAccount(form);
                 updateTable("enable", _id);
-                navigate("/host");
                 handlePrint(form);
                 addBill(newBill._id, _id);
+                navigate("/host");
                 return;
               }
               updateBill("enable", billCurrent, form);
               handlePrint(form);
               navigate("/host");
             } catch (error) {
+              console.log("entre aca sal error");
               console.error("Error:", error);
             }
           }}
+          disabled={form.products.length < 1}
         >
           <img src={sendIcon} alt="send-icon" />
           Enviar

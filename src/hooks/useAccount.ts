@@ -11,7 +11,6 @@ export default function UseAccount() {
 
   async function createAccount(account: Bill) {
     setIsLoading(true);
-    console.log(account);
     try {
       const response = await axios.post(
         "https://tomate-server.onrender.com/bills",
@@ -121,28 +120,13 @@ export default function UseAccount() {
     }
   }
 
-  const handlePrint = async (process: string) => {
+  const handlePrint = async (process: string, billPrint: string) => {
+    console.log(billPrint);
     const printers = ["192.168.1.88", "192.168.1.82"];
 
     printers?.forEach(async (item) => {
       try {
-        const data = {
-          items: [
-            {
-              name: "Producto 1",
-              quantity: 2,
-              price: 10.99,
-            },
-            {
-              name: "Producto 2",
-              quantity: 1,
-              price: 24.99,
-            },
-          ],
-          total: 46.97,
-          tcp: item,
-        };
-        await axios.post(`http://localhost:8000/print/${process}`, data);
+        await axios.post(`http://localhost:8000/print/${process}`, billPrint);
         console.log("Ticket enviado para impresión");
       } catch (error) {
         console.error("Error al enviar el ticket para impresión", error);

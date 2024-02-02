@@ -200,3 +200,7 @@
     font-size: 30px;
     font-weight: 400;
 }
+
+.printButton:disabled{
+    opacity: 0.3;
+}

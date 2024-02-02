@@ -5,7 +5,7 @@ export interface Bill {
   user: string;
   checkTotal: string;
   products: Product[];
-  status: "enabled" | "free" | "forPayment" | "pending";
+  status: "enable" | "free" | "forPayment" | "pending";
   paymentDate: string;
   tableNum: string;
   table: string | undefined;
