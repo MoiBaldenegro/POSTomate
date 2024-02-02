@@ -120,7 +120,7 @@ export default function UseAccount() {
     }
   }
 
-  const handlePrint = async (process: string, billPrint: string) => {
+  const handlePrint = async (process: string, billPrint: Bill | undefined) => {
     console.log(billPrint);
     const printers = ["192.168.1.88", "192.168.1.82"];
 
