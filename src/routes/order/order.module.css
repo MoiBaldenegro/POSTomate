@@ -204,3 +204,8 @@
 .printButton:disabled{
     opacity: 0.3;
 }
+.productContainer button:disabled{
+    opacity: 0.3;
+
+
+}

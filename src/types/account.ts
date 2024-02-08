@@ -1,5 +1,10 @@
 import { Product } from "./products";
 
+export interface Printer {
+  printerName: string;
+  tcp: string;
+}
+
 export interface Bill {
   sellType: "onSite" | "toGo" | "rappi" | "phone";
   user: string;
@@ -9,4 +14,5 @@ export interface Bill {
   paymentDate: string;
   tableNum: string;
   table: string | undefined;
+  printerLocation?: Printer[];
 }

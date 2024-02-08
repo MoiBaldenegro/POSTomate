@@ -18,10 +18,9 @@ const PrintButton = ({ currentBill }: Props) => {
   return (
     <button
       onClick={() => {
-        updateTable("free", currentBill?.table, currentTable);
-        updateBill("finished", currentBill),
-          handlePrint("ticket", currentBill),
-          navigate("/host");
+        // updateTable("free", currentBill?.table, currentTable);
+        //updateBill("finished", currentBill),
+        handlePrint("ticket", currentBill), navigate("/");
       }}
       className={styles.printBtn}
     >

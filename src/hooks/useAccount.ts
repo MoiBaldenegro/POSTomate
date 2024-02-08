@@ -9,8 +9,24 @@ export default function UseAccount() {
   const [errors, setErrors] = useState(false);
   const [currentBill, setCurrentBill] = useState();
 
+  const getLocalDevice = async () => {
+    setIsLoading(true);
+    try {
+      const serial = await axios("http://localhost:8000/device/idn");
+      if (!serial) {
+        setIsLoading(false);
+        setErrors(true);
+      }
+      return serial;
+    } catch (error) {
+      setIsLoading(false);
+      setErrors(true);
+    }
+  };
+
   async function createAccount(account: Bill) {
     setIsLoading(true);
+    console.log(account);
     try {
       const response = await axios.post(
         "https://tomate-server.onrender.com/bills",
@@ -76,8 +92,6 @@ export default function UseAccount() {
     });  */
     const id = currentBill._id;
     const currentProducts = form?.products ?? currentBill.products;
-    console.log("ACA ACA");
-    console.log(currentBill.products);
     try {
       const res = await axios.put(
         `https://tomate-server.onrender.com/bills/${id}`,
@@ -121,17 +135,48 @@ export default function UseAccount() {
   }
 
   const handlePrint = async (process: string, billPrint: Bill | undefined) => {
-    console.log(billPrint);
-    const printers = ["192.168.1.88", "192.168.1.82"];
+    // const printers = ["192.168.1.88", "192.168.1.82"]; // estas las tomariamos de la cuenta por que vienen dentro ya.
+    // Pero debemos saber cual es el proceso de impresion que se esta llevando a cabo primero
+    //
+    const serial = await getLocalDevice(); // EL SERIAL LLEGA ACA CORRECTAMENTE
 
-    printers?.forEach(async (item) => {
-      try {
-        await axios.post(`http://localhost:8000/print/${process}`, billPrint);
-        console.log("Ticket enviado para impresión");
-      } catch (error) {
-        console.error("Error al enviar el ticket para impresión", error);
+    if (!serial) {
+      setIsLoading(false);
+      setErrors(true);
+      return;
+    }
+    try {
+      const response = axios(
+        `https://tomate-server.onrender.com/device/deviceIdn/${serial.data}`
+      );
+      if (!response) {
+        setIsLoading(false);
+        setErrors(true);
       }
-    });
+      const settingsArray = (await response).data.settings;
+
+      const printersObjectArray: any = settingsArray.find(
+        (item: any) => item.printers
+      );
+      const printers = printersObjectArray.printers.map(
+        (item: any) => item.tcp
+      );
+
+      printers?.forEach(async (item: any) => {
+        const data = {
+          data: billPrint,
+          tcp: item,
+        };
+        try {
+          await axios.post(`http://localhost:8000/print/${process}`, data);
+          console.log("Ticket enviado para impresión");
+        } catch (error) {
+          console.error("Error al enviar el ticket para impresión", error);
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return {

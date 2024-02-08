@@ -11,7 +11,7 @@ import Host from "./routes/host/host.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Host/>,
+    element: <Host />,
   },
   {
     path: "/host",

@@ -25,8 +25,15 @@ import UseAccount from "../../hooks/useAccount";
 import { useLocation, useNavigate } from "react-router-dom";
 import UseOrder from "../../hooks/useOrder";
 import UseTable from "../../hooks/useTable";
+// utils
+import { incrementQuantity, reduceQuantity } from "./utils/changeQuantity";
 
 export default function Order() {
+  const { productsArray, getProducts } = useProducts();
+  const { createAccount, handlePrint: handlePrintBill } = UseAccount();
+  const { addBill, updateBill } = UseAccount();
+  const { handlePrint } = UseOrder();
+  const { updateTable } = UseTable();
   const navigate = useNavigate();
   const location = useLocation();
   const { _id, status, billCurrent, tableItem } = location.state || {};
@@ -68,6 +75,76 @@ export default function Order() {
     });
   };
 
+  const handleReduceQuantity = (index: number) => {
+    setForm((prevForm) => {
+      const updatedForm = { ...prevForm };
+      const updatedProducts = [...prevForm.products];
+
+      if (updatedProducts[index].quantity <= 1) {
+        updatedProducts[index] = { ...updatedProducts[index], quantity: 1 };
+        updatedForm.products = updatedProducts;
+        return updatedForm;
+      }
+
+      updatedProducts[index] = {
+        ...updatedProducts[index],
+        quantity: updatedProducts[index].quantity - 1,
+      };
+      updatedForm.products = updatedProducts;
+      return updatedForm;
+    });
+  };
+
+  const handleIncrementQuantity = (index: number) => {
+    setForm((prevForm) => {
+      const updatedForm = { ...prevForm };
+      const updatedProducts = [...prevForm.products];
+
+      if (updatedProducts[index].quantity >= 99) {
+        updatedProducts[index] = { ...updatedProducts[index], quantity: 99 };
+        updatedForm.products = updatedProducts;
+        return updatedForm;
+      }
+
+      updatedProducts[index] = {
+        ...updatedProducts[index],
+        quantity: updatedProducts[index].quantity + 1,
+      };
+      updatedForm.products = updatedProducts;
+      return updatedForm;
+    });
+  };
+
+  /*  
+  const handleReduceQuantity = (index: number) => {
+    const updatedForm = { ...form };
+    const updatedProducts = [...form.products];
+
+    if (updatedProducts[index].quantity <= 1) {
+      updatedProducts[index].quantity = 1;
+      setForm(updatedForm);
+      return;
+    }
+    updatedProducts[index].quantity -= 1;
+    updatedForm.products = updatedProducts;
+    setForm(updatedForm);
+  };
+
+  const handleIncrementQuantity = (index: number) => {
+    const updatedForm = { ...form };
+    const updatedProducts = [...form.products];
+
+    if (updatedProducts[index].quantity >= 99) {
+      updatedProducts[index].quantity = 99;
+      setForm(updatedForm);
+      return;
+    }
+    updatedProducts[index].quantity += 1;
+    updatedForm.products = updatedProducts;
+    setForm(updatedForm);
+  };
+  */
+  // ACA LA INFORMACION DONDE SE RECUPERABA EL TOTAL DE LA CUENTA SIN PROBLEMAS
   /*const addToForm = (item: Product) => {
     
     setForm((prevForm) => ({
@@ -85,22 +162,15 @@ export default function Order() {
   };
 */
 
-  const { productsArray, getProducts } = useProducts();
-  const { createAccount, handlePrint: handlePrintBill } = UseAccount();
-  const { addBill, updateBill } = UseAccount();
-  const { handlePrint } = UseOrder();
-  const { updateTable } = UseTable();
-
   useEffect(() => {
-    console.log(form.status);
-    console.log(form.status);
-    console.log(form.status);
-
     getProducts();
-    setForm({
-      ...form,
-      products: billCurrent?.products ?? [],
-    });
+    if (form.products.length < 1 && billCurrent?.products) {
+      console.log("entre al useEffect");
+      setForm({
+        ...form,
+        products: billCurrent?.products ?? [],
+      });
+    }
   }, []);
   return (
     <div className={styles.container}>
@@ -121,14 +191,24 @@ export default function Order() {
               </div>
             </div>
             <div>
-              {form.products?.map((element) => (
-                <div className={styles.productContainer}>
+              {form.products?.map((element, index) => (
+                <div className={styles.productContainer} key={index}>
                   <div>
-                    <button>
+                    <button
+                      onClick={() => {
+                        handleReduceQuantity(index);
+                      }}
+                      disabled={form.products[index].quantity <= 1}
+                    >
                       <img src={rest} alt="resta-icon" />
                     </button>
-                    <span>01</span>
-                    <button>
+                    <span>{element.quantity}</span>
+                    <button
+                      onClick={() => {
+                        handleIncrementQuantity(index);
+                      }}
+                      disabled={form.products[index].quantity >= 99}
+                    >
                       <img src={sum} alt="sumar-icon" />
                     </button>
                   </div>
@@ -161,11 +241,13 @@ export default function Order() {
           </div>
         </section>
         <section>
-          {productsArray?.map((item) => (
+          {productsArray?.map((item, index) => (
             <section
-              key={item.code}
+              key={index}
               className={styles.containerProduct}
-              onClick={() => addToForm(item)}
+              onClick={() => {
+                addToForm(item);
+              }}
             >
               <p>{item.productName}</p>
             </section>
@@ -189,8 +271,8 @@ export default function Order() {
           <img src={dividerBtn} alt="divider-buttons" />
           <button
             onClick={() => {
-              //handlePrintBill("billPrint", form),
-              updateBill("forPayment", billCurrent, form);
+              handlePrintBill("billPrint", form),
+                updateBill("forPayment", billCurrent, form);
               updateTable("forPayment", _id);
               navigate("/host");
             }}
