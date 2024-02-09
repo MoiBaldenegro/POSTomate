@@ -17,18 +17,20 @@ import personIcon from "../../assets/icon/personIcon.svg";
 import searchIcon from "../../assets/icon/searchIcon.svg";
 // Hooks
 import useProducts from "../../hooks/useProducts";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 // Types and interfaces
 import { Product } from "../../types/products";
 import { Bill } from "../../types/account";
+//Hooks
 import UseAccount from "../../hooks/useAccount";
 import { useLocation, useNavigate } from "react-router-dom";
 import UseOrder from "../../hooks/useOrder";
 import UseTable from "../../hooks/useTable";
-// utils
-import { incrementQuantity, reduceQuantity } from "./utils/changeQuantity";
+import { useCurrentCommand } from "../../store/productsInOrder";
+import { categoriesMap } from "../../mocks/categories";
 
 export default function Order() {
+  const [commandArray, setCommandArray] = useState<Product[]>();
   const { productsArray, getProducts } = useProducts();
   const { createAccount, handlePrint: handlePrintBill } = UseAccount();
   const { addBill, updateBill } = UseAccount();
@@ -38,139 +40,128 @@ export default function Order() {
   const location = useLocation();
   const { _id, status, billCurrent, tableItem } = location.state || {};
 
-  const [prods, setProds] = useState<Product[]>([]);
-  const sumr = prods
-    .reduce((a, b) => a + parseFloat(b.priceInSite), 0)
-    .toFixed(2);
+  // ZUSTAND /////////////////
+  const billCurrentCommand = useCurrentCommand(
+    (state) => state.BillCommandCurrent
+  );
+  const setBillCurrentCommand = useCurrentCommand((state) => state.setState);
 
-  const [form, setForm] = useState<Bill>({
-    sellType: "onSite",
-    user: "Moises",
-    checkTotal: "0.00",
-    products: [],
-    status: "enable",
-    paymentDate: "Fecha",
-    tableNum: "s/N",
-    table: undefined,
-  });
+  const handleAddedProducts = (item: Product) => {
+    setBillCurrentCommand({
+      ...billCurrentCommand,
+      products: [...billCurrentCommand.products, item],
+    });
+  };
+  ////////////////////////////
 
-  const addToForm = (item: Product) => {
-    setForm((prevForm) => {
-      const updatedProducts = prevForm.products?.length
-        ? [...prevForm.products, item]
-        : [item];
-
-      const checkTotal = updatedProducts
-        .reduce((a, b) => a + parseFloat(b.priceInSite), 0)
-        .toFixed(2);
-
-      return {
-        ...prevForm,
-        products: updatedProducts,
-        checkTotal,
-        tableNum: tableItem.tableNum,
-        status: status,
-        table: tableItem._id,
+  const handleIncrementQuantity = (index: number) => {
+    const updatedProducts = [...billCurrentCommand.products];
+    const currentQuantity = updatedProducts[index].quantity;
+    if (currentQuantity >= 99) {
+      updatedProducts[index] = { ...updatedProducts[index], quantity: 99 };
+    } else {
+      const newQuantity = currentQuantity + 1;
+      updatedProducts[index] = {
+        ...updatedProducts[index],
+        quantity: newQuantity,
+        priceInSiteBill:
+          updatedProducts[index].quantity === 1
+            ? (parseFloat(updatedProducts[index].priceInSite) * 2)
+                .toFixed(2)
+                .toString()
+            : (parseFloat(updatedProducts[index].priceInSite) * newQuantity)
+                .toFixed(2)
+                .toString(),
+        priceToGoBill: (
+          parseFloat(updatedProducts[index].priceToGo) * newQuantity
+        )
+          .toFixed(2)
+          .toString(),
+        priceCallOrderBill: (
+          parseFloat(updatedProducts[index].priceCallOrder) * newQuantity
+        )
+          .toFixed(2)
+          .toString(),
+        priceDeliveryBill: (
+          parseFloat(updatedProducts[index].priceDelivery) * newQuantity
+        )
+          .toFixed(2)
+          .toString(),
       };
+    }
+    setBillCurrentCommand({
+      ...billCurrentCommand,
+      products: [
+        ...billCurrentCommand.products.slice(0, index),
+        updatedProducts[index],
+        ...billCurrentCommand.products.slice(index + 1),
+      ],
     });
   };
 
   const handleReduceQuantity = (index: number) => {
-    setForm((prevForm) => {
-      const updatedForm = { ...prevForm };
-      const updatedProducts = [...prevForm.products];
+    console.log("me ejecute");
+    const updatedProducts = [...billCurrentCommand.products];
+    const currentQuantity = updatedProducts[index].quantity;
 
-      if (updatedProducts[index].quantity <= 1) {
-        updatedProducts[index] = { ...updatedProducts[index], quantity: 1 };
-        updatedForm.products = updatedProducts;
-        return updatedForm;
-      }
-
+    if (currentQuantity <= 1) {
+      updatedProducts[index] = { ...updatedProducts[index], quantity: 1 };
+    } else {
+      const newQuantity = currentQuantity - 1;
       updatedProducts[index] = {
         ...updatedProducts[index],
-        quantity: updatedProducts[index].quantity - 1,
+        quantity: newQuantity,
+        priceInSiteBill:
+          updatedProducts[index].quantity === 1
+            ? updatedProducts[index].priceInSite
+            : (parseFloat(updatedProducts[index].priceInSite) * newQuantity)
+                .toFixed(2)
+                .toString(),
+        priceToGoBill: (
+          parseFloat(updatedProducts[index].priceToGo) * newQuantity
+        )
+          .toFixed(2)
+          .toString(),
+        priceCallOrderBill: (
+          parseFloat(updatedProducts[index].priceCallOrder) * newQuantity
+        )
+          .toFixed(2)
+          .toString(),
+        priceDeliveryBill: (
+          parseFloat(updatedProducts[index].priceDelivery) * newQuantity
+        )
+          .toFixed(2)
+          .toString(),
       };
-      updatedForm.products = updatedProducts;
-      return updatedForm;
+    }
+    setBillCurrentCommand({
+      ...billCurrentCommand,
+      products: [
+        ...billCurrentCommand.products.slice(0, index),
+        updatedProducts[index],
+        ...billCurrentCommand.products.slice(index + 1),
+      ],
     });
   };
-
-  const handleIncrementQuantity = (index: number) => {
-    setForm((prevForm) => {
-      const updatedForm = { ...prevForm };
-      const updatedProducts = [...prevForm.products];
-
-      if (updatedProducts[index].quantity >= 99) {
-        updatedProducts[index] = { ...updatedProducts[index], quantity: 99 };
-        updatedForm.products = updatedProducts;
-        return updatedForm;
-      }
-
-      updatedProducts[index] = {
-        ...updatedProducts[index],
-        quantity: updatedProducts[index].quantity + 1,
-      };
-      updatedForm.products = updatedProducts;
-      return updatedForm;
-    });
-  };
-
-  /*  
-  const handleReduceQuantity = (index: number) => {
-    const updatedForm = { ...form };
-    const updatedProducts = [...form.products];
-
-    if (updatedProducts[index].quantity <= 1) {
-      updatedProducts[index].quantity = 1;
-      setForm(updatedForm);
-      return;
-    }
-    updatedProducts[index].quantity -= 1;
-    updatedForm.products = updatedProducts;
-    setForm(updatedForm);
-  };
-
-  const handleIncrementQuantity = (index: number) => {
-    const updatedForm = { ...form };
-    const updatedProducts = [...form.products];
-
-    if (updatedProducts[index].quantity >= 99) {
-      updatedProducts[index].quantity = 99;
-      setForm(updatedForm);
-      return;
-    }
-    updatedProducts[index].quantity += 1;
-    updatedForm.products = updatedProducts;
-    setForm(updatedForm);
-  };
-  */
-  // ACA LA INFORMACION DONDE SE RECUPERABA EL TOTAL DE LA CUENTA SIN PROBLEMAS
-  /*const addToForm = (item: Product) => {
-    
-    setForm((prevForm) => ({
-      
-      ...prevForm,
-      products: [...prevForm.products, item],
-      checkTotal: (prevForm.products.length === 0
-        ? parseFloat(item.priceInSite)
-        : prevForm.products.reduce((a, b) => a + parseFloat(b.priceInSite), 0) +
-          parseFloat(item.priceInSite)
-      ).toFixed(2),
-      tableNum: numTable,
-      status: status,
-    }));
-  };
-*/
 
   useEffect(() => {
     getProducts();
-    if (form.products.length < 1 && billCurrent?.products) {
-      console.log("entre al useEffect");
-      setForm({
-        ...form,
-        products: billCurrent?.products ?? [],
-      });
+    const filteredProducts = productsArray.filter(
+      (item) => item.category === categoriesMap[0]
+    );
+    setCommandArray(filteredProducts);
+    if (tableItem.bill[0]) {
+      setBillCurrentCommand(tableItem.bill[0]);
+      return;
     }
+    setBillCurrentCommand({
+      ...billCurrentCommand,
+      tableNum: tableItem.tableNum,
+      table: tableItem._id,
+    });
+    return () => {
+      setBillCurrentCommand({ ...billCurrentCommand, products: [] });
+    };
   }, []);
   return (
     <div className={styles.container}>
@@ -191,14 +182,16 @@ export default function Order() {
               </div>
             </div>
             <div>
-              {form.products?.map((element, index) => (
+              {billCurrentCommand.products?.map((element, index) => (
                 <div className={styles.productContainer} key={index}>
                   <div>
                     <button
                       onClick={() => {
                         handleReduceQuantity(index);
                       }}
-                      disabled={form.products[index].quantity <= 1}
+                      disabled={
+                        billCurrentCommand.products[index].quantity <= 1
+                      }
                     >
                       <img src={rest} alt="resta-icon" />
                     </button>
@@ -207,18 +200,26 @@ export default function Order() {
                       onClick={() => {
                         handleIncrementQuantity(index);
                       }}
-                      disabled={form.products[index].quantity >= 99}
+                      disabled={
+                        billCurrentCommand.products[index].quantity >= 99
+                      }
                     >
                       <img src={sum} alt="sumar-icon" />
                     </button>
                   </div>
                   <span>{element.productName}</span>
-                  <p>$ {element.priceInSite}</p>
+                  {element.quantity > 1 ? (
+                    <p>$ {element.priceInSiteBill}</p>
+                  ) : (
+                    <p>$ {element.priceInSite}.00</p>
+                  )}
                 </div>
               ))}
             </div>
             <div className={styles.totalContainer}>
-              <span className={styles.Total}>Total: {form.checkTotal}</span>
+              <span className={styles.Total}>
+                Total: {billCurrentCommand.checkTotal}
+              </span>
             </div>
           </div>
           <div>
@@ -240,19 +241,38 @@ export default function Order() {
             </button>
           </div>
         </section>
-        <section>
-          {productsArray?.map((item, index) => (
-            <section
-              key={index}
-              className={styles.containerProduct}
-              onClick={() => {
-                addToForm(item);
-              }}
-            >
-              <p>{item.productName}</p>
-            </section>
-          ))}
-        </section>
+        <div>
+          <section className={styles.sectionContainerProducts}>
+            {productsArray &&
+              commandArray?.map((item, index) => (
+                <section
+                  key={index}
+                  className={styles.containerProduct}
+                  onClick={() => {
+                    handleAddedProducts(item);
+                  }}
+                >
+                  <p>{item.productName}</p>
+                </section>
+              ))}
+          </section>
+          <section className={styles.sectionContainerCategories}>
+            {categoriesMap?.map((itemI, index) => (
+              <section
+                key={index}
+                className={styles.containerCategories}
+                onClick={() => {
+                  const productsFiltered = productsArray.filter(
+                    (item) => item.category === itemI
+                  );
+                  setCommandArray(productsFiltered);
+                }}
+              >
+                <p>{itemI}</p>
+              </section>
+            ))}
+          </section>
+        </div>
       </main>
       <footer className={styles.footer}>
         <button onClick={() => navigate("/tables")}>
@@ -271,8 +291,8 @@ export default function Order() {
           <img src={dividerBtn} alt="divider-buttons" />
           <button
             onClick={() => {
-              handlePrintBill("billPrint", form),
-                updateBill("forPayment", billCurrent, form);
+              handlePrintBill("billPrint", billCurrentCommand),
+                updateBill("forPayment", billCurrent, billCurrentCommand);
               updateTable("forPayment", _id);
               navigate("/host");
             }}
@@ -292,22 +312,22 @@ export default function Order() {
           onClick={async () => {
             try {
               if (!billCurrent) {
-                let newBill = await createAccount(form);
+                let newBill = await createAccount(billCurrentCommand);
                 updateTable("enable", _id);
-                handlePrint(form);
+                handlePrint(billCurrentCommand);
                 addBill(newBill._id, _id);
                 navigate("/host");
                 return;
               }
-              updateBill("enable", billCurrent, form);
-              handlePrint(form);
+              updateBill("enable", billCurrent, billCurrentCommand);
+              handlePrint(billCurrentCommand);
               navigate("/host");
             } catch (error) {
               console.log("entre aca sal error");
               console.error("Error:", error);
             }
           }}
-          disabled={form.products.length < 1}
+          disabled={billCurrentCommand.products.length < 1}
         >
           <img src={sendIcon} alt="send-icon" />
           Enviar

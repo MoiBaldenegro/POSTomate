@@ -8,4 +8,9 @@ export interface Product {
   priceDelivery: string;
   status: "disabled" | "enabled";
   quantity: number;
+  priceInSiteBill: string;
+  priceToGoBill: string;
+  priceCallOrderBill: string;
+  priceDeliveryBill: string;
+  active: boolean;
 }

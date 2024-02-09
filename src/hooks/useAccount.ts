@@ -95,7 +95,11 @@ export default function UseAccount() {
     try {
       const res = await axios.put(
         `https://tomate-server.onrender.com/bills/${id}`,
-        { status: statusChange, products: currentProducts }
+        {
+          status: statusChange,
+          products: currentProducts,
+          checkTotal: form.checkTotal,
+        }
       );
       if (!res.data) {
         setIsLoading(false);

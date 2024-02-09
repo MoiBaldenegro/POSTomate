@@ -7,6 +7,7 @@ import Restaurant from "./routes/restaurant/restaurant.tsx";
 import Cashier from "./routes/cashier/cashier.tsx";
 import Login from "./routes/login/login.tsx";
 import Host from "./routes/host/host.tsx";
+import FingerRegister from "./routes/fingerRegister/fingerRegister.tsx";
 
 const router = createBrowserRouter([
   {

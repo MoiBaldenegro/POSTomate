@@ -40,17 +40,6 @@ export default function PaymentInterface({
   );
   const ticketRef = useRef(null);
 
-  // Llamar a Print.js para imprimir el contenido
-  const handleImprimirTicket = () => {
-    if (ticketRef.current) {
-      printJS({
-        printable: ticketRef.current,
-        type: "html",
-        targetStyles: ["*"],
-      });
-    }
-  };
-
   useEffect(() => {
     console.log(`La cuenta por pagar es la: ${currentBill}`);
     console.log(currentBill?.products);
