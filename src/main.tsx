@@ -7,11 +7,12 @@ import Restaurant from "./routes/restaurant/restaurant.tsx";
 import Cashier from "./routes/cashier/cashier.tsx";
 import Login from "./routes/login/login.tsx";
 import Host from "./routes/host/host.tsx";
+import Loader from "./components/loader/loader.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Cashier />,
+    element: <Restaurant />,
   },
   {
     path: "/host",
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/cashier",
     element: <Cashier />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 

@@ -8,8 +8,6 @@ export default function UsePayment() {
   const [payment, setPayment] = useState<Payment>();
 
   const createPayment = async (payment: Payment) => {
-    console.log("se envio la creacion del pago");
-    console.log(payment);
     setIsLoading(true);
     try {
       const res = await axios.post(
@@ -32,7 +30,6 @@ export default function UsePayment() {
       setErrors("No se pudo completar el pago debido a un error inesperado");
     }
   };
-
   return {
     isLoading,
     errors,

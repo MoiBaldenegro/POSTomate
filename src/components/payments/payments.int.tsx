@@ -21,6 +21,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Payment, Transaction } from "../../types/payment";
 import { initialState, initialTransaction } from "./utils/initialState";
 interface Props {
+  setRevolve: (value: string) => void;
+  handleLoading: (value: boolean) => void;
   openModal: any;
   isOpen: any;
   onClose: any;
@@ -29,6 +31,8 @@ interface Props {
 }
 
 export default function PaymentInterface({
+  setRevolve,
+  handleLoading,
   openModal,
   isOpen,
   onClose,
@@ -62,7 +66,7 @@ export default function PaymentInterface({
 
     if (trimmedValue.length <= 10) {
       setPaymentQuantity(trimmedValue);
-      handleTransactionQuantity(trimmedValue); // REVISAR ACA EL QUE SE PUEDA PAGAR MAS DE MIL PESOS //* ACA SE ESTA SETEANDO LA CANTIDAD DE LA TRANSACTION ACTUAL PARA POSTERIORMENTE AGREGARLA
+      handleTransactionQuantity(trimmedValue);
       console.log(currentTransaction);
     }
   };
@@ -216,6 +220,7 @@ export default function PaymentInterface({
               <div className={styles.denominationsContainer}>
                 {denominations?.map((item) => (
                   <button
+                    disabled={currentPayment <= 0}
                     className={styles.denominationBtn}
                     onClick={() => {
                       addTransaction({ paymentType: "cash", quantity: item });
@@ -306,6 +311,10 @@ export default function PaymentInterface({
               </div>
             </div>
             <PrintButton
+              setRevolve={setRevolve}
+              handleLoading={handleLoading}
+              openModal={openModal}
+              onClose={onClose}
               createCurrentPayment={createPayment}
               diference={currentPayment}
               currentBill={currentBill}

@@ -15,11 +15,21 @@ import PaymentInterface from "../../components/payments/payments.int";
 import CashierBox from "../../components/cashierBox/cashierBox";
 import { useEffect, useState } from "react";
 import { Bill } from "../../types/account";
+import ConfirmPayment from "../../components/modals/confirmPayments/confirmPayments";
 
 export default function Cashier() {
   const paymentInterface = useModal("paymentInterface");
+  const confirmPayment = useModal("confirmPayment");
   const { accountArray, getBills } = UseAccount();
   const [currentBill, setCurrentBill] = useState<Bill>();
+
+  /////////////////////////////
+  // Manejo de errores en el pago
+  const [errors, setErros] = useState();
+  const [isLoading, setIsloading] = useState(false);
+  const [revolve, setRevolve] = useState<string>("");
+
+  //////////////////////////
 
   useEffect(() => {
     getBills();
@@ -45,13 +55,27 @@ export default function Cashier() {
         {paymentInterface.isOpen &&
         paymentInterface.modalName === "paymentInterface" ? (
           <PaymentInterface
+            setRevolve={setRevolve}
+            handleLoading={setIsloading}
             currentBill={currentBill}
-            openModal={paymentInterface.openModal}
+            openModal={confirmPayment.openModal}
             isOpen={paymentInterface.isOpen}
             onClose={paymentInterface.closeModal}
           >
             Cobrar
           </PaymentInterface>
+        ) : null}
+        {confirmPayment.isOpen &&
+        confirmPayment.modalName === "confirmPayment" ? (
+          <ConfirmPayment
+            setIsLoading={setIsloading}
+            revolve={revolve}
+            isLoading={isLoading}
+            isOpen={confirmPayment.isOpen}
+            onClose={confirmPayment.closeModal}
+          >
+            {revolve}
+          </ConfirmPayment>
         ) : null}
       </main>
       <footer className={styles.footer}>
