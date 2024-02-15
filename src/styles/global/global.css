@@ -11,3 +11,26 @@ button {
 button:hover {
     filter: brightness(0.85);
 }
+
+/* ScrollingBar*/
+
+/* Hide the scrollbar */
+::-webkit-scrollbar,
+::-webkit-scrollbar,
+::-webkit-scrollbar {
+    width: 0.001em;
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+    background-color: #7D7E80;
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track {
+    background-color: #5C5D60;
+}

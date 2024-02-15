@@ -56,14 +56,11 @@
     gap: 6px;
 
 }
-
 .sectionContainerCategories{
     display: flex;
     flex-wrap: wrap;
     height: 152px;
 }
-
-
 .mainSection>section>div:first-child {
     display: flex;
     flex-direction: column;
@@ -81,9 +78,7 @@
     width: 590px;
     height: 600px;
 
-
 }
-
 .mainSection>section>div:last-child {
     display: flex;
     flex-direction: column;
@@ -95,7 +90,6 @@
     background: #494A4C;
 
 }
-
 .mainSection>section div>button {
     width: 48px;
     height: 48px;
@@ -107,7 +101,7 @@
 
    
             
-/* ScrollingBar*/
+/* ScrollingBar
 
 .mainSection>section>div:first-child>div:nth-child(2)::-webkit-scrollbar,
 .sectionContainerCategories::-webkit-scrollbar,
@@ -127,6 +121,8 @@
     
     background-color: #5C5D60;
 }
+
+*/
 
 
 

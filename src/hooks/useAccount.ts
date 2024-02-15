@@ -26,11 +26,17 @@ export default function UseAccount() {
 
   async function createAccount(account: Bill) {
     setIsLoading(true);
-    console.log(account);
+
+    const accountProducts = account.products.map((item) => {
+      const newProductStatus = { ...item, active: true };
+      return newProductStatus;
+    });
+
+    const sendAccount = { ...account, products: accountProducts };
     try {
       const response = await axios.post(
         "https://tomate-server.onrender.com/bills",
-        account
+        sendAccount
       );
       setIsLoading(false);
       if (!response.data) {
@@ -84,21 +90,28 @@ export default function UseAccount() {
   async function updateBill(
     statusChange: string,
     currentBill: any,
-    form?: any
+    form?: Bill
   ) {
     /*   tables.map((item) => {
       if (item.tableNum === tableId) {
       }
     });  */
     const id = currentBill._id;
-    const currentProducts = form?.products ?? currentBill.products;
+    //const currentProducts = form?.products ?? currentBill.products;
+
+    const accountProducts = form?.products.map((item) => {
+      const newProductStatus = { ...item, active: true };
+      return newProductStatus;
+    });
+
+    const sendAccount = { ...form, products: accountProducts };
     try {
       const res = await axios.put(
         `https://tomate-server.onrender.com/bills/${id}`,
         {
           status: statusChange,
-          products: currentProducts,
-          checkTotal: form.checkTotal,
+          products: sendAccount.products,
+          checkTotal: sendAccount.checkTotal,
         }
       );
       if (!res.data) {

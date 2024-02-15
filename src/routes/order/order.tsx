@@ -17,10 +17,9 @@ import personIcon from "../../assets/icon/personIcon.svg";
 import searchIcon from "../../assets/icon/searchIcon.svg";
 // Hooks
 import useProducts from "../../hooks/useProducts";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 // Types and interfaces
 import { Product } from "../../types/products";
-import { Bill } from "../../types/account";
 //Hooks
 import UseAccount from "../../hooks/useAccount";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -158,9 +157,13 @@ export default function Order() {
       ...billCurrentCommand,
       tableNum: tableItem.tableNum,
       table: tableItem._id,
+      payment: [],
     });
     return () => {
-      setBillCurrentCommand({ ...billCurrentCommand, products: [] });
+      setBillCurrentCommand({
+        ...billCurrentCommand,
+        products: [],
+      });
     };
   }, []);
   return (
@@ -190,7 +193,8 @@ export default function Order() {
                         handleReduceQuantity(index);
                       }}
                       disabled={
-                        billCurrentCommand.products[index].quantity <= 1
+                        billCurrentCommand.products[index].quantity <= 1 ||
+                        element.active
                       }
                     >
                       <img src={rest} alt="resta-icon" />
@@ -201,7 +205,8 @@ export default function Order() {
                         handleIncrementQuantity(index);
                       }}
                       disabled={
-                        billCurrentCommand.products[index].quantity >= 99
+                        billCurrentCommand.products[index].quantity >= 99 ||
+                        element.active
                       }
                     >
                       <img src={sum} alt="sumar-icon" />

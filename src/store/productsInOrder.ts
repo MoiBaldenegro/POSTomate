@@ -8,17 +8,16 @@ interface state {
 export const useCurrentCommand = create<state>((set) => {
   return {
     BillCommandCurrent: {
-      sellType: "onSite",
+      sellType: "n/A",
       user: "Moises",
       checkTotal: "0.00",
       products: [],
       status: "enable",
-      paymentDate: "ZUSTAND ES LA HOSTIA TIO",
+      paymentDate: "",
       tableNum: "s/N",
       table: undefined,
     },
     setState: (form: Bill) => {
-      console.log(form);
       const checkTotalNew = form.products
         .reduce(
           (a, b) =>
@@ -29,7 +28,6 @@ export const useCurrentCommand = create<state>((set) => {
         .toString();
 
       const actualyForm = { ...form, checkTotal: checkTotalNew };
-      console.log(actualyForm);
       set({ BillCommandCurrent: actualyForm });
     },
   };

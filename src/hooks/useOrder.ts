@@ -12,21 +12,25 @@ export default function UseOrder() {
       { printerId: "192.168.1.88", position: "caja" },
       { printerId: "192.168.1.82", position: "comandas" },
     ];
+    const commandProducts = form.products.filter(
+      (item) => item.active === false
+    );
+    console.log(commandProducts);
 
     printersArray?.forEach(async (item) => {
       const currentPrinter = item.position;
 
-      const productsArray = form.products.filter(
+      const commandProductsFilter = commandProducts.filter(
         (item) => item.category === currentPrinter
       );
       try {
         const data = {
-          items: productsArray,
+          items: commandProductsFilter,
           total: 46.97,
           tcp: item.printerId,
           position: item.position,
         };
-        if (productsArray.length <= 0) return;
+        if (commandProductsFilter.length <= 0) return;
         await axios.post("http://localhost:8000/print/order", data);
         console.log("Ticket enviado para impresión");
       } catch (error) {
