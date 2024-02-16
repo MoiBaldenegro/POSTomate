@@ -13,7 +13,7 @@ import FingerRegister from "./routes/fingerRegister/fingerRegister.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Host />,
+    element: <Cashier />,
   },
   {
     path: "/host",
