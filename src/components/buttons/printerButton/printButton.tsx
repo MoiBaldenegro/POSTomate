@@ -36,7 +36,7 @@ const PrintButton = ({
 
   return (
     <button
-      disabled={diference >= 0}
+      disabled={diference > 0}
       onClick={() => {
         handleLoading(true);
         onClose();

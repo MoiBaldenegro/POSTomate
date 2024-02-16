@@ -24,7 +24,7 @@ export default function ConfirmPayment({
 
   setTimeout(() => {
     onClose();
-    navigate("/login");
+    navigate("/");
   }, 1200);
   return (
     <div className={styles.screen}>
