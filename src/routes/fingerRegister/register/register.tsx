@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { User } from "../../../types/User";
 import styles from "./register.module.css";
+import { FingerprintReader, SampleFormat } from "@digitalpersona/devices";
 // Icons
 import finger from "./../../../assets/icon/fingerIcon.svg";
 import leftHand from "./../../../assets/icon/leftHand.svg";
 import rightHand from "./../../../assets/icon/rightHand.svg";
 import crossCancel from "./../../../assets/icon/crossCancel.svg";
+import UseFingerCapture from "../../../hooks/useFingerCapture";
 interface Props {
   user: User;
 }
 export default function Register({ user }: Props) {
+  const { initReader, huella, setHuella, message } = UseFingerCapture();
   const [startCapture, setStartCapture] = useState(false);
   const [active, setActive] = useState(false);
   return (
@@ -40,6 +43,7 @@ export default function Register({ user }: Props) {
                 <button
                   onClick={() => {
                     setStartCapture(true);
+                    initReader();
                   }}
                   className={styles.startCaptureBtn}
                 >
@@ -50,22 +54,68 @@ export default function Register({ user }: Props) {
 
             {startCapture && (
               <div>
-                <h2>Paso: {"1"}</h2>
+                <span>
+                  - Coloca tu dedo en el sensor y Presiona tu dedo con firmeza.
+                </span>
+                <br />
+                <span>
+                  - Mantén tu dedo en posición hasta que veas una confirmación
+                  en la pantalla.
+                </span>
                 <div className={styles.indicatorsItemContainer}>
-                  <span className={styles.processIndicator}>1</span>
-                  <span className={styles.processIndicator}>2</span>
-                  <span className={styles.processIndicator}>3</span>
-                  <span className={styles.processIndicator}>4</span>
+                  <button
+                    disabled={!huella.length}
+                    className={styles.processIndicator}
+                  >
+                    1
+                  </button>
+                  <button
+                    disabled={huella.length <= 1}
+                    className={styles.processIndicator}
+                  >
+                    2
+                  </button>
+                  <button
+                    disabled={huella.length <= 2}
+                    className={styles.processIndicator}
+                  >
+                    3
+                  </button>
+                  <button
+                    disabled={huella.length <= 3}
+                    className={styles.processIndicator}
+                  >
+                    4
+                  </button>
                 </div>
-                <button
-                  className={styles.cancelBtn}
-                  onClick={() => {
-                    setStartCapture(false);
-                  }}
-                >
-                  <img src={crossCancel} alt="cross-cancel" />
-                  Cancelar
-                </button>
+                {huella && huella.length >= 4 ? (
+                  <button
+                    className={styles.cancelBtn}
+                    onClick={() => {
+                      setStartCapture(false);
+                      setHuella([]);
+                    }}
+                  >
+                    <img src={crossCancel} alt="cross-cancel" />
+                    Guardar
+                  </button>
+                ) : (
+                  <button
+                    className={styles.cancelBtn}
+                    onClick={() => {
+                      setStartCapture(false);
+                      setHuella([]);
+                    }}
+                  >
+                    <img src={crossCancel} alt="cross-cancel" />
+                    Cancelar
+                  </button>
+                )}
+
+                {huella.length}
+                {message && (
+                  <strong className={styles.message}>{message}</strong>
+                )}
               </div>
             )}
           </div>

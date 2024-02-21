@@ -24,4 +24,12 @@ export default defineConfig({
       renderer: {},
     }),
   ],
+  optimizeDeps: {
+    exclude: ["WebSdk"],
+  },
+  resolve: {
+    alias: {
+      WebSdk: "/src/core/modules/WebSdk",
+    },
+  },
 });
