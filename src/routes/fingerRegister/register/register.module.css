@@ -66,9 +66,11 @@
 }
 .indicatorsContainer>p{
     text-align: center;
-    font-size: 24px
+    font-size: 24px;
+    font-weight: 300;
 }
-.cancelBtn{
+.cancelBtn,
+.startCaptureBtn{
     width: 121px;
     height: 48px;
     padding: 12px 16px 12px 16px;
@@ -76,6 +78,7 @@
     gap: 8px;
     background: rgba(249, 249, 249, 0.2);
     box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
+    font-size: 15px;
 
 }
 .processIndicator{
@@ -90,6 +93,27 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
+    > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 350px;
+    & p {
+        font-size: 24px;
+        text-align: center;
+    }
+    & span {
+        text-align:left;
+        padding: 0 16px;
+    }
+    & button {
+        margin-bottom: 15px;
+        margin-top: -20px;
+    }
+
+    }
 }
 .indicatorsItemContainer{
     display: flex;
@@ -152,6 +176,8 @@ radial-gradient(50% 50% at 50% 50%, rgba(7, 175, 222, 0) 62.5%, rgba(255, 255, 2
     flex-direction: column;
     margin: 50px;
     width: 350px;
+    height: 180px;
+    justify-content: space-around;
+    align-items: center;
 }
-
 
