@@ -9,25 +9,28 @@ import usersCircleIcon from "./../../assets/icon/usersCircleIcon.svg";
 import homeButtonIcon from "./../../assets/icon/homeButtonIcon.svg";
 import registerFingerIcon from "./../../assets/icon/RegisterFingerIcon.svg";
 import UseUsers from "../../hooks/useUsers";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Register from "./register/register";
+import { User } from "../../types/User";
+import { initialUser } from "./utils/initialUser";
 
 export default function FingerRegister() {
   const { usersArray, getUsers } = UseUsers();
+  const [selectUser, setSelectUser] = useState<User>(initialUser);
 
   useEffect(() => {
     getUsers();
-    console.log(usersArray);
   }, []);
   return (
     <div className={styles.container}>
       <HeaderTwo />
-      <main>
+      <main className={styles.mainSection}>
         <section>
           <div>
             <img src={registerFingerIcon} alt="register-finger-icon" />
             <h2>Registro de huellas</h2>
           </div>
-          <div></div>
+          <Register user={selectUser} />
         </section>
         <section className={styles.employeesContainer}>
           <div>
@@ -48,8 +51,14 @@ export default function FingerRegister() {
               <h2>huella</h2>
             </div>
             <img src={divider} alt="divider" />
-            {usersArray?.map((element: any) => (
-              <div className={styles.userBox}>
+            {usersArray?.map((element: any, index: any) => (
+              <div
+                key={index}
+                className={styles.userBox}
+                onClick={() => {
+                  setSelectUser({ email: element.email });
+                }}
+              >
                 <div className={styles.avatar}>
                   <h1>{element.email.slice(0, 2).toUpperCase()}</h1>
                 </div>

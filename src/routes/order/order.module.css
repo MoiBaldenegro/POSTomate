@@ -37,7 +37,7 @@
     height: 906px;
 }
 
-.mainSection>section:first-child {
+.mainSection>section>:first-child {
     height: 842px;
     display: flex;
     align-items: end;
