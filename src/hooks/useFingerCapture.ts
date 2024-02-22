@@ -55,27 +55,38 @@ export default function UseFingerCapture() {
   const onQualityReported = async (event: any) => {
     const quality = event.quality;
 
+    if (huella.length >= 4) {
+      // Manejar el caso cuando se han capturado suficientes huellas.
+      setMessage("Ya se han capturado suficientes huellas.");
+      return;
+    }
+
     try {
       if (quality !== 0) {
         console.log("La calidad de la muestra no es buena.");
+      } else {
+        setMessage("Captura exitosa");
+        setTimeout(() => {
+          setMessage("");
+        }, 800);
+      }
+    } catch (error) {
+      console.error("Error durante la verificación de calidad:", error);
+    } finally {
+      try {
+        // Asegurarse de que stopAcquisition siempre se llame, incluso en caso de un error.
         await reader?.stopAcquisition("D10C5D6F-6A62-A447-89B7-A4BB77B7BA10");
         console.log("Adquisición detenida correctamente.");
-
-        return;
+      } catch (error) {
+        console.error("Error al detener la adquisición:", error);
+      } finally {
+        // Asegurarse de la limpieza consistente, establecer reader como null.
+        setReader(null);
       }
-
-      await reader?.stopAcquisition("D10C5D6F-6A62-A447-89B7-A4BB77B7BA10");
-      console.log("Adquisición detenida correctamente.");
-      setMessage("Captura exitosa");
-      setReader(null);
-      setTimeout(() => {
-        setMessage("");
-      }, 800);
-      setReader(null);
-    } catch (error) {
-      console.error("Error al detener la adquisición:", error);
     }
   };
 
-  return { initReader, huella, setHuella, message, setReader };
+  return { initReader, huella, setHuella, message, setReader, complete };
 }
+
+// Update

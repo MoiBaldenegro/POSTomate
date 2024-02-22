@@ -90,7 +90,7 @@ export default function Register({ user }: Props) {
                 </div>
                 {huella && huella.length >= 4 ? (
                   <button
-                    className={styles.cancelBtn}
+                    className={styles.sendFingerBtn}
                     onClick={() => {
                       setStartCapture(false);
                       setHuella([]);
