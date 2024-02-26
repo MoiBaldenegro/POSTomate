@@ -9,7 +9,7 @@
     align-items: center;
     z-index: 1000;
     transition: 1s;
-    background: rgba(214, 208, 208, 0.616);
+    background: rgba(5, 5, 5, 0.616);
   }
   .modal {
     display: flex;
@@ -17,13 +17,13 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    width: 1120px;
-    height: 736px;
+    width: 480px;
+    height: 320px;
     padding: 32px;
     border-radius: 32px;
     background: var(--color-primary);
     color: var(--color-white);
-    box-shadow: 0px 0px 10px rgba(117, 117, 117, 0.2);
+    box-shadow: 0px 0px 10px rgba(8, 8, 8, 0.2);
   }
   .closeButton {
     position: absolute;

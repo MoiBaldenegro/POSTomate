@@ -2,8 +2,9 @@
   .container {
     --uib-size: 130px;
     --uib-color: rgb(221, 13, 13);
-    --uib-speed: 2s;
+    --uib-speed: 3s;
     position: relative;
+    display: flex;
     height: var(--uib-size);
     width: var(--uib-size);
   }

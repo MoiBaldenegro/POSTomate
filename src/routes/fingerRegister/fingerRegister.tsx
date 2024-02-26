@@ -8,15 +8,19 @@ import searchIcon from "./../../assets/icon/searchIcon.svg";
 import usersCircleIcon from "./../../assets/icon/usersCircleIcon.svg";
 import homeButtonIcon from "./../../assets/icon/homeButtonIcon.svg";
 import registerFingerIcon from "./../../assets/icon/RegisterFingerIcon.svg";
+import pendingIcon from "../../assets/icon/paymentIcon.svg";
+import enableIcon from "../../assets/icon/enableIcon.svg";
 import UseUsers from "../../hooks/useUsers";
 import { useEffect, useState } from "react";
 import Register from "./register/register";
 import { User } from "../../types/User";
 import { initialUser } from "./utils/initialUser";
+import { useNavigate } from "react-router-dom";
 
 export default function FingerRegister() {
   const { usersArray, getUsers } = UseUsers();
   const [selectUser, setSelectUser] = useState<User>(initialUser);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUsers();
@@ -30,7 +34,11 @@ export default function FingerRegister() {
             <img src={registerFingerIcon} alt="register-finger-icon" />
             <h2>Registro de huellas</h2>
           </div>
-          <Register user={selectUser} />
+          {selectUser.name.length > 0 ? (
+            <Register user={selectUser} setUser={setSelectUser} />
+          ) : (
+            <div className={styles.noUserSelected}></div>
+          )}
         </section>
         <section className={styles.employeesContainer}>
           <div>
@@ -56,20 +64,45 @@ export default function FingerRegister() {
                 key={index}
                 className={styles.userBox}
                 onClick={() => {
-                  setSelectUser({ email: element.email });
+                  setSelectUser({
+                    email: element.email,
+                    name: element.name,
+                    color: element.color,
+                    employeeNumber: element.employeeNumber,
+                    lastName: element.lastName,
+                    samples: element.samples,
+                    _id: element._id,
+                  });
                 }}
               >
-                <div className={styles.avatar}>
-                  <h1>{element.email.slice(0, 2).toUpperCase()}</h1>
+                <div
+                  className={styles.avatar}
+                  style={{ background: element.color }}
+                >
+                  <h1>{element.name.slice(0, 2).toUpperCase()}</h1>
                 </div>
-                <h1>{element.email}</h1>
+                <h3>{element.employeeNumber}</h3>
+                <h3
+                  className={styles.name}
+                >{`${element.name.toUpperCase()} ${element.lastName.toUpperCase()}`}</h3>
+                <div>
+                  <img
+                    src={element.samples.length ? enableIcon : pendingIcon}
+                    alt="icon-status"
+                  />
+                  <span>{element.samples.length ? "Sí" : "No"}</span>
+                </div>
               </div>
             ))}
           </div>
         </section>
       </main>
       <footer>
-        <button>
+        <button
+          onClick={() => {
+            navigate("/sell-types");
+          }}
+        >
           <img src={homeButtonIcon} alt="home-icon" />
           Inicio
         </button>

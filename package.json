@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@digitalpersona/authentication": "^0.2.6",
     "@digitalpersona/devices": "^0.2.6",
     "axios": "^1.6.5",
     "print-js": "^1.6.0",

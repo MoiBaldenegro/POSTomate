@@ -1,11 +1,12 @@
 export class User {
-  /*
+  _id: string;
   name: string;
-  */
+  lastName: string;
   email: string;
+  employeeNumber: string;
+
   /*
   active: boolean;
-  employeeNumber: string;
   password: string;
   pin: string;
   shift: string;
@@ -13,4 +14,6 @@ export class User {
   comingDate: string;
   avatarColor: string;
   */
+  color: string;
+  samples: string[];
 }

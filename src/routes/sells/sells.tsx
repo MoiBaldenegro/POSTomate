@@ -14,6 +14,8 @@ import HeaderTwo from "../../components/headers/headerTwo/headerTwo";
 import { useNavigate } from "react-router-dom";
 import { useCurrentCommand } from "../../store/productsInOrder";
 import { SellType } from "../../types/props/sellType";
+import { useModal } from "../../hooks/useModal";
+import MainMenu from "../../components/menus/mainMenu/mainMenu";
 
 export default function Sells() {
   const navigate = useNavigate();
@@ -25,6 +27,8 @@ export default function Sells() {
     setBillCurrentCommand({ ...billCurrentCommand, sellType: item.sellType });
     navigate("/tables");
   };
+
+  const mainMenu = useModal("mainMenu");
 
   const sells: SellType[] = [
     { name: "Restaurant", sellType: "onSite" },
@@ -48,7 +52,12 @@ export default function Sells() {
         ))}
       </main>
       <footer>
-        <button>
+        <button
+          onClick={() => {
+            navigate("/login");
+            console.log("ejecucion");
+          }}
+        >
           <img src={backIcon} alt="back-icons" />
           Salir
         </button>
@@ -67,11 +76,16 @@ export default function Sells() {
             Cuentas finalizadas <span>#valor</span>
           </button>
         </div>
-        <button>
+        <button onClick={mainMenu.openModal}>
           <img src={burgerMenu} alt="burger-menu" />
           Menu
         </button>
       </footer>
+      {mainMenu.isOpen && mainMenu.modalName === "mainMenu" ? (
+        <MainMenu onClose={mainMenu.closeModal} isOpen={mainMenu.isOpen}>
+          Main Menu
+        </MainMenu>
+      ) : null}
     </div>
   );
 }

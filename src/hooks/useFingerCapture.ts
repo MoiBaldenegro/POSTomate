@@ -6,12 +6,15 @@ import {
   SamplesAcquired,
 } from "@digitalpersona/devices";
 import { useState } from "react";
+import axios from "axios";
 
 export default function UseFingerCapture() {
   const [reader, setReader] = useState<FingerprintReader | null>(null);
-  const [huella, setHuella] = useState<any[]>([]);
   const [message, setMessage] = useState<string>();
-  const [complete, setComplete] = useState(false); //
+  const [complete, setComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<string>("");
+  const [huella, setHuella] = useState<any[]>([]);
 
   const initReader = async () => {
     try {
@@ -54,13 +57,6 @@ export default function UseFingerCapture() {
 
   const onQualityReported = async (event: any) => {
     const quality = event.quality;
-
-    if (huella.length >= 4) {
-      // Manejar el caso cuando se han capturado suficientes huellas.
-      setMessage("Ya se han capturado suficientes huellas.");
-      return;
-    }
-
     try {
       if (quality !== 0) {
         console.log("La calidad de la muestra no es buena.");
@@ -86,7 +82,45 @@ export default function UseFingerCapture() {
     }
   };
 
-  return { initReader, huella, setHuella, message, setReader, complete };
-}
+  const saveSamples = async (id: string, data: any) => {
+    console.log(data);
+    setIsLoading(true);
+    try {
+      const res = await axios.put(
+        `https://tomate-server.onrender.com/users/${id}`,
+        { samples: data }
+      );
+      if (!res.data) {
+        setIsLoading(false);
+        setErrors("No se ha podido actualizar");
+        throw new Error(`No se pudo actualizar`);
+      }
 
-// Update
+      setIsLoading(false);
+      const userUpdated = res.data;
+      return userUpdated;
+    } catch (error) {
+      setIsLoading(false);
+      if (axios.isAxiosError(error)) {
+        setErrors("Error de red. Verifica tu conexión a Internet.");
+        return;
+      }
+      setErrors("Ha ocurrido algo inesperado");
+      console.error(`Ha ocurrido algo inesperado ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return {
+    initReader,
+    huella,
+    setHuella,
+    message,
+    setReader,
+    complete,
+    saveSamples,
+    isLoading,
+    errors,
+  };
+}
