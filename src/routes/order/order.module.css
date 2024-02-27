@@ -16,6 +16,11 @@
 .footer div {
     display: flex;
 }
+main>section{
+    display: flex;
+    gap: 12px;
+
+}
 
 .footer button {
     height: 48px;
@@ -35,6 +40,8 @@
     align-items: center;
     width: 1920px;
     height: 906px;
+
+
 }
 
 .mainSection>section>:first-child {
@@ -42,6 +49,8 @@
     display: flex;
     align-items: end;
     gap: 16px;
+
+
 
 }
 .sectionContainerProducts,
@@ -55,11 +64,13 @@
     place-content: center;
     gap: 6px;
 
+
 }
 .sectionContainerCategories{
     display: flex;
     flex-wrap: wrap;
     height: 152px;
+
 }
 .mainSection>section>div:first-child {
     display: flex;
@@ -77,6 +88,7 @@
     overflow-x: hidden;
     width: 590px;
     height: 600px;
+
 
 }
 .mainSection>section>div:last-child {

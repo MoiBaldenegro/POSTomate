@@ -27,6 +27,10 @@ import UseOrder from "../../hooks/useOrder";
 import UseTable from "../../hooks/useTable";
 import { useCurrentCommand } from "../../store/productsInOrder";
 import { categoriesMap } from "../../mocks/categories";
+import CustomSelect from "../../components/customElements/select/customSelect";
+import { useModal } from "../../hooks/useModal";
+import MainKeyboard from "../../components/tools/mainKeyboard/mainKeyboard";
+import { keyboard } from "../../components/payments/utils/denominations";
 
 export default function Order() {
   const [commandArray, setCommandArray] = useState<Product[]>();
@@ -38,6 +42,7 @@ export default function Order() {
   const navigate = useNavigate();
   const location = useLocation();
   const { _id, status, billCurrent, tableItem } = location.state || {};
+  const mainKeyboard = useModal("mainKeyboard");
 
   // ZUSTAND /////////////////
   const billCurrentCommand = useCurrentCommand(
@@ -228,7 +233,7 @@ export default function Order() {
             </div>
           </div>
           <div>
-            <button>
+            <button onClick={mainKeyboard.openModal}>
               <img src={searchIcon} alt="search-icon" />
             </button>
             <button>1</button>
@@ -279,6 +284,16 @@ export default function Order() {
           </section>
         </div>
       </main>
+      {mainKeyboard.isOpen && mainKeyboard.modalName === "mainKeyboard" ? (
+        <MainKeyboard
+          addProduct={handleAddedProducts}
+          products={productsArray}
+          isOpen={mainKeyboard.isOpen}
+          onClose={mainKeyboard.closeModal}
+        >
+          Buscar
+        </MainKeyboard>
+      ) : null}
       <footer className={styles.footer}>
         <button onClick={() => navigate("/tables")}>
           <img src={backIcon} alt="back-icon" />

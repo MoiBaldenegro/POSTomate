@@ -11,7 +11,7 @@ import foodShift from "../../assets/icon/foodShift.svg";
 import bullet from "../../assets/icon/bullet.svg";
 import point from "../../assets/icon/point.svg";
 // Components
-import Pinboard from "../../components/tools/keyboard/Pinboard";
+import Pinboard from "../../components/tools/pinBoard/Pinboard";
 import HeaderOne from "../../components/headers/headerOne/headerOne";
 // Dependencies
 import { NavLink } from "react-router-dom";
