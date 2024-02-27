@@ -16,7 +16,7 @@
    place-content: center;
    margin: auto;
     
-    & section {
+    >section {
         width: 920px;
         height: 413px;
         border-radius: 8px;
@@ -27,7 +27,7 @@
         justify-content: space-between;
         align-items: center;
 
-        & div{
+        >div{
             background: rgba(249, 249, 249, 0.2);
             height: 96px;
             width: 100%;
@@ -71,7 +71,7 @@ footer {
         
     }
 
-    & div {
+    >div {
         display: flex;
     }
 }

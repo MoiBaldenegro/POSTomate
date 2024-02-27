@@ -1,3 +1,7 @@
+*{
+    user-select: none;
+}
+
 button {
     border: none;
     outline: none;
@@ -6,6 +10,11 @@ button {
         align-items: center;
         justify-content: center;
         gap: 8px;
+}
+
+input {
+    border: none;
+    outline: none;
 }
 
 button:hover {
