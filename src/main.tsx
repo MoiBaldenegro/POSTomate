@@ -14,7 +14,7 @@ import Reports from "./routes/reports/reports.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Host />,
+    element: <FingerRegister />,
   },
   {
     path: "/host",

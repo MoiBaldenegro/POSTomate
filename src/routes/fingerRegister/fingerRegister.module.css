@@ -85,10 +85,12 @@ footer>button{
     border-radius: 8px;
     transition: 220ms;
     padding: 10px;
+
     
     & h3 {
         margin: 0 14px;
         font-size: 18px;
+
 
     }
     & div:last-child{
@@ -100,6 +102,7 @@ footer>button{
          min-width: 315px;
          max-width: 315px;
          overflow: hidden;
+
         
     }
 }
@@ -137,12 +140,16 @@ footer>button{
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: rgba(238, 27, 27, 0.795);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size:12px;
-    font-weight: 100;
+
+    >h1 {
+        font-size: 20px;
+        margin: auto;
+        font-weight: 400;
+    }
+
 }
 .noUserSelected{
     width: 1080px;

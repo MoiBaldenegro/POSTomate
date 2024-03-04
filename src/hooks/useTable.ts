@@ -19,7 +19,6 @@ export default function UseTable() {
       }
       setIsLoading(false);
       const tableArray = res.data;
-      console.log(`me ejecute: ${tableArray}`);
       setTablesArray(tableArray);
       return tableArray;
     } catch (error) {
