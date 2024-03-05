@@ -11,10 +11,14 @@ import HeaderTwo from "../../components/headers/headerTwo/headerTwo";
 import TableBox from "../../components/tableBox/tableBox";
 import { useEffect } from "react";
 import UseTable from "../../hooks/useTable";
+import { useModal } from "../../hooks/useModal";
+import { OPEN_MORE_ACTIONS } from "../../configs/consts";
+import MoreActionsMenu from "../../components/menus/mainMenu/moreActions/moreActionsMenu";
 // Dependecies
 
 export default function Restaurant() {
   const { getTables, tablesArray } = UseTable();
+  const openMoreActions = useModal(OPEN_MORE_ACTIONS);
   useEffect(() => {
     getTables();
   }, []);
@@ -22,9 +26,22 @@ export default function Restaurant() {
     <div className={styles.container}>
       <HeaderTwo />
       <main className={styles.mainSection}>
+        {openMoreActions.isOpen &&
+        openMoreActions.modalName === OPEN_MORE_ACTIONS ? (
+          <MoreActionsMenu
+            isOpen={openMoreActions.isOpen}
+            onClose={openMoreActions.closeModal}
+          >
+            ""
+          </MoreActionsMenu>
+        ) : null}
         {tablesArray?.map((item: any) => (
           <div className={styles.grid}>
-            <TableBox item={item} route={"/restaurant-order/:item"} />
+            <TableBox
+              item={item}
+              route={"/restaurant-order/:item"}
+              openModal={openMoreActions.openModal}
+            />
           </div>
         ))}
       </main>

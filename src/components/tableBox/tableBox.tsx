@@ -6,11 +6,16 @@ import tableFree from "../../assets/icon/tableFree.svg";
 import tablePending from "../../assets/icon/tablePending.svg";
 import tableEnable from "../../assets/icon/tableActive.svg";
 import tablePayment from "../../assets/icon/tableForPayment.svg";
+import moreActionsIcon from "../../assets/icon/moreActionsIcon.svg";
 // types
 import UseTable from "../../hooks/useTable";
 
 export default function TableBox(
-  { item, route }: any /* AJUSTAR EL TYPE DE PROPS DE MESA (TABLE) COMPLETO */
+  {
+    item,
+    route,
+    openModal,
+  }: any /* AJUSTAR EL TYPE DE PROPS DE MESA (TABLE) COMPLETO */
 ) {
   const { loading, newAccount }: any = useAccount();
   const navigate = useNavigate();
@@ -58,7 +63,7 @@ export default function TableBox(
   };
   if (!loading && newAccount?.code === 200) handleclick;
   return (
-    <div className={styles.table} onClick={handleclick}>
+    <div className={styles.table}>
       <div>
         <span>00.00</span>
         <span>
@@ -85,14 +90,19 @@ export default function TableBox(
       ) : (
         <img src={tableFree} alt="table-free" />
       ) */}
-      <p>{item.tableNum}</p>
-      <span>{item.server}</span>
-      <div>
-        <span>00.00</span>
-        <span>
-          <img src="" alt="" />
-          04
-        </span>
+      <div className={styles.openTable} onClick={handleclick}>
+        <p>{item.tableNum}</p>
+        <span>{item.server}</span>
+      </div>
+
+      <div className={styles.footBox}>
+        <button
+          onClick={() => {
+            openModal();
+          }}
+        >
+          <img src={moreActionsIcon} alt="more-actions" />
+        </button>
       </div>
     </div>
   );

@@ -8,30 +8,44 @@
     align-items: center;
     position: relative;
     transition: 150ms;
+    .table div {
+        width: 75%;
+        display: flex;
+        z-index: 100;
+    
+    }
 }
 
 .table div {
-    width: 75%;
+    width: 80%;
     display: flex;
     justify-content: space-between;
     z-index: 100;
+
 }
 
 .table div:first-child {
     margin-top: 10px;
     padding: 10px 0px;
-}
 
+}
 .table div:last-child {
-    margin-bottom: 8px;
-    padding: 8px 0px;
+    width: 85%;
+  
+
 }
 
 .table p {
     font-size: 40px;
     margin-top: 20px;
 }
+.openTable{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
+}
 .table p,
 .table span {
     z-index: 100;
@@ -44,4 +58,23 @@
 
 .table:hover {
     transform: scale(1.02);
+}
+
+.footBox{
+    height: 30px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end !important;
+    > button{
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+        border-radius: 50%;
+        padding: 5px;
+        transition: .3s ease;
+    }
+    > button:hover{
+        background-color: rgba(0, 0, 0, 0.103);
+    }
+   
 }
