@@ -4,8 +4,11 @@ import backspace from "../../assets/icon/backspaceIcon.svg";
 import cleanIcon from "../../assets/icon/cleanIcon.svg";
 import spaceIcon from "../../assets/icon/spaceIcon.svg";
 import minCheck from "../../assets/icon/minCheck.svg";
-
-export function ActionsKeyboard() {
+interface Props {
+  children: string;
+  actionType: (arg: any) => void;
+}
+export function ActionsKeyboard({ children }: Props) {
   const [mayus, setMayus] = useState(true);
   const [text, setText] = useState("");
 
@@ -15,7 +18,7 @@ export function ActionsKeyboard() {
   const rowFour = ["Z", "X", "C", "V", "B", "N", "M", ",", "."];
   return (
     <article className={styles.container}>
-      <div></div>
+      <strong>{children}</strong>
       <input readOnly type="search" value={text} />
       <div className={styles.keys}>
         <div className={styles.rowOne}>

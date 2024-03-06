@@ -39,11 +39,27 @@
 
   .actionsContainer{
     background: rgba(73, 74, 76, 1);
-    width: 324px;
+    min-width: 324px;
     min-height: 846px;
     max-height: 846px;
     border-radius: 16px;
     box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.5);
     overflow-x: hidden;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 24px 16px;
+
+    > button{
+      width: 90%;
+      border-radius: 8px;
+      height: 48px;
+      background: rgba(249, 249, 249, 0.2);
+      justify-content:  flex-start;
+      padding: 20px;
+      font-size: 16px;
+      box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);      
+    }
   }

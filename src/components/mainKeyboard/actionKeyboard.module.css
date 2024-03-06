@@ -9,6 +9,10 @@
     gap: 32px;
     background: rgba(73, 74, 76, 1);
 
+    >strong{
+        font-size: 24px;
+    }
+
     > *{
         transition: .1.5s ease;
     }
