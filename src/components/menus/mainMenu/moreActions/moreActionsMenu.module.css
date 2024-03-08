@@ -1,5 +1,5 @@
 .screen {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -62,4 +62,19 @@
       font-size: 16px;
       box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);      
     }
+  }
+
+  .errors{
+    position: relative;
+    width: 25%;
+    height: 32%;
+    border-radius: 16px;
+    background: rgba(53, 54, 57, 1);
+    box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    gap: 32px;
   }

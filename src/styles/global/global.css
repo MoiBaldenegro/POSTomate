@@ -1,5 +1,5 @@
 *{
-    user-select: none;
+   /* user-select: none; */
 }
 
 button {
@@ -10,6 +10,10 @@ button {
         align-items: center;
         justify-content: center;
         gap: 8px;
+}
+
+button:disabled{
+    opacity: .2;
 }
 
 input {

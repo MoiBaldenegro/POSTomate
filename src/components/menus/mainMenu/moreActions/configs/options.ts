@@ -11,7 +11,6 @@ import {
   PRODUCTS_CANCEL,
   PRODUCTS_DISCOUNTS,
   SEPARATE_CHECKS,
-  SPLIT_EQUALLY,
   TRANSFER_BILL,
 } from "./constants";
 
@@ -68,9 +67,5 @@ export const actionsMenu: Action[] = [
   {
     option: "Cancelar notas",
     set: NOTES_CANCEL,
-  },
-  {
-    option: "Cancelar cuenta",
-    set: BILL_CANCEL,
   },
 ];

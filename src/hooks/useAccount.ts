@@ -196,8 +196,29 @@ export default function UseAccount() {
     }
   };
 
+  const changeKey = async (id: string, key: any) => {
+    setIsLoading(true);
+    console.log(id, key);
+    try {
+      const res = await axios.put(
+        `https://tomate-server.onrender.com/bills/${id}`,
+        key
+      );
+      if (!res) {
+        setErrors(true);
+      }
+      setIsLoading(false);
+      setErrors(false);
+      return res.data;
+    } catch (error) {
+      setErrors(true);
+      setIsLoading(false);
+    }
+  };
+
   return {
     isLoading,
+    errors,
     createAccount,
     newAccount,
     getAccount,
@@ -207,5 +228,6 @@ export default function UseAccount() {
     addBill,
     currentBill,
     getBills,
+    changeKey,
   };
 }

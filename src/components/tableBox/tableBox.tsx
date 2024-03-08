@@ -10,13 +10,7 @@ import moreActionsIcon from "../../assets/icon/moreActionsIcon.svg";
 // types
 import UseTable from "../../hooks/useTable";
 
-export default function TableBox(
-  {
-    item,
-    route,
-    openModal,
-  }: any /* AJUSTAR EL TYPE DE PROPS DE MESA (TABLE) COMPLETO */
-) {
+export default function TableBox({ item, route, openModal, set }: any) {
   const { loading, newAccount }: any = useAccount();
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,7 +37,7 @@ export default function TableBox(
             status: item.status,
           },
         });
-        return; // aca recuperaremos la cuenta activa
+        return;
       }
       if (item.status === "enable") {
         navigate(route, {
@@ -80,16 +74,6 @@ export default function TableBox(
       ) : (
         <img src={tableFree} alt="table-free" />
       )}
-
-      {/*item.status === "pending" ? (
-        <img src={tablePending} alt="table-pending" />
-      ) : item.status === "enable" ? (
-        <img src={tableEnable} alt="table-enable" />
-      ) : item.status === "forPayment" ? (
-        <img src={tablePayment} alt="table-for-payment" />
-      ) : (
-        <img src={tableFree} alt="table-free" />
-      ) */}
       <div className={styles.openTable} onClick={handleclick}>
         <p>{item.tableNum}</p>
         <span>{item.server}</span>
@@ -98,6 +82,7 @@ export default function TableBox(
       <div className={styles.footBox}>
         <button
           onClick={() => {
+            set(item);
             openModal();
           }}
         >

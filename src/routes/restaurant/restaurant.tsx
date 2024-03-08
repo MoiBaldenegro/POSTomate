@@ -9,7 +9,7 @@ import freeIcon from "../../assets/icon/freeIcon.svg";
 import HeaderTwo from "../../components/headers/headerTwo/headerTwo";
 // Vars
 import TableBox from "../../components/tableBox/tableBox";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import UseTable from "../../hooks/useTable";
 import { useModal } from "../../hooks/useModal";
 import { OPEN_MORE_ACTIONS } from "../../configs/consts";
@@ -17,10 +17,12 @@ import MoreActionsMenu from "../../components/menus/mainMenu/moreActions/moreAct
 // Dependecies
 
 export default function Restaurant() {
+  const [idTable, setIdTable] = useState();
   const { getTables, tablesArray } = UseTable();
   const openMoreActions = useModal(OPEN_MORE_ACTIONS);
   useEffect(() => {
     getTables();
+    console.log(tablesArray);
   }, []);
   return (
     <div className={styles.container}>
@@ -31,9 +33,8 @@ export default function Restaurant() {
           <MoreActionsMenu
             isOpen={openMoreActions.isOpen}
             onClose={openMoreActions.closeModal}
-          >
-            ""
-          </MoreActionsMenu>
+            item={idTable}
+          ></MoreActionsMenu>
         ) : null}
         {tablesArray?.map((item: any) => (
           <div className={styles.grid}>
@@ -41,6 +42,7 @@ export default function Restaurant() {
               item={item}
               route={"/restaurant-order/:item"}
               openModal={openMoreActions.openModal}
+              set={setIdTable}
             />
           </div>
         ))}

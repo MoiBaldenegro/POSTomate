@@ -6,9 +6,18 @@ import spaceIcon from "../../assets/icon/spaceIcon.svg";
 import minCheck from "../../assets/icon/minCheck.svg";
 interface Props {
   children: string;
-  actionType: (arg: any) => void;
+  actionType: any;
+  item: any;
+  openModal: any;
+  caseTo: number;
 }
-export function ActionsKeyboard({ children }: Props) {
+export function ActionsKeyboard({
+  children,
+  actionType,
+  item,
+  openModal,
+  caseTo,
+}: Props) {
   const [mayus, setMayus] = useState(true);
   const [text, setText] = useState("");
 
@@ -16,6 +25,7 @@ export function ActionsKeyboard({ children }: Props) {
   const rowTwo = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "´", "/"];
   const rowThree = ["A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ", "-"];
   const rowFour = ["Z", "X", "C", "V", "B", "N", "M", ",", "."];
+
   return (
     <article className={styles.container}>
       <strong>{children}</strong>
@@ -128,7 +138,17 @@ export function ActionsKeyboard({ children }: Props) {
         >
           <img src={spaceIcon} alt="space-icon" />
         </button>
-        <button className={styles.checkBtn}>
+        <button
+          className={styles.checkBtn}
+          disabled={!item?.bill[0]}
+          onClick={() => {
+            if (text.length > 1) {
+              actionType(item.bill[0]._id);
+            }
+            openModal();
+            return;
+          }}
+        >
           <img src={minCheck} alt="check-icon" />
         </button>
       </div>
