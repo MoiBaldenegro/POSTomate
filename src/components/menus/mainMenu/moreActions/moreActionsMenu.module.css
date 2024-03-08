@@ -14,9 +14,9 @@
   .modal {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     position: relative;
-    width: 1620px;
+    width: 1750px;
     height: 926px;
     padding: 32px;
     border-radius: 32px;

@@ -1,16 +1,20 @@
 import { ActionsKeyboard } from "../../../mainKeyboard/actionKeyboard";
 import styles from "./moreActionsMenu.module.css";
 import { actionsMenu } from "./configs/options";
-import { useEffect, useState } from "react";
-import { BILL_NAME, NOTES_NAME } from "./configs/constants";
+import { useState } from "react";
+import {
+  BILL_NAME,
+  COMMENTS,
+  NOTES_NAME,
+  SEPARATE_CHECKS,
+} from "./configs/constants";
 import tomateIcon from "../../../../assets/icon/tomatePOSlogo.svg";
 import UseAccount from "../../../../hooks/useAccount";
-import Loader from "../../../loader/loader";
-import errorIcon from "../../../../assets/icon/warning.svg";
-import checkIcon from "../../../../assets/icon/checkIcon.svg";
 import { useModal } from "../../../../hooks/useModal";
 import ConfirmChanges from "../../../modals/confirm/confirmChanges";
 import { CONFIRM_ACTIONS } from "../../../../configs/consts";
+import { updateBillProps } from "../../../../store/updateBill";
+import SeparateChecks from "../../../separateChecks/separateChecks";
 interface Props {
   isOpen: any;
   onClose: any;
@@ -21,16 +25,15 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
   const [petition, setPetition] = useState(false);
   const accountProps = UseAccount();
 
+  const updateNameBill = updateBillProps((state) => state.updateName);
+  const updateCommentBill = updateBillProps((state) => state.updateComments);
+  const isLoading = updateBillProps((state) => state.isLoading);
+  const errors = updateBillProps((state) => state.errors);
+
   const confirmChanges = useModal(CONFIRM_ACTIONS);
-  const actiontype = accountProps.changeKey;
-  const errors = accountProps.errors;
-  const isLoading = accountProps.isLoading;
+
   // El proble es que hay muchos loadings diferentes aca de diferentes peticiones
 
-  useEffect(() => {
-    console.log("aca es el que busco");
-    console.log(errors);
-  }, [errors]);
   return (
     <main className={styles.screen}>
       {confirmChanges.isOpen && confirmChanges.modalName === CONFIRM_ACTIONS ? (
@@ -68,7 +71,7 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
           {selectedOption === BILL_NAME ? (
             <>
               <ActionsKeyboard
-                actionType={actiontype}
+                actionType={updateNameBill}
                 item={item}
                 openModal={confirmChanges.openModal}
                 caseTo={1}
@@ -76,17 +79,21 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
                 Ingresa el nombre de la cuenta:
               </ActionsKeyboard>
             </>
-          ) : selectedOption === NOTES_NAME ? (
+          ) : selectedOption === COMMENTS ? (
             <>
               {" "}
               <ActionsKeyboard
-                actionType={actiontype}
+                actionType={updateCommentBill}
                 item={item}
                 openModal={confirmChanges.openModal}
                 caseTo={2}
               >
-                Ingresa el nombre de la nota:
+                Agregar comentarios a la cuenta
               </ActionsKeyboard>{" "}
+            </>
+          ) : selectedOption === SEPARATE_CHECKS ? (
+            <>
+              <SeparateChecks></SeparateChecks>
             </>
           ) : (
             <div
@@ -95,7 +102,7 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                width: "1200px",
+                width: "1312px",
                 fontSize: "32px",
               }}
             >

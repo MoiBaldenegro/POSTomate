@@ -2,12 +2,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 1200px;
-    height: 728px;
-    padding: 32px;
+    width: 1282px;
+    height: 778px;
+    padding: 40px 80px;
     border-radius: 16px;
     gap: 32px;
     background: rgba(73, 74, 76, 1);
+
 
     >strong{
         font-size: 24px;

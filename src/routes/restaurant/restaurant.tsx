@@ -22,7 +22,6 @@ export default function Restaurant() {
   const openMoreActions = useModal(OPEN_MORE_ACTIONS);
   useEffect(() => {
     getTables();
-    console.log(tablesArray);
   }, []);
   return (
     <div className={styles.container}>
