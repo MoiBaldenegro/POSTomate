@@ -32,6 +32,7 @@ button:hover {
 ::-webkit-scrollbar,
 ::-webkit-scrollbar {
     width: 0.001em;
+    height: 4px;
 }
 
 /* Style the scrollbar thumb */

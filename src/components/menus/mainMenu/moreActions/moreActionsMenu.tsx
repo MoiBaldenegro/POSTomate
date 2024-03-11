@@ -74,7 +74,6 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
                 actionType={updateNameBill}
                 item={item}
                 openModal={confirmChanges.openModal}
-                caseTo={1}
               >
                 Ingresa el nombre de la cuenta:
               </ActionsKeyboard>
@@ -86,14 +85,13 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
                 actionType={updateCommentBill}
                 item={item}
                 openModal={confirmChanges.openModal}
-                caseTo={2}
               >
                 Agregar comentarios a la cuenta
               </ActionsKeyboard>{" "}
             </>
           ) : selectedOption === SEPARATE_CHECKS ? (
             <>
-              <SeparateChecks></SeparateChecks>
+              <SeparateChecks item={item}></SeparateChecks>
             </>
           ) : (
             <div

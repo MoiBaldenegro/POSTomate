@@ -9,14 +9,12 @@ interface Props {
   actionType: any;
   item: any;
   openModal: any;
-  caseTo: number;
 }
 export function ActionsKeyboard({
   children,
   actionType,
   item,
   openModal,
-  caseTo,
 }: Props) {
   const [mayus, setMayus] = useState(true);
   const [text, setText] = useState("");

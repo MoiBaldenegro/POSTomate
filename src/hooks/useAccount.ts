@@ -25,6 +25,8 @@ export default function UseAccount() {
   };
 
   async function createAccount(account: Bill) {
+    console.log(account);
+    console.log("legue aca");
     setIsLoading(true);
 
     const accountProducts = account.products.map((item) => {
@@ -35,7 +37,7 @@ export default function UseAccount() {
     const sendAccount = { ...account, products: accountProducts };
     try {
       const response = await axios.post(
-        "https://tomate-server.onrender.com/bills",
+        `https://tomate-server.onrender.com/bills`,
         sendAccount
       );
       setIsLoading(false);
