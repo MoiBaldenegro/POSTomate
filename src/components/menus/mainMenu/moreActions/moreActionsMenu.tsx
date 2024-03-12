@@ -91,7 +91,10 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
             </>
           ) : selectedOption === SEPARATE_CHECKS ? (
             <>
-              <SeparateChecks item={item}></SeparateChecks>
+              <SeparateChecks
+                item={item}
+                openModal={confirmChanges.openModal}
+              ></SeparateChecks>
             </>
           ) : (
             <div

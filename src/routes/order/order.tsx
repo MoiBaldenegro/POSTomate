@@ -27,10 +27,8 @@ import UseOrder from "../../hooks/useOrder";
 import UseTable from "../../hooks/useTable";
 import { useCurrentCommand } from "../../store/productsInOrder";
 import { categoriesMap } from "../../mocks/categories";
-import CustomSelect from "../../components/customElements/select/customSelect";
 import { useModal } from "../../hooks/useModal";
 import MainKeyboard from "../../components/tools/mainKeyboard/mainKeyboard";
-import { keyboard } from "../../components/payments/utils/denominations";
 
 export default function Order() {
   const [commandArray, setCommandArray] = useState<Product[]>();

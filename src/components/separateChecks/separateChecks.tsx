@@ -2,44 +2,86 @@ import styles from "./separateChecks.module.css";
 import addIcon from "../../assets/icon/addItemIcon.svg";
 import divider from "../../assets/icon/dividerInNote.svg";
 import trashIcon from "../../assets/icon/trashIcon.svg";
+import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
+import { updateBillProps } from "../../store/updateBill";
 
 interface Props {
   item: any;
+  openModal: any;
 }
 
-export default function SeparateChecks({ item }: Props) {
-  const [separateNotes, setSeparateNotes] = useState<any[]>();
-  const [selectedProducts, setSelectedProducts] = useState([]);
+export default function SeparateChecks({ item, openModal }: Props) {
+  const [separateNotes, setSeparateNotes] = useState<any[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
+  const createNotes = updateBillProps((state) => state.createNotes);
 
-  function transferProducts() {}
+  function handleProducts(product: any) {
+    if (
+      selectedProducts.some(
+        (selectedElement) => selectedElement.unique === product.unique
+      )
+    ) {
+      // El producto ya está seleccionado, lo filtramos
+      const updatedProducts = selectedProducts.filter(
+        (selectedElement) => selectedElement.unique !== product.unique
+      );
+      setSelectedProducts(updatedProducts);
+    } else {
+      setSelectedProducts([...selectedProducts, product]);
+    }
+  }
 
   const NOTE_TEMPLATE = {
-    checkCode: item.bill[0].billCode,
+    checkCode: item.bill[0]?.billCode.toString(),
     noteNumber: "aca ponemos el indice",
     paymentCode: "aca clavamos el pago",
-    sellType: item.bill[0].sellType,
-    user: item.bill[0].user,
+    sellType: item.bill[0]?.sellType,
+    user: item.bill[0]?.user,
     products: [],
     checkTotal: "esto se renombrar a noteTotal",
     status: "enable",
     cashier: "revisar esto",
     paymentDate: "inesceria creo, refvisar...",
   };
+
   useEffect(() => {
-    if (item.bill[0]) {
+    if (!item.bill[0].notes.length) {
+      const updatedProducts = item.bill[0].products.flatMap((element: any) => {
+        if (element.quantity > 1) {
+          const products = [];
+          for (let i = 0; i < element.quantity; i++) {
+            products.push({ ...element, quantity: 1, unique: uuidv4() });
+          }
+          return products;
+        } else {
+          return { ...element, unique: uuidv4() };
+        }
+      });
+
       setSeparateNotes([
-        { ...NOTE_TEMPLATE, products: item.bill[0].products },
+        { ...NOTE_TEMPLATE, products: updatedProducts },
         { ...NOTE_TEMPLATE },
       ]);
+      return;
     }
+    const updatedNotes = [...item.bill[0].notes];
+    const newData = updatedNotes.map((element, index) => {
+      console.log(element);
+      return {
+        ...NOTE_TEMPLATE,
+        noteNumber: element.noteNumber,
+        products: element.products,
+      };
+    });
+    setSeparateNotes(newData);
   }, []);
 
   return (
     <article className={styles.container}>
       <div className={styles.notesContainer}>
-        {item.notes?.[0] ? (
-          <></>
+        {item.notes ? (
+          <>aca hay notas ya creadas</>
         ) : (
           <>
             {separateNotes && separateNotes.length > 0 ? (
@@ -53,19 +95,63 @@ export default function SeparateChecks({ item }: Props) {
                       </div>
                       <img src={divider} alt="divider-icon" />
                     </div>
-                    <div>
+                    <div className={styles.productsContainer}>
                       {element?.products.map((element: any, index: any) => (
-                        <div className={styles.productBox}>
+                        <div className={styles.productBox} key={index}>
                           <div>
                             <span>{element.quantity}</span>
                             <span>{element.productName}</span>
                           </div>
-                          <input type="checkbox" className={styles.check} />
+                          <input
+                            type="checkbox"
+                            className={styles.check}
+                            checked={selectedProducts.some(
+                              (selectedItem) =>
+                                selectedItem.unique === element.unique
+                            )}
+                            onChange={() => {
+                              handleProducts(element);
+                            }}
+                          />
                         </div>
                       ))}
                     </div>
                     <div>
-                      <button>Mover aquí</button>
+                      <button
+                        onClick={() => {
+                          if (selectedProducts.length > 0) {
+                            setSeparateNotes((prevSeparateNotes) => {
+                              if (!prevSeparateNotes) {
+                                return prevSeparateNotes;
+                              }
+
+                              if (index !== -1) {
+                                const updatedNotes = [...prevSeparateNotes];
+                                updatedNotes[index].products.push(
+                                  ...selectedProducts
+                                );
+                                updatedNotes.forEach((note, i) => {
+                                  if (i !== index) {
+                                    updatedNotes[i].products = updatedNotes[
+                                      i
+                                    ].products.filter(
+                                      (product: any) =>
+                                        !selectedProducts.includes(product)
+                                    );
+                                  }
+                                });
+                                return updatedNotes;
+                              }
+
+                              return prevSeparateNotes;
+                            });
+
+                            setSelectedProducts([]);
+                          }
+                        }}
+                      >
+                        Mover aquí
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -103,6 +189,11 @@ export default function SeparateChecks({ item }: Props) {
         <button
           onClick={() => {
             console.log(separateNotes);
+
+            if (separateNotes?.length) {
+              openModal();
+              createNotes(separateNotes, item.bill[0]._id);
+            }
           }}
         >
           Guardar

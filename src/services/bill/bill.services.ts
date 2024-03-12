@@ -23,3 +23,40 @@ export const addComments = async (id: string, comments: Comments) => {
   );
   return res;
 };
+
+export const createNotes = async (notesArray: any) => {
+  const noteIds = [];
+
+  try {
+    for (const note of notesArray) {
+      try {
+        const res = await axios.post(
+          "https://tomate-server.onrender.com/notes",
+          note
+        );
+
+        if (res.data && res.data._id) {
+          console.log(res.data._id);
+          noteIds.push(res.data._id);
+        } else {
+          console.error("Error: No se recibió un ID para la nota.");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    console.log(noteIds);
+    return noteIds;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export const injectNotesInBill = async (id: string, notesArray: any[]) => {
+  console.log(id);
+  const response = axios.put(`https://tomate-server.onrender.com/bills/${id}`, {
+    notes: notesArray,
+  });
+  return response;
+};
