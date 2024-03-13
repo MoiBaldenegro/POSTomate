@@ -45,6 +45,12 @@
         >div:first-child,
         >div:last-child{
             width: 400px;
+            >div:first-child{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 32px;
+            }
         }
 
         >div:nth-child(2){
@@ -77,3 +83,61 @@
 
 
 }
+
+/* Select styles */
+.customSelect{
+    position: relative;
+    width: 120px;
+    height: 48px;
+    background: rgba(249, 249, 249, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+  .selectTrigger {
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    
+  }
+  .options {
+    position: absolute;
+    background-color: var(--color-gray-hover);
+    top: 120%;
+    left: 0;
+    width: 120px;
+    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+  }
+  
+
+  .hidden{
+    display: none;
+  }
+  .option {
+    padding: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #33333333;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    color: black;
+    font-size: 14px;
+  
+  }
+  .option:hover {
+    background-color: #6e717442;
+    
+  }
+  
+  /* //////////////*/

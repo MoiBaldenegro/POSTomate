@@ -46,8 +46,8 @@ export default function SeparateChecks({ item, openModal }: Props) {
   };
 
   useEffect(() => {
-    if (!item.bill[0].notes.length) {
-      const updatedProducts = item.bill[0].products.flatMap((element: any) => {
+    if (!item.bill[0]?.notes.length) {
+      const updatedProducts = item.bill[0]?.products.flatMap((element: any) => {
         if (element.quantity > 1) {
           const products = [];
           for (let i = 0; i < element.quantity; i++) {
@@ -59,13 +59,17 @@ export default function SeparateChecks({ item, openModal }: Props) {
         }
       });
 
+      if (!item.bill[0]) {
+        return;
+      }
+
       setSeparateNotes([
         { ...NOTE_TEMPLATE, products: updatedProducts },
         { ...NOTE_TEMPLATE },
       ]);
       return;
     }
-    const updatedNotes = [...item.bill[0].notes];
+    const updatedNotes = [...item.bill[0]?.notes];
     /*
 
     const newData = updatedNotes.map((element, index) => {
@@ -82,8 +86,8 @@ export default function SeparateChecks({ item, openModal }: Props) {
   return (
     <article className={styles.container}>
       <div className={styles.notesContainer}>
-        {item.notes ? (
-          <>aca hay notas ya creadas</>
+        {!item.bill[0] ? (
+          <>No hay cuentas abiertas en esta mesa</>
         ) : (
           <>
             {separateNotes && separateNotes.length > 0 ? (
@@ -189,6 +193,7 @@ export default function SeparateChecks({ item, openModal }: Props) {
       <div className={styles.footerModal}>
         <h4>Cantidad de notas: {separateNotes?.length}</h4>
         <button
+          disabled={!item.bill[0]}
           onClick={() => {
             console.log(separateNotes);
 
