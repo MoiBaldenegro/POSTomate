@@ -5,6 +5,7 @@ import { useState } from "react";
 import {
   BILL_NAME,
   COMMENTS,
+  MOVE_PRODUCTS,
   NOTES_NAME,
   SEPARATE_CHECKS,
 } from "./configs/constants";
@@ -15,11 +16,13 @@ import ConfirmChanges from "../../../modals/confirm/confirmChanges";
 import { CONFIRM_ACTIONS } from "../../../../configs/consts";
 import { updateBillProps } from "../../../../store/updateBill";
 import SeparateChecks from "../../../separateChecks/separateChecks";
+import TransferProducts from "../../../transferProducts/transferProducts";
 interface Props {
   isOpen: any;
   onClose: any;
   item: any;
 }
+
 export default function MoreActionsMenu({ onClose, item }: Props) {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [petition, setPetition] = useState(false);
@@ -27,6 +30,7 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
 
   const updateNameBill = updateBillProps((state) => state.updateName);
   const updateCommentBill = updateBillProps((state) => state.updateComments);
+  const updateNameNote = updateBillProps((state) => state.updateNameInNote);
   const isLoading = updateBillProps((state) => state.isLoading);
   const errors = updateBillProps((state) => state.errors);
 
@@ -71,6 +75,7 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
           {selectedOption === BILL_NAME ? (
             <>
               <ActionsKeyboard
+                option={selectedOption}
                 actionType={updateNameBill}
                 item={item}
                 openModal={confirmChanges.openModal}
@@ -78,10 +83,22 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
                 Ingresa el nombre de la cuenta:
               </ActionsKeyboard>
             </>
+          ) : selectedOption === NOTES_NAME ? (
+            <>
+              <ActionsKeyboard
+                option={selectedOption}
+                actionType={updateNameNote}
+                item={item}
+                openModal={confirmChanges.openModal}
+              >
+                Ingresa el nombre de la nota:
+              </ActionsKeyboard>
+            </>
           ) : selectedOption === COMMENTS ? (
             <>
               {" "}
               <ActionsKeyboard
+                option={selectedOption}
                 actionType={updateCommentBill}
                 item={item}
                 openModal={confirmChanges.openModal}
@@ -95,6 +112,15 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
                 item={item}
                 openModal={confirmChanges.openModal}
               ></SeparateChecks>
+            </>
+          ) : selectedOption === MOVE_PRODUCTS ? (
+            <>
+              <TransferProducts
+                item={item}
+                openModal={confirmChanges.openModal}
+              >
+                ESTE ES EL CHILDREN
+              </TransferProducts>
             </>
           ) : (
             <div

@@ -66,6 +66,8 @@ export default function SeparateChecks({ item, openModal }: Props) {
       return;
     }
     const updatedNotes = [...item.bill[0].notes];
+    /*
+
     const newData = updatedNotes.map((element, index) => {
       console.log(element);
       return {
@@ -73,9 +75,9 @@ export default function SeparateChecks({ item, openModal }: Props) {
         noteNumber: element.noteNumber,
         products: element.products,
       };
-    });
-    setSeparateNotes(newData);
-  }, []);
+    }); */
+    setSeparateNotes(updatedNotes);
+  }, [createNotes]);
 
   return (
     <article className={styles.container}>

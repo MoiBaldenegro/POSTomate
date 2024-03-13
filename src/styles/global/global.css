@@ -10,6 +10,8 @@ button {
         align-items: center;
         justify-content: center;
         gap: 8px;
+        box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
+
 }
 
 button:disabled{
@@ -40,6 +42,7 @@ button:hover {
 ::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb {
     background-color: #7D7E80;
+
 }
 
 /* Style the scrollbar track */

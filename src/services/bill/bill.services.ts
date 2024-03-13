@@ -30,23 +30,36 @@ export const addComments = async (id: string, comments: Comments) => {
 
 export const createNotes = async (notesArray: any) => {
   const noteIds = [];
-
   try {
     for (const note of notesArray) {
-      try {
-        const res = await axios.post(
-          "https://tomate-server.onrender.com/notes",
-          note
-        );
+      if (!note._id) {
+        try {
+          const res = await axios.post(
+            "https://tomate-server.onrender.com/notes",
+            note
+          );
 
-        if (res.data && res.data._id) {
-          console.log(res.data._id);
-          noteIds.push(res.data._id);
-        } else {
-          console.error("Error: No se recibió un ID para la nota.");
+          if (res.data && res.data._id) {
+            console.log(res.data._id);
+            noteIds.push(res.data._id);
+          } else {
+            console.error("Error: No se recibió un ID para la nota.");
+          }
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(error);
+      } else {
+        try {
+          const res = await axios.put(
+            `https://tomate-server.onrender.com/notes/${note._id}`,
+            {
+              products: note.products,
+            }
+          );
+          noteIds.push(note._id);
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
     console.log(noteIds);
@@ -58,7 +71,6 @@ export const createNotes = async (notesArray: any) => {
 };
 
 export const injectNotesInBill = async (id: string, notesArray: any[]) => {
-  console.log(id);
   const response = axios.put(`https://tomate-server.onrender.com/bills/${id}`, {
     notes: notesArray,
   });

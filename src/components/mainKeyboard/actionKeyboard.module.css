@@ -144,4 +144,61 @@ h1 {
     color: black;
 }
 
+.noteNav{
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    >strong{
+        font-size: 24px;
+        margin-left: 50px;
+    }
+    >div{
+        width: 65%;
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+    }
+
+    >.selectNotesInterface{
+        width: 62%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        >span{
+            font-size: 24px;
+            height: 54px;
+            padding: 12px 24px 12px 24px;
+            border-radius: 40px;
+            border: 2px;
+            background: rgba(249, 249, 249, 0.1);
+            border: 2px solid rgba(249, 249, 249, 0.2)
+        }
+
+        >div{
+            display: flex;
+            gap: 8px;
+            align-items: center;
+
+            >button{
+                background: rgba(249, 249, 249, 0.2);
+                height: 48px;
+                width: 48px;
+                border-radius: 8px;
+    
+            }
+        }
+
+        
+
+    }
+}
+
+.disquet{
+    height: 30px;
+}
+
+
 

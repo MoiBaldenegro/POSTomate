@@ -9,12 +9,15 @@
     background: rgba(73, 74, 76, 1);   
 }
 
+
+
 .notesContainer{
     width: 1218px;
     min-height: 660px;
     display: flex;
     overflow-y: hidden;
     overflow-x: auto;
+    
 
     > div{
         min-width: 400px;
