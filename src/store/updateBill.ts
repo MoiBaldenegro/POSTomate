@@ -2,6 +2,7 @@ import { create } from "zustand";
 import {
   addComments,
   addName,
+  addNameInNote,
   createNotes,
   injectNotesInBill,
 } from "../services/bill/bill.services";
@@ -12,6 +13,7 @@ interface state {
   updateName: (id: string, arg: string) => Promise<void>;
   updateComments: (id: string, arg: string) => Promise<void>;
   createNotes: (notesArray: any[], id: string) => Promise<void>;
+  updateNameInNote: (id: string, arg: string) => Promise<void>;
 }
 
 export const updateBillProps = create<state>((set) => {
@@ -78,5 +80,25 @@ export const updateBillProps = create<state>((set) => {
         set({ isLoading: false, errors: true });
       }
     },
+
+    updateNameInNote: async (id, arg) => {
+      set({ isLoading: true });
+      try {
+        const data = {
+          noteName: arg,
+        };
+        const res = await addNameInNote(id, data);
+        if (!res.data) {
+          set({ isLoading: false, errors: true });
+          throw new Error("No se ha podido guardar");
+        }
+        set({ isLoading: false });
+      } catch (error) {
+        set({ isLoading: false, errors: true });
+        throw new Error("Ha ocurrido algo inesperado");
+      }
+    },
   };
 });
+// aca continuamos, tenemo sque meter las claves para el nombre yu comentarios opcionales en el esquema de notas y
+// agregar las notas despues ya de haberlas creado filtrando las que ya tienen asignado un ID por que ya estan creadas, para solo crear las agregadas nuevamente.

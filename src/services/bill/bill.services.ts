@@ -1,5 +1,9 @@
 import axios from "axios";
 
+type NoteName = {
+  noteName: string;
+};
+
 type BillName = {
   billName: string;
 };
@@ -58,5 +62,13 @@ export const injectNotesInBill = async (id: string, notesArray: any[]) => {
   const response = axios.put(`https://tomate-server.onrender.com/bills/${id}`, {
     notes: notesArray,
   });
+  return response;
+};
+
+export const addNameInNote = async (id: string, noteName: NoteName) => {
+  const response = axios.put(
+    `https://tomate-server.onrender.com/notes/${id}`,
+    noteName
+  );
   return response;
 };
