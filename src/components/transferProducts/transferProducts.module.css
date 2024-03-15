@@ -14,7 +14,6 @@
     }
 
     >.head {
-        border: 1px solid white;
         height: 48px;
         display: flex;
         align-items: center;
@@ -29,32 +28,57 @@
     }
 
     >.mainSection{
-        border: 1px solid red;
         height: 580px;
         display: flex;
         justify-content: space-evenly;
 
+
         >div{
-            border: 1px solid yellow;
             height: 100%;
             border-radius: 16px;
             background: rgba(92, 93, 96, 1);
+            position: relative;
 
-        }
 
-        >div:first-child,
-        >div:last-child{
-            width: 400px;
             >div:first-child{
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 32px;
+                padding: 32px 32px 0px 32px;
+
+
+               >div>div{
+
+                    display: flex;
+                    justify-content: space-between;
+                     align-items: center;
+            }   
+        }   
+    }
+    .productsContainer{
+            border: 1px solid white;
+            height: 420px;
+            width: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 10px 32px 10px 32px;
+
+            .productBox{
+                border: 1px solid yellow;
+                width: 100%;
+                height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
             }
-        }
+    }
 
         >div:nth-child(2){
             width: 320px;
+        }
+
+        >div:last-child{
+            width: 400px;
         }
 
         
@@ -95,6 +119,8 @@
     align-items: center;
     border-radius: 6px;
     font-size: 16px;
+    box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
+
   }
   .selectTrigger {
     cursor: pointer;
@@ -103,7 +129,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 8px;
     
   }
   .options {
@@ -118,6 +144,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 6px;
+    max-height: 310px;overflow-y: auto;
   }
   
 
@@ -130,7 +157,7 @@
     border-bottom: 1px solid #33333333;
     width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     color: black;
     font-size: 14px;
   

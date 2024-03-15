@@ -14,6 +14,8 @@ interface Props {
 export default function SeparateChecks({ item, openModal }: Props) {
   const [separateNotes, setSeparateNotes] = useState<any[]>([]);
   const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
+  const [enableNote, setEnableNote] = useState<any[]>([]);
+
   const createNotes = updateBillProps((state) => state.createNotes);
 
   function handleProducts(product: any) {
@@ -33,8 +35,10 @@ export default function SeparateChecks({ item, openModal }: Props) {
   }
 
   const NOTE_TEMPLATE = {
-    checkCode: item.bill[0]?.billCode.toString(),
-    noteNumber: "aca ponemos el indice",
+    checkCode: `0${
+      item.bill[0]?.tableNum
+    }00${item.bill[0]?.billCode.toString()}`,
+    accountId: item.bill[0]?._id,
     paymentCode: "aca clavamos el pago",
     sellType: item.bill[0]?.sellType,
     user: item.bill[0]?.user,
@@ -92,7 +96,7 @@ export default function SeparateChecks({ item, openModal }: Props) {
           <>
             {separateNotes && separateNotes.length > 0 ? (
               <>
-                {separateNotes.map((element, index) => (
+                {separateNotes.map((noteElement, index) => (
                   <div>
                     <div>
                       <div>
@@ -102,7 +106,7 @@ export default function SeparateChecks({ item, openModal }: Props) {
                       <img src={divider} alt="divider-icon" />
                     </div>
                     <div className={styles.productsContainer}>
-                      {element?.products.map((element: any, index: any) => (
+                      {noteElement?.products.map((element: any, index: any) => (
                         <div className={styles.productBox} key={index}>
                           <div>
                             <span>{element.quantity}</span>
@@ -116,6 +120,28 @@ export default function SeparateChecks({ item, openModal }: Props) {
                                 selectedItem.unique === element.unique
                             )}
                             onChange={() => {
+                              if (!enableNote.length) {
+                                setEnableNote([noteElement]);
+                              } else {
+                                const isExist = enableNote.some(
+                                  (note) =>
+                                    note.noteNumber === noteElement.noteNumber
+                                );
+
+                                if (!isExist) {
+                                  setEnableNote([...enableNote, noteElement]);
+                                } else {
+                                  // Utiliza filter para eliminar la nota con noteNumber igual a noteElement.noteNumber
+                                  setEnableNote(
+                                    enableNote.filter(
+                                      (note) =>
+                                        note.noteNumber !==
+                                        noteElement.noteNumber
+                                    )
+                                  );
+                                }
+                              }
+
                               handleProducts(element);
                             }}
                           />
@@ -124,7 +150,20 @@ export default function SeparateChecks({ item, openModal }: Props) {
                     </div>
                     <div>
                       <button
+                        disabled={
+                          enableNote.some(
+                            (note) => note.noteNumber === noteElement.noteNumber
+                          ) ||
+                          enableNote.length === 0 ||
+                          noteElement.products.some((prod: any) =>
+                            selectedProducts.some(
+                              (selProd: any) => selProd.unique === prod.unique
+                            )
+                          )
+                        }
                         onClick={() => {
+                          setEnableNote([]);
+
                           if (selectedProducts.length > 0) {
                             setSeparateNotes((prevSeparateNotes) => {
                               if (!prevSeparateNotes) {
@@ -195,12 +234,12 @@ export default function SeparateChecks({ item, openModal }: Props) {
         <button
           disabled={!item.bill[0]}
           onClick={() => {
-            console.log(separateNotes);
-
+            console.log(enableNote);
+            /*
             if (separateNotes?.length) {
               openModal();
               createNotes(separateNotes, item.bill[0]._id);
-            }
+            } */
           }}
         >
           Guardar
