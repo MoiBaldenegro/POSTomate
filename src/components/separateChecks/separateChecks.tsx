@@ -122,24 +122,22 @@ export default function SeparateChecks({ item, openModal }: Props) {
                             onChange={() => {
                               if (!enableNote.length) {
                                 setEnableNote([noteElement]);
-                              } else {
-                                const isExist = enableNote.some(
-                                  (note) =>
-                                    note.noteNumber === noteElement.noteNumber
-                                );
+                              }
+                              const isExist = enableNote.some(
+                                (note) =>
+                                  note.noteNumber === noteElement.noteNumber
+                              );
 
-                                if (!isExist) {
-                                  setEnableNote([...enableNote, noteElement]);
-                                } else {
-                                  // Utiliza filter para eliminar la nota con noteNumber igual a noteElement.noteNumber
-                                  setEnableNote(
-                                    enableNote.filter(
-                                      (note) =>
-                                        note.noteNumber !==
-                                        noteElement.noteNumber
-                                    )
-                                  );
-                                }
+                              if (!isExist) {
+                                setEnableNote([...enableNote, noteElement]);
+                              } else {
+                                // Utiliza filter para eliminar la nota con noteNumber igual a noteElement.noteNumber
+                                setEnableNote(
+                                  enableNote.filter(
+                                    (note) =>
+                                      note.noteNumber !== noteElement.noteNumber
+                                  )
+                                );
                               }
 
                               handleProducts(element);
@@ -149,17 +147,20 @@ export default function SeparateChecks({ item, openModal }: Props) {
                       ))}
                     </div>
                     <div>
-                      <button
-                        disabled={
-                          enableNote.some(
+                      <button /*   enableNote.some(
                             (note) => note.noteNumber === noteElement.noteNumber
-                          ) ||
-                          enableNote.length === 0 ||
-                          noteElement.products.some((prod: any) =>
+                          ) || */
+                        disabled={
+                          (enableNote.length === 0 &&
+                            selectedProducts.length === 0) ||
+                          selectedProducts.length === 0 ||
+                          (noteElement.products.some((prod: any) =>
                             selectedProducts.some(
                               (selProd: any) => selProd.unique === prod.unique
                             )
-                          )
+                          ) &&
+                            selectedProducts &&
+                            selectedProducts.length > 0)
                         }
                         onClick={() => {
                           setEnableNote([]);
@@ -235,6 +236,7 @@ export default function SeparateChecks({ item, openModal }: Props) {
           disabled={!item.bill[0]}
           onClick={() => {
             console.log(enableNote);
+            console.log(selectedProducts);
             /*
             if (separateNotes?.length) {
               openModal();
