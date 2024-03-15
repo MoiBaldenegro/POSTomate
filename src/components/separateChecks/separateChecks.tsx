@@ -235,13 +235,10 @@ export default function SeparateChecks({ item, openModal }: Props) {
         <button
           disabled={!item.bill[0]}
           onClick={() => {
-            console.log(enableNote);
-            console.log(selectedProducts);
-            /*
             if (separateNotes?.length) {
               openModal();
               createNotes(separateNotes, item.bill[0]._id);
-            } */
+            }
           }}
         >
           Guardar
