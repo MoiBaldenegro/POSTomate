@@ -4,7 +4,7 @@ import divider from "../../assets/icon/dividerInNote.svg";
 import trashIcon from "../../assets/icon/trashIcon.svg";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
-import { updateBillProps } from "../../store/updateBill";
+import { updateBillProps } from "../../store/bill.store";
 
 interface Props {
   item: any;
@@ -131,7 +131,6 @@ export default function SeparateChecks({ item, openModal }: Props) {
                               if (!isExist) {
                                 setEnableNote([...enableNote, noteElement]);
                               } else {
-                                // Utiliza filter para eliminar la nota con noteNumber igual a noteElement.noteNumber
                                 setEnableNote(
                                   enableNote.filter(
                                     (note) =>
@@ -164,13 +163,11 @@ export default function SeparateChecks({ item, openModal }: Props) {
                         }
                         onClick={() => {
                           setEnableNote([]);
-
                           if (selectedProducts.length > 0) {
                             setSeparateNotes((prevSeparateNotes) => {
                               if (!prevSeparateNotes) {
                                 return prevSeparateNotes;
                               }
-
                               if (index !== -1) {
                                 const updatedNotes = [...prevSeparateNotes];
                                 updatedNotes[index].products.push(
@@ -214,10 +211,27 @@ export default function SeparateChecks({ item, openModal }: Props) {
                     <img src={addIcon} alt="icon" />
                   </button>
                   <button
-                    disabled={separateNotes.length <= 2}
+                    disabled={
+                      separateNotes.length <= 2 ||
+                      separateNotes[separateNotes.length - 1]._id
+                    }
                     onClick={() => {
-                      const updateNotes = [...separateNotes.slice(0, -1)];
-                      setSeparateNotes(updateNotes);
+                      const productsLastNote = [
+                        ...separateNotes[separateNotes.length - 1].products,
+                      ];
+                      const firstNoteProducts = [...separateNotes[0].products];
+                      const updatedFirstNoteProducts =
+                        firstNoteProducts.concat(productsLastNote);
+
+                      const updatedNotes = [
+                        {
+                          ...separateNotes[0],
+                          products: updatedFirstNoteProducts,
+                        },
+                        ...separateNotes.slice(1, -1),
+                      ];
+
+                      setSeparateNotes(updatedNotes);
                     }}
                   >
                     <img src={trashIcon} alt="icon" />

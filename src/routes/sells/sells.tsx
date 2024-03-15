@@ -12,7 +12,7 @@ import burgerMenu from "../../assets/icon/burgerMenu.svg";
 import HeaderTwo from "../../components/headers/headerTwo/headerTwo";
 //Dependencies
 import { useNavigate } from "react-router-dom";
-import { useCurrentCommand } from "../../store/productsInOrder";
+import { useCurrentCommand } from "../../store/productsInOrder.store";
 import { SellType } from "../../types/props/sellType";
 import { useModal } from "../../hooks/useModal";
 import MainMenu from "../../components/menus/mainMenu/mainMenu";

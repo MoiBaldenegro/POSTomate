@@ -6,7 +6,7 @@ interface state {
   isLoading: boolean;
   errors: boolean;
 }
-
+// ESTO YA NO SE USA // DEPRECATED // VERIFICAR SU ELIMINACION
 export const useCheckStore = create<state>((set) => {
   return {
     isLoading: false,

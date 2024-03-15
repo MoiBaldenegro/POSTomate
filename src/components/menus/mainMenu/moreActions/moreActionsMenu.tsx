@@ -14,7 +14,7 @@ import UseAccount from "../../../../hooks/useAccount";
 import { useModal } from "../../../../hooks/useModal";
 import ConfirmChanges from "../../../modals/confirm/confirmChanges";
 import { CONFIRM_ACTIONS } from "../../../../configs/consts";
-import { updateBillProps } from "../../../../store/updateBill";
+import { updateBillProps } from "../../../../store/bill.store";
 import SeparateChecks from "../../../separateChecks/separateChecks";
 import TransferProducts from "../../../transferProducts/transferProducts";
 interface Props {

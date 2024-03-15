@@ -39,46 +39,92 @@
             background: rgba(92, 93, 96, 1);
             position: relative;
 
-
             >div:first-child{
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 padding: 32px 32px 0px 32px;
 
-
                >div>div{
-
                     display: flex;
                     justify-content: space-between;
                      align-items: center;
-            }   
+            }     
+        }
+
+        >div:last-child{
+            height: 48px;
+            display: flex;
+            justify-content: center;
+
+            >button{
+                width: 158px;
+                border-radius: 8px;
+                height: 48px;
+                background: rgba(249, 249, 249, 0.2);
+
+            }
         }   
     }
+
     .productsContainer{
-            border: 1px solid white;
-            height: 420px;
+            height: 400px;
             width: 100%;
             overflow-y: auto;
             overflow-x: hidden;
             padding: 10px 32px 10px 32px;
 
-            .productBox{
-                border: 1px solid yellow;
+            .productBox,
+            .productBoxEmpty{
                 width: 100%;
                 height: 44px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
             }
+
+            .productBoxEmpty{
+                justify-content: center;
+            }
     }
+
 
         >div:nth-child(2){
             width: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         >div:last-child{
             width: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            >h2,
+            h3{
+                width: 100%;
+                height: 100%;
+                border-radius: 8px;
+                background-color:#00ccff13; 
+                text-align: center;
+                opacity: .8;
+                transform: .25s ease;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0 50px;
+
+            }
+
+          >.error{
+            background-color: #fb533d1f;
+            color: #ffffff;
+            
+          }
+
+            
         }
 
         

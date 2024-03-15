@@ -25,7 +25,7 @@ import UseAccount from "../../hooks/useAccount";
 import { useLocation, useNavigate } from "react-router-dom";
 import UseOrder from "../../hooks/useOrder";
 import UseTable from "../../hooks/useTable";
-import { useCurrentCommand } from "../../store/productsInOrder";
+import { useCurrentCommand } from "../../store/productsInOrder.store";
 import { categoriesMap } from "../../mocks/categories";
 import { useModal } from "../../hooks/useModal";
 import MainKeyboard from "../../components/tools/mainKeyboard/mainKeyboard";
