@@ -165,7 +165,7 @@ export default function TransferProducts({ children, item, openModal }: Props) {
         </div>
         <div>
           {tableSelected && tableSelected[0]?.tableNum ? (
-            <h2>{`Seleccionaste la mesa: ${tableSelected[0]?.tableNum}`}</h2>
+            <h2>{`Seleccionaste la mesa: ${tableSelected[0]?.tableNum}, la mesa se selecciona correctamente, aca se maquetara el componente que recibe los productos, validar el no poder seleccionar la mesa remitente`}</h2>
           ) : tableSearch &&
             tableSearch.length > 0 &&
             (!tableSelected ||

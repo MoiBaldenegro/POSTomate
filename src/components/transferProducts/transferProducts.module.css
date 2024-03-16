@@ -106,7 +106,7 @@
             h3{
                 width: 100%;
                 height: 100%;
-                border-radius: 8px;
+                border-radius: 16px;
                 background-color:#00ccff13; 
                 text-align: center;
                 opacity: .8;
@@ -131,7 +131,6 @@
     }
     
     >.footerSection{
-        border: 1px solid blue;
         height: 48px;
         display: flex;
         justify-content: flex-end;
