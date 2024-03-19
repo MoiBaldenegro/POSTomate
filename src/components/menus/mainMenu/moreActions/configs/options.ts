@@ -5,13 +5,13 @@ import {
   COMMENTS,
   COURTESY_APPLY,
   MOVE_PRODUCTS,
+  MOVE_TABLE,
   NOTES_CANCEL,
   NOTES_DISCOUNTS,
   NOTES_NAME,
   PRODUCTS_CANCEL,
   PRODUCTS_DISCOUNTS,
   SEPARATE_CHECKS,
-  TRANSFER_BILL,
 } from "./constants";
 
 interface Action {
@@ -41,8 +41,8 @@ export const actionsMenu: Action[] = [
     set: MOVE_PRODUCTS,
   },
   {
-    option: "Transferir cuenta",
-    set: TRANSFER_BILL,
+    option: "Cambiar mesa",
+    set: MOVE_TABLE,
   },
   {
     option: "Descuentos en productos",
@@ -67,5 +67,9 @@ export const actionsMenu: Action[] = [
   {
     option: "Cancelar notas",
     set: NOTES_CANCEL,
+  },
+  {
+    option: "Cancelar cuenta",
+    set: BILL_CANCEL,
   },
 ];

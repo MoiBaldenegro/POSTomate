@@ -3,10 +3,14 @@ import styles from "./moreActionsMenu.module.css";
 import { actionsMenu } from "./configs/options";
 import { useState } from "react";
 import {
+  BILL_DISCOUNTS,
   BILL_NAME,
   COMMENTS,
   MOVE_PRODUCTS,
+  MOVE_TABLE,
+  NOTES_DISCOUNTS,
   NOTES_NAME,
+  PRODUCTS_DISCOUNTS,
   SEPARATE_CHECKS,
 } from "./configs/constants";
 import tomateIcon from "../../../../assets/icon/tomatePOSlogo.svg";
@@ -17,6 +21,10 @@ import { CONFIRM_ACTIONS } from "../../../../configs/consts";
 import { updateBillProps } from "../../../../store/bill.store";
 import SeparateChecks from "../../../separateChecks/separateChecks";
 import TransferProducts from "../../../transferProducts/transferProducts";
+import MoveTable from "../../../moveTable/moveTable";
+import ProductsDiscounts from "../../../discounts/productsDiscounts/productsDiscounts";
+import NotesDiscounts from "../../../discounts/notesDiscounts/notesDiscounts";
+import BillDiscount from "../../../discounts/billDiscounts/billDiscounts";
 interface Props {
   isOpen: any;
   onClose: any;
@@ -121,6 +129,33 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
               >
                 ESTE ES EL CHILDREN
               </TransferProducts>
+            </>
+          ) : selectedOption === MOVE_TABLE ? (
+            <>
+              <MoveTable item={item} openModal={confirmChanges.openModal}>
+                YEP
+              </MoveTable>
+            </>
+          ) : selectedOption === PRODUCTS_DISCOUNTS ? (
+            <>
+              <ProductsDiscounts
+                item={item}
+                openModal={confirmChanges.openModal}
+              >
+                YEP
+              </ProductsDiscounts>
+            </>
+          ) : selectedOption === NOTES_DISCOUNTS ? (
+            <>
+              <NotesDiscounts item={item} openModal={confirmChanges.openModal}>
+                YEP
+              </NotesDiscounts>
+            </>
+          ) : selectedOption === BILL_DISCOUNTS ? (
+            <>
+              <BillDiscount item={item} openModal={confirmChanges.openModal}>
+                YEP
+              </BillDiscount>
             </>
           ) : (
             <div
