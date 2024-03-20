@@ -1,5 +1,5 @@
 import DiscountBoard from "../../discountBoard/discount";
-import styles from "./productsDiscounts.module.css";
+import styles from "./productCourtesy.module.css";
 import rightArrow from "../../../assets/icon/arrowRight.svg";
 import arrow from "../../../assets/icon/selectArrow.svg";
 import divider from "../../../assets/icon/dividerTransfer.svg";
@@ -14,11 +14,7 @@ interface Props {
   children: string;
 }
 
-export default function ProductsDiscounts({
-  item,
-  openModal,
-  children,
-}: Props) {
+export default function ProductsCourtesy({ item, openModal, children }: Props) {
   const [toggleStatus, setToggleStatus] = useState(false);
   const [selectedNote, setSelectedNote] = useState("seleccion");
   const [productSelection, setproductSelection] = useState();
@@ -29,7 +25,7 @@ export default function ProductsDiscounts({
       <div className={styles.discountContainer}>
         <div>
           <div>
-            <h3>1.- Selecciona producto</h3>
+            <h3>Selecciona producto</h3>
             <div>
               <div className={styles.head}>
                 <div>
@@ -118,10 +114,6 @@ export default function ProductsDiscounts({
                 )}
               </div>
             </div>
-          </div>
-          <div>
-            <h3>2.-Ingresa descuento</h3>
-            <DiscountBoard>ea la marea</DiscountBoard>
           </div>
         </div>
         <div>

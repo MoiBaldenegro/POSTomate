@@ -9,7 +9,7 @@ interface Props {
   children: string;
 }
 
-export default function DiscountBoard({ item, openModal, children }: Props) {
+export default function DiscountBoard({ item, openModal }: Props) {
   const [percent, setPercent] = useState("");
   const [mode, setMode] = useState<string>(SET_PERCENT);
 

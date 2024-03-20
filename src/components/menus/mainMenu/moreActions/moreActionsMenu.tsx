@@ -6,6 +6,9 @@ import {
   BILL_DISCOUNTS,
   BILL_NAME,
   COMMENTS,
+  COURTESY_APPLY_BILL,
+  COURTESY_APPLY_NOTES,
+  COURTESY_APPLY_PRODUCTS,
   MOVE_PRODUCTS,
   MOVE_TABLE,
   NOTES_DISCOUNTS,
@@ -25,6 +28,8 @@ import MoveTable from "../../../moveTable/moveTable";
 import ProductsDiscounts from "../../../discounts/productsDiscounts/productsDiscounts";
 import NotesDiscounts from "../../../discounts/notesDiscounts/notesDiscounts";
 import BillDiscount from "../../../discounts/billDiscounts/billDiscounts";
+import ProductsCourtesy from "../../../courtesy/productsCourtesy/productCourtesy";
+import NotesCourtesy from "../../../courtesy/notesCourtesy/notesCourtesy";
 interface Props {
   isOpen: any;
   onClose: any;
@@ -156,6 +161,36 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
               <BillDiscount item={item} openModal={confirmChanges.openModal}>
                 YEP
               </BillDiscount>
+            </>
+          ) : selectedOption === COURTESY_APPLY_PRODUCTS ? (
+            <>
+              <ProductsCourtesy
+                item={item}
+                openModal={confirmChanges.openModal}
+              >
+                YEP
+              </ProductsCourtesy>
+            </>
+          ) : selectedOption === COURTESY_APPLY_NOTES ? (
+            <>
+              <NotesCourtesy item={item} openModal={confirmChanges.openModal}>
+                YEP
+              </NotesCourtesy>
+            </>
+          ) : selectedOption === COURTESY_APPLY_BILL ? (
+            <>
+              <ActionsKeyboard // ACA HAY QUE CAMBIAR  TODO PARA FUNCIONAR COMO CORTESIA, HACER UN SERVICIO PARA CAMBIAR EL STATUS DE LA MESA - CAMBAIR EL STATUS DE LA CUENTA - E IMPRIMIR EL TICKET
+                option={selectedOption}
+                actionType={
+                  /* aca va el nuevo servicio */ () => {
+                    return;
+                  }
+                }
+                item={item}
+                openModal={confirmChanges.openModal}
+              >
+                Ingresa descripcion de la cortesia:
+              </ActionsKeyboard>
             </>
           ) : (
             <div

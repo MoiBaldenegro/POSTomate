@@ -4,6 +4,9 @@ import {
   BILL_NAME,
   COMMENTS,
   COURTESY_APPLY,
+  COURTESY_APPLY_BILL,
+  COURTESY_APPLY_NOTES,
+  COURTESY_APPLY_PRODUCTS,
   MOVE_PRODUCTS,
   MOVE_TABLE,
   NOTES_CANCEL,
@@ -57,8 +60,16 @@ export const actionsMenu: Action[] = [
     set: BILL_DISCOUNTS,
   },
   {
-    option: "Cortesías",
-    set: COURTESY_APPLY,
+    option: "Cortesías de producto",
+    set: COURTESY_APPLY_PRODUCTS,
+  },
+  {
+    option: "Cortesías de nota",
+    set: COURTESY_APPLY_NOTES,
+  },
+  {
+    option: "Cortesía de cuenta",
+    set: COURTESY_APPLY_BILL,
   },
   {
     option: "Cancelar productos",

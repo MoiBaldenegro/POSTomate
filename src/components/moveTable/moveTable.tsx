@@ -6,6 +6,7 @@ import divider from "../../assets/icon/dividerTransfer.svg";
 import { UseTableStore } from "../../store/tables.store";
 import TableBoard from "../tableBoard/tableBoard";
 import table from "./../../assets/icon/tableFree.svg";
+
 interface Props {
   children: string;
   item: any;
@@ -38,7 +39,7 @@ export default function MoveTable({ children, item, openModal }: Props) {
       <div className={styles.mainSection}>
         <div>
           <div>
-            <div>
+            <div className={styles.headContainerFirst}>
               {item.bill[0]?.notes ? (
                 <div className={styles.containerInput}>
                   <span>{`Mesa ${item.tableNum}`}</span>
