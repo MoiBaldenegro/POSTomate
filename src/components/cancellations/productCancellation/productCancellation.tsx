@@ -3,10 +3,11 @@ import rightArrow from "../../../assets/icon/arrowRight.svg";
 import arrow from "../../../assets/icon/selectArrow.svg";
 import divider from "../../../assets/icon/dividerTransfer.svg";
 import dividerThree from "../../../assets/icon/divider003.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useModal } from "../../../hooks/useModal";
 import { GENERIC_KEYBOARD_ACTIVE } from "../../genericKeyboard/config";
 import { GenericKeyboard } from "../../genericKeyboard/genericKeyboard";
+import { cancellationReasonStore } from "../../../store/cancellationReasons.store";
 
 interface Props {
   item: any;
@@ -15,10 +16,22 @@ interface Props {
 }
 
 export default function ProductsCancel({ item, openModal, children }: Props) {
+  const [active, setActive] = useState<string>();
   const [toggleStatus, setToggleStatus] = useState(false);
   const [selectedNote, setSelectedNote] = useState("seleccion");
   const [productSelection, setproductSelection] = useState();
   const genericKeyboard = useModal(GENERIC_KEYBOARD_ACTIVE);
+
+  // zustand
+  const cancellationReasonsArray = cancellationReasonStore(
+    (state) => state.reasonsArray
+  );
+  const getReasons = cancellationReasonStore((state) => state.getReasons);
+
+  useEffect(() => {
+    getReasons();
+    console.log(cancellationReasonsArray);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -123,7 +136,27 @@ export default function ProductsCancel({ item, openModal, children }: Props) {
                   <h4>Restar del inventario</h4>
                   <img src={dividerThree} alt="divider-003" />
                 </div>
-                <div></div>
+                <div>
+                  {cancellationReasonsArray
+                    .filter((item) => {
+                      return item.substraction === true;
+                    })
+                    .map((element, index) => (
+                      <button
+                        onClick={() => {
+                          setActive(element.reasonName);
+                        }}
+                        style={
+                          active === element.reasonName
+                            ? { background: "white", color: "black" }
+                            : {}
+                        }
+                        key={index}
+                      >
+                        {element.reasonName}
+                      </button>
+                    ))}
+                </div>
               </div>
               <div>
                 <div>
@@ -131,14 +164,25 @@ export default function ProductsCancel({ item, openModal, children }: Props) {
                   <img src={dividerThree} alt="divider-003" />
                 </div>
                 <div>
-                  <button></button>
-                  <button></button>
-                  <button></button>
-                  <button></button>
-                  <button></button>
-                  <button></button>
-                  <button></button>
-                  <button></button>
+                  {cancellationReasonsArray
+                    .filter((item) => {
+                      return item.substraction === false;
+                    })
+                    .map((element, index) => (
+                      <button
+                        onClick={() => {
+                          setActive(element.reasonName);
+                        }}
+                        style={
+                          active === element.reasonName
+                            ? { background: "white", color: "black" }
+                            : {}
+                        }
+                        key={index}
+                      >
+                        {element.reasonName}
+                      </button>
+                    ))}
                 </div>
               </div>
             </div>
