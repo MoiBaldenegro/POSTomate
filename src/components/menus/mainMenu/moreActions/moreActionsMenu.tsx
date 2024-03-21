@@ -3,6 +3,7 @@ import styles from "./moreActionsMenu.module.css";
 import { actionsMenu } from "./configs/options";
 import { useState } from "react";
 import {
+  BILL_CANCEL,
   BILL_DISCOUNTS,
   BILL_NAME,
   COMMENTS,
@@ -11,8 +12,10 @@ import {
   COURTESY_APPLY_PRODUCTS,
   MOVE_PRODUCTS,
   MOVE_TABLE,
+  NOTES_CANCEL,
   NOTES_DISCOUNTS,
   NOTES_NAME,
+  PRODUCTS_CANCEL,
   PRODUCTS_DISCOUNTS,
   SEPARATE_CHECKS,
 } from "./configs/constants";
@@ -30,6 +33,8 @@ import NotesDiscounts from "../../../discounts/notesDiscounts/notesDiscounts";
 import BillDiscount from "../../../discounts/billDiscounts/billDiscounts";
 import ProductsCourtesy from "../../../courtesy/productsCourtesy/productCourtesy";
 import NotesCourtesy from "../../../courtesy/notesCourtesy/notesCourtesy";
+import NotesCancellation from "../../../cancellations/noteCancellation/noteCancellation";
+import ProductsCancel from "../../../cancellations/productCancellation/productCancellation";
 interface Props {
   isOpen: any;
   onClose: any;
@@ -190,6 +195,36 @@ export default function MoreActionsMenu({ onClose, item }: Props) {
                 openModal={confirmChanges.openModal}
               >
                 Ingresa descripcion de la cortesia:
+              </ActionsKeyboard>
+            </>
+          ) : selectedOption === PRODUCTS_CANCEL ? (
+            <>
+              <ProductsCancel item={item} openModal={confirmChanges.openModal}>
+                YEP
+              </ProductsCancel>
+            </>
+          ) : selectedOption === NOTES_CANCEL ? (
+            <>
+              <NotesCancellation
+                item={item}
+                openModal={confirmChanges.openModal}
+              >
+                YEP
+              </NotesCancellation>
+            </>
+          ) : selectedOption === BILL_CANCEL ? (
+            <>
+              <ActionsKeyboard // ACA HAY QUE CAMBIAR  TODO PARA FUNCIONAR COMO CANCELLAR NOTA, HACER UN SERVICIO PARA CAMBIAR EL STATUS DE LA MESA - CAMBAIR EL STATUS DE LA CUENTA - E IMPRIMIR EL TICKET
+                option={selectedOption}
+                actionType={
+                  /* aca va el nuevo servicio */ () => {
+                    return;
+                  }
+                }
+                item={item}
+                openModal={confirmChanges.openModal}
+              >
+                Ingresa descripcion de la cancellacion:
               </ActionsKeyboard>
             </>
           ) : (
