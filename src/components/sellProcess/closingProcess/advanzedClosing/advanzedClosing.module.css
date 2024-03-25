@@ -1,0 +1,146 @@
+.container{
+    width: 1734px;
+    height: 1012px;
+    background: rgba(53, 54, 57, 1);
+    border-radius: 32px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+   
+    >div:first-child{
+        height: 48px;
+        display: flex;
+        justify-content: space-between;
+
+        >div:first-child{
+            width: 350px;
+            display: flex ;
+            align-items: center;
+            gap: 16px;
+            font-size: 24px;
+
+            
+        }
+
+        >div:last-child{
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            >button{
+                height: 36px;
+                width: 36px;
+                border-radius: 6px;
+                background: rgba(249, 249, 249, 0.2);
+                box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
+            }
+        }
+    }
+
+    >div:last-child{
+        height: 868px;
+        display: flex;
+        justify-content: space-between;
+
+        >div{
+            padding: 48px 16px 32px 36px;
+            border-radius: 32px;
+            background: rgba(73, 74, 76, 1);
+        }
+
+        >div:first-child{
+            width: 636px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            
+            >div:nth-child(2){
+                height: 572px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+            }
+
+            >div>div{
+                align-items: center;
+                display: grid;
+                grid-template-columns: 150px 80px 160px 160px;
+
+                >h3:nth-child(3){
+                    justify-self: end;
+                }
+                >h3:last-child{
+                    justify-self: end;
+                }
+                
+                
+                >input{
+                    width: 120px;
+                    height: 40px;
+                    border-radius: 8px;
+                    background: rgba(249, 249, 249, 0.1);
+                    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5) inset;
+                    color: aliceblue;
+                    text-align: center;
+                    font-size: 16px;
+                }
+            }
+
+            >div:last-child{
+
+                
+                >div{
+                    display: flex;
+                    justify-content: space-between;
+                    height: 80px;
+                    padding: 0px 32px 0px 0px;
+
+
+                    >div{
+                        display: flex;
+                        align-items: center;
+                        width: 250px;
+                        gap: 16px;
+                        font-size: 24px;
+                    }
+                    
+                    >h3{
+                        font-size: 32px;
+                    }
+                }
+            }
+        }
+
+       
+
+        
+        >div:nth-child(2){
+            border: 1px solid rgb(141, 139, 23);
+            width: 562px;
+            height: 100%;
+        }
+
+        
+        >div:last-child{
+            border: 1px solid rgb(38, 207, 46);
+            width: 408px;
+            height: 100%;
+        }
+    }
+
+   
+}
+
+.quantity{
+    margin-left: 20px;
+}
+.import{
+    margin-right: 8px;
+}
+
+

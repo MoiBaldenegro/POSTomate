@@ -202,7 +202,7 @@ export function ActionsKeyboard({
             disabled={!item?.bill[0]}
             onClick={() => {
               if (text.length > 1) {
-                actionType(item.bill[0]._id, text);
+                actionType(item.bill[0]?._id, text);
               }
               openModal();
               return;

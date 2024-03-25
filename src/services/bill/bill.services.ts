@@ -21,10 +21,7 @@ export const addName = async (id: string, billName: BillName) => {
 };
 
 export const addComments = async (id: string, comments: Comments) => {
-  const res = await axios.put(
-    `https://tomate-server.onrender.com/bills/${id}`,
-    comments
-  );
+  const res = await axios.put(`http://localhost:8000/bills/${id}`, comments);
   return res;
 };
 

@@ -37,6 +37,8 @@ export const updateBillProps = create<state>((set) => {
     },
 
     updateComments: async (id, arg) => {
+      console.log(id);
+      console.log(arg);
       set({ isLoading: true });
       const data = { comments: arg };
       try {

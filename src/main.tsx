@@ -9,11 +9,13 @@ import Login from "./routes/login/login.tsx";
 import Host from "./routes/host/host.tsx";
 import FingerRegister from "./routes/fingerRegister/fingerRegister.tsx";
 import Reports from "./routes/reports/reports.tsx";
+import OpeningProcess from "./components/sellProcess/openingProcess/openingProcess.tsx";
+import ClosingProcess from "./components/sellProcess/closingProcess/closingProcess.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Host />,
+    element: <ClosingProcess />,
   },
   {
     path: "/host",
