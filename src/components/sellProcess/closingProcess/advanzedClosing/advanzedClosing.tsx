@@ -21,7 +21,14 @@ export default function AdvanzedClosing() {
     index: number,
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const newValue = event.target.value;
+    let newValue = event.target.value;
+
+    // Limitar a 2 caracteres
+    newValue = newValue.slice(0, 2);
+
+    // Remover caracteres especiales y negativos
+    newValue = newValue.replace(/[^0-9]/g, "");
+
     setValues((prevValues) => {
       const newValues = [...prevValues];
       newValues[index] = newValue;
@@ -73,7 +80,7 @@ export default function AdvanzedClosing() {
             {entrys.map((element, index) => (
               <div key={index}>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="0"
                   value={values[index]}
                   onChange={(event) => handleInputChange(index, event)}
