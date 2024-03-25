@@ -115,25 +115,44 @@
                 }
             }
         }
-
-       
-
-        
+     
         >div:nth-child(2){
-            border: 1px solid rgb(141, 139, 23);
+            border-radius: 4px;
+            background-color: transparent;
             width: 562px;
             height: 100%;
+            padding: 0px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            overflow: hidden;
+            overflow-y: auto;
+
+            >div{
+                border-radius: 16px;
+                background: rgba(73, 74, 76, 1);
+
+            }
+            
+            >div:first-child{
+             min-height: 378px;
+            }
+
+            >div:nth-child(2){
+                min-height: 378px;
+               }
+
+               >div:last-child{
+                min-height: 240px;
+               }
         }
 
         
         >div:last-child{
-            border: 1px solid rgb(38, 207, 46);
             width: 408px;
             height: 100%;
         }
-    }
-
-   
+    } 
 }
 
 .quantity{

@@ -24,7 +24,7 @@ export default function AdvanzedClosing() {
     let newValue = event.target.value;
 
     // Limitar a 2 caracteres
-    newValue = newValue.slice(0, 2);
+    newValue = newValue.slice(0, 3);
 
     // Remover caracteres especiales y negativos
     newValue = newValue.replace(/[^0-9]/g, "");
@@ -112,8 +112,12 @@ export default function AdvanzedClosing() {
             </div>
           </div>
         </div>
-        <div></div>
-        <div></div>
+        <div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div>aca</div>
       </div>
     </div>
   );
