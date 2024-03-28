@@ -1,0 +1,122 @@
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: 1s;
+    background: rgba(0, 0, 0, 0.616);
+
+    >div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        width: 1112px;
+        height: 790px;
+        padding: 32px;
+        border-radius: 32px;
+        background: rgba(53, 54, 57, 1);
+        color: var(--color-white);
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+
+        >div{
+            width: 100%;
+        }
+
+        >div:nth-child(2){
+            height: 48px;
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            gap: 16px;
+
+        }
+
+        >div:nth-child(3){
+            border-radius: 16px;
+            height: 112px;
+            display: flex;
+            justify-content: space-between;
+            background: rgba(249, 249, 249, 0.1);
+            padding: 0px 0px 0px 24px;
+
+            >div{
+                 width: 400px;
+                display: flex;
+                align-items: center;
+                gap: 16px;
+            }
+            >div:last-child{
+                padding: 32px;
+
+                >button{
+                    width: 160px;
+                    height: 48px;
+                    border-radius: 8px;
+                    background: rgba(249, 249, 249, 0.2);
+                }
+            }
+        }
+    
+        >:last-child{
+            height: 502px;
+            background: rgba(249, 249, 249, 0.1);
+            border-radius: 16px;
+            border: 1px solid yellowgreen;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 32px;
+
+           
+           
+            >div:last-child{
+                border: 1px solid rgb(46, 68, 167);
+                height: 438px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                >div:first-child{
+                    border: 1px solid salmon;
+                    height: 48px;
+                    display: grid;
+                    grid-template-columns: 140px 60px 140px 120px 120px 120px 120px;
+
+                    >button{
+                        width: 100%;
+                        background-color: transparent;
+                        box-shadow: none;
+                    }
+
+                   
+                }
+
+                >div:last-child{
+                    border: 1px solid rgb(27, 143, 27);
+                    height: 374px;
+              }
+          }
+        }
+      }
+    }
+   
+  .closeButton {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    cursor: pointer;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
+    background: rgba(249, 249, 249, 0.2);
+
+  }

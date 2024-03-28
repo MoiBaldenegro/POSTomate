@@ -15,7 +15,7 @@ import ClosingProcess from "./components/sellProcess/closingProcess/closingProce
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ClosingProcess />,
+    element: <Host />,
   },
   {
     path: "/host",

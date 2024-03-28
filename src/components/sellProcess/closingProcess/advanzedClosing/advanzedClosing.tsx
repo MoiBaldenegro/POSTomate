@@ -3,9 +3,16 @@ import tillIcon from "../../../../assets/icon/tillIconTwo.svg";
 import useDate from "../../../../hooks/useDate";
 import crossButton from "../../../../assets/icon/crossButton.svg";
 import dividerFinally from "../../../../assets/icon/dividerFinally.svg";
+import buttonTill from "../../../../assets/icon/tillTransparent.svg";
 import cashCircle from "../../../../assets/icon/paperCash.svg";
+import dividerOne from "../../../../assets/icon/divider10.svg";
+import dividerThree from "../../../../assets/icon/divider30.svg";
+import cardCircle from "../../../../assets/icon/cardCircle.svg";
+import platformCircle from "../../../../assets/icon/platformCircle.svg";
+import dividerTwo from "../../../../assets/icon/divider20.svg";
 import { IS_METALLIC, IS_PAPER, entrys } from "./constants";
 import { useState } from "react";
+import ClosingBoard from "../closingBoard/closingBoard";
 
 export default function AdvanzedClosing() {
   const { currentDateTime, opcionesFecha, opcionesHora }: any = useDate();
@@ -66,43 +73,118 @@ export default function AdvanzedClosing() {
         </div>
       </div>
       <div className={styles.mainSection}>
-        <div>
+        <div className={styles.primaryContainer}>
           <div>
             <div>
-              <h3 className={styles.quantity}>Cantidad</h3>
-              <h3>Tipo</h3>
-              <h3>Denominación</h3>
-              <h3 className={styles.import}>Importe</h3>
-            </div>
-            <img src={dividerFinally} alt="divider-finally" />
-          </div>
-          <div className={styles.denominationBox}>
-            {entrys.map((element, index) => (
-              <div key={index}>
-                <input
-                  type="text"
-                  placeholder="0"
-                  value={values[index]}
-                  onChange={(event) => handleInputChange(index, event)}
-                />
-                <h3>
-                  {element.type === IS_PAPER
-                    ? "Billete"
-                    : element.type === IS_METALLIC
-                    ? "Moneda"
-                    : null}
-                </h3>
-                <h3>{element.tittle}</h3>
-                <h3>{`${
-                  !isNaN(parseFloat(values[index]))
-                    ? (parseFloat(values[index]) * element.value).toFixed(2)
-                    : "0"
-                } MXN`}</h3>
+              <div>
+                <h3>Importe</h3>
+                <h3>Metodo de pago</h3>
               </div>
-            ))}
+              <img src={dividerOne} alt="divider" />
+            </div>
+            <div>
+              <div>
+                <input type="text" placeholder="0" />
+                <h3>Tarjeta de débito</h3>
+              </div>
+              <div>
+                <input type="text" placeholder="0" />
+                <h3>Tarjeta de crédito</h3>
+              </div>
+              <div>
+                <input type="text" placeholder="0" />
+                <h3>Transferencia</h3>
+              </div>
+              <div>
+                <div>
+                  <span>#! value</span>
+                </div>
+                <h3>Cortesía</h3>
+              </div>
+            </div>
           </div>
           <div>
-            <img src={dividerFinally} alt="divider-finally" />
+            <div>
+              <div>
+                <h3>Importe</h3>
+                <h3>Plataforma</h3>
+              </div>
+              <img src={dividerTwo} alt="divider" />
+            </div>
+            <div>
+              <div>
+                <input type="text" placeholder="0" />
+                <h3>Rappi</h3>
+              </div>
+              <div>
+                <input type="text" placeholder="0" />
+                <h3>Uber Eats</h3>
+              </div>
+              <div>
+                <div>
+                  <span>#! value</span>
+                </div>
+                <h3>Didi Food</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div>
+                <h3>Importe</h3>
+                <h3>Plataforma</h3>
+              </div>
+              <img src={dividerThree} alt="divider" />
+            </div>
+            <div>
+              <div>
+                <input type="text" placeholder="0" />
+                <h3>Entradas de efectivo</h3>
+              </div>
+              <div>
+                <input type="text" placeholder="0" />
+                <h3>Salidas de efectivo</h3>
+              </div>
+              <div>
+                <div>
+                  <span>#! value</span>
+                </div>
+                <h3>Propinas</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={styles.secondaryContainer}>
+          <div>
+            <div>
+              <div>
+                <h3 className={styles.quantity}>Cantidad</h3>
+                <h3>Denominación</h3>
+                <h3 className={styles.import}>Importe</h3>
+              </div>
+              <img src={dividerFinally} alt="divider-finally" />
+            </div>
+            <div className={styles.denominationBox}>
+              {entrys.map((element, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    placeholder="0"
+                    value={values[index]}
+                    onChange={(event) => handleInputChange(index, event)}
+                  />
+
+                  <h3>{element.tittle}</h3>
+                  <h3>{`${
+                    !isNaN(parseFloat(values[index]))
+                      ? (parseFloat(values[index]) * element.value).toFixed(2)
+                      : "0"
+                  } MXN`}</h3>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.totals}>
             <div>
               <div>
                 <img src={cashCircle} alt="cash-circle" />
@@ -110,14 +192,33 @@ export default function AdvanzedClosing() {
               </div>
               <h3>{`$${!isNaN(efectivoTotal) ? efectivoTotal : "0"} MXN`}</h3>
             </div>
+            <div>
+              <div>
+                <img src={cardCircle} alt="card-circle" />
+                <h3>Total de metodos de pago: </h3>
+              </div>
+              <h3>{`$${!isNaN(efectivoTotal) ? efectivoTotal : "0"} MXN`}</h3>
+            </div>
+            <div>
+              <div>
+                <img src={platformCircle} alt="platform-circle" />
+                <h3>Total de: </h3>
+              </div>
+              <h3>{`$${!isNaN(efectivoTotal) ? efectivoTotal : "0"} MXN`}</h3>
+            </div>
           </div>
         </div>
         <div>
-          <div></div>
-          <div></div>
-          <div></div>
+          <ClosingBoard></ClosingBoard>
+          <button>
+            <img src={buttonTill} alt="till-icon" />
+            Cerrar caja
+          </button>
+          <div>
+            <h4>Total ingresado</h4>
+            <h3>{`$${!isNaN(efectivoTotal) ? efectivoTotal : "0"} MXN`}</h3>
+          </div>
         </div>
-        <div>aca</div>
       </div>
     </div>
   );

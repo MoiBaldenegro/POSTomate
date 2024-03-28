@@ -12,12 +12,19 @@ import menuEight from "../../../assets/icon/menuIconEight.svg";
 import menuNine from "../../../assets/icon/menuIconNine.svg";
 import menuTen from "../../../assets/icon/menuIconTen.svg";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "../../../hooks/useModal";
+import { CASH_MOVES } from "../mainMenuActions/constants";
+import CashMoves from "../mainMenuActions/cashMoves/cashMoves";
+
 interface Props {
   isOpen: any;
   onClose: any;
   children: any;
 }
+
 export default function MainMenu({ isOpen, onClose, children }: Props) {
+  const cashMoves = useModal(CASH_MOVES);
+
   const navigate = useNavigate();
   return (
     <div className={styles.screen}>
@@ -30,7 +37,7 @@ export default function MainMenu({ isOpen, onClose, children }: Props) {
           <h2>Menú</h2>
         </section>
         <section>
-          <button>
+          <button onClick={cashMoves.openModal}>
             <img src={menuOne} alt="menu-icon" />
             <span>Movimientos de caja</span>
           </button>
@@ -84,6 +91,10 @@ export default function MainMenu({ isOpen, onClose, children }: Props) {
           </button>
         </section>
       </section>
+
+      {cashMoves.isOpen && cashMoves.modalName === CASH_MOVES ? (
+        <CashMoves onClose={cashMoves.closeModal}></CashMoves>
+      ) : null}
     </div>
   );
 }

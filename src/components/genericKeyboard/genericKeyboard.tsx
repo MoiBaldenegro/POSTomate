@@ -25,7 +25,7 @@ export function GenericKeyboard({
   const [mayus, setMayus] = useState(true);
   const [text, setText] = useState("");
 
-  const rowOne = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+  const rowOne = ["", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
   const rowTwo = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "´", "/"];
   const rowThree = ["A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ", "-"];
   const rowFour = ["Z", "X", "C", "V", "B", "N", "M", ",", "."];
