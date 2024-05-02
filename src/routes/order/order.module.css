@@ -295,7 +295,7 @@
   .customSelect{
     position: relative;
     width: 145px;
-    height: 56px;
+    height: 48px;
     background: rgba(249, 249, 249, 0.2);
     display: flex;
     justify-content: center;

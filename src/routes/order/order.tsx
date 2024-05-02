@@ -9,7 +9,6 @@ import dividerBtn from "../../assets/icon/dividerBtn.svg";
 import separateIcon from "../../assets/icon/separateNotes.svg";
 import actionsIcon from "../../assets/icon/actionsIcon.svg";
 import printIcon from "../../assets/icon/printIcon.svg";
-import tillIcon from "../../assets/icon/tillIcon.svg";
 import HeaderTwo from "../../components/headers/headerTwo/headerTwo";
 import rest from "../../assets/icon/rest.svg";
 import sum from "../../assets/icon/sum.svg";
@@ -254,7 +253,10 @@ export default function Order() {
                         }}
                       >
                         <div className={styles.selectTrigger}>
-                          <span> Español </span>
+                          <span>
+                            {selectNote.noteName ??
+                              `Nota  ${selectNote.noteNumber}`}
+                          </span>
                           <img
                             src={arrow}
                             alt=""
@@ -266,69 +268,83 @@ export default function Order() {
                             toggleStatus ? styles.options : styles.hidden
                           }
                         >
-                          <span className={styles.option}>Option</span>
-                          <span className={styles.option}>Option</span>
-                          <span className={styles.option}>Optionyou</span>
+                          {tableItem.bill[0].notes.map((element, index) => (
+                            <span
+                              key={index}
+                              className={styles.option}
+                              onClick={() => {
+                                setSelectNote(element);
+                              }}
+                            >
+                              {element.noteName ??
+                                `Nota  ${element.noteNumber}`}
+                            </span>
+                          ))}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div>
-                  {billCurrentCommand.products?.map((element, index) => (
-                    <div className={styles.productContainer} key={index}>
-                      {!element.active ? (
-                        <div>
-                          <button
-                            onClick={() => {
-                              handleReduceQuantity(index);
-                            }}
-                            disabled={
-                              billCurrentCommand.products[index].quantity <=
-                                1 || element.active
+                  {selectNote.products?.map(
+                    (
+                      element,
+                      index //////////////////
+                    ) => (
+                      <div className={styles.productContainer} key={index}>
+                        {!element.active ? (
+                          <div>
+                            <button
+                              onClick={() => {
+                                handleReduceQuantity(index);
+                              }}
+                              disabled={
+                                selectNote.products[index].quantity <= 1 ||
+                                element.active
+                              }
+                            >
+                              <img src={rest} alt="resta-icon" />
+                            </button>
+                            <span>{element.quantity}</span>
+                            <button
+                              onClick={() => {
+                                handleIncrementQuantity(index);
+                              }}
+                              disabled={
+                                selectNote.products[index].quantity >= 99 ||
+                                element.active
+                              }
+                            >
+                              <img src={sum} alt="sumar-icon" />
+                            </button>
+                          </div>
+                        ) : (
+                          <h3>{element.quantity}</h3>
+                        )}
+                        <span
+                          onClick={() => {
+                            if (element.active) {
+                              return;
                             }
-                          >
-                            <img src={rest} alt="resta-icon" />
+                            addModifier.openModal();
+                            setSelectedProduct(element);
+                          }}
+                        >
+                          {element.productName}
+                        </span>
+                        {element.quantity > 1 ? (
+                          <p>$ {element.priceInSiteBill}</p>
+                        ) : (
+                          <p>$ {element.priceInSite}.00</p>
+                        )}
+                        {!element.active && (
+                          <button>
+                            <img src={trashBtn} alt="trash-button" />
                           </button>
-                          <span>{element.quantity}</span>
-                          <button
-                            onClick={() => {
-                              handleIncrementQuantity(index);
-                            }}
-                            disabled={
-                              billCurrentCommand.products[index].quantity >=
-                                99 || element.active
-                            }
-                          >
-                            <img src={sum} alt="sumar-icon" />
-                          </button>
-                        </div>
-                      ) : (
-                        <h3>{element.quantity}</h3>
-                      )}
-                      <span
-                        onClick={() => {
-                          if (element.active) {
-                            return;
-                          }
-                          addModifier.openModal();
-                          setSelectedProduct(element);
-                        }}
-                      >
-                        {element.productName}
-                      </span>
-                      {element.quantity > 1 ? (
-                        <p>$ {element.priceInSiteBill}</p>
-                      ) : (
-                        <p>$ {element.priceInSite}.00</p>
-                      )}
-                      {!element.active && (
-                        <button>
-                          <img src={trashBtn} alt="trash-button" />
-                        </button>
-                      )}
-                    </div>
-                  ))}
+                        )}
+                      </div>
+                    )
+                  )}
                 </div>
                 <div>
                   <span>Cantidad:</span>
@@ -508,10 +524,6 @@ export default function Order() {
           >
             <img src={printIcon} alt="print-icon" />
             Imprimir
-          </button>
-          <button>
-            <img src={tillIcon} alt="till-icon" />
-            Cobrar
           </button>
         </div>
         {addModifier.isOpen && addModifier.modalName === ADD_MODIFIER_MODAL ? (
