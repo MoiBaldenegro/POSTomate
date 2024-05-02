@@ -28,6 +28,8 @@ export default function TableBox({ item, route, openModal, set }: any) {
   const userRole = authData.payload?.user?.role?.role.value;
 
   const handleclick = () => {
+    console.log("Este ees el useEffect dle tablebox");
+    console.log(item);
     if (
       item.status !== FREE_STATUS &&
       item.status != PENDING_STATUS &&

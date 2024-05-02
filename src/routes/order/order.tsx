@@ -48,7 +48,7 @@ interface ToGoOrder {
 }
 
 export default function Order() {
-  const [selectNote, setSelectNote] = useState();
+  const [selectNote, setSelectNote] = useState([]);
   const [toggleStatus, setToggleStatus] = useState(false);
   const [selectQuantity, setSelectQuantity] = useState<number | null>(null);
   // MODALS
@@ -194,10 +194,10 @@ export default function Order() {
     setCommandArray(filteredProducts);
 
     if (type === ON_SITE_ORDER) {
-      if (tableItem.bill[0]?.notes?.length > 0) {
-        setBillCurrentCommand(tableItem.bill[0]); // HEALTCHECK ✅
+      if (tableItem.bill[0]?.notes && tableItem.bill[0]?.notes?.length > 0) {
+        setSelectNote(tableItem.bill[0].notes[0]); // HEALTCHECK
         console.log("Entre el IF CON notas y...");
-        console.log(billCurrentCommand);
+        console.log(selectNote.length); // Esto se consologuea bien
         return;
       }
 
@@ -237,12 +237,13 @@ export default function Order() {
       <HeaderTwo />
       <main className={styles.mainSection}>
         <section>
-          {billCurrentCommand.notes?.length > 0 ? (
+          {tableItem.bill[0] && tableItem.bill[0].notes ? (
             <>
               <div>
                 <div className={styles.headAccount}>
                   <span>
-                    Cuenta: 0{type === ON_SITE_ORDER ? tableItem.tableNum : "#"}
+                    CON NOTAS Cuenta: 0
+                    {type === ON_SITE_ORDER ? tableItem.tableNum : "#"}
                   </span>
                   <div className={styles.containerInput}>
                     <div className={styles.categoriesSelect}>
