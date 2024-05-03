@@ -66,7 +66,6 @@ export default function SeparateChecks({ item, openModal }: Props) {
       if (!item.bill[0]) {
         return;
       }
-
       setSeparateNotes([
         { ...NOTE_TEMPLATE, products: updatedProducts },
         { ...NOTE_TEMPLATE },
@@ -75,7 +74,6 @@ export default function SeparateChecks({ item, openModal }: Props) {
     }
     const updatedNotes = [...item.bill[0]?.notes];
     /*
-
     const newData = updatedNotes.map((element, index) => {
       console.log(element);
       return {
@@ -83,7 +81,8 @@ export default function SeparateChecks({ item, openModal }: Props) {
         noteNumber: element.noteNumber,
         products: element.products,
       };
-    }); */
+    }); 
+    */
     setSeparateNotes(updatedNotes);
   }, [createNotes]);
 

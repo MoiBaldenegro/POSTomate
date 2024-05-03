@@ -45,10 +45,7 @@ export const createNotes = async (notesArray: any) => {
         console.log("Creacion");
         console.log(note);
         try {
-          const res = await axios.post(
-            "https://tomate-server.onrender.com/notes",
-            note
-          );
+          const res = await axios.post("http://localhost:8000/notes", note);
 
           if (res.data && res.data._id) {
             noteIds.push(res.data._id);
@@ -62,12 +59,15 @@ export const createNotes = async (notesArray: any) => {
         try {
           console.log("Actualizacion");
           console.log(note);
+          const transferNote = {
+            accountId: null,
+            body: { products: note.products },
+          };
+          console.log("Aca el objeto que anda observanmdo");
+          console.log(transferNote);
           const res = await axios.put(
-            `https://tomate-server.onrender.com/notes/${note._id}`,
-            {
-              accountId: null,
-              body: { products: note.products },
-            }
+            `http://localhost:8000/notes/${note._id}`,
+            transferNote
           );
           noteIds.push(note._id);
         } catch (error) {
