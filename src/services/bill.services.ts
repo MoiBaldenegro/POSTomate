@@ -40,7 +40,7 @@ export const createNotes = async (notesArray: any) => {
   console.log(updatedNotes);
   const noteIds = [];
   try {
-    for (const note of notesArray) {
+    for (const note of updatedNotes) {
       if (!note._id) {
         console.log("Creacion");
         console.log(note);
