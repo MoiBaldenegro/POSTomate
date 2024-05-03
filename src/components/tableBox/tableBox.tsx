@@ -15,7 +15,7 @@ import {
   FOR_PAYMENT_STATUS,
   FREE_STATUS,
   PENDING_STATUS,
-} from "../../lib/tableStatus.lib";
+} from "../../lib/tables.status.lib";
 import { HOSTESS, WAITER } from "../tools/confirmPassword/lib";
 import { ON_SITE_ORDER } from "../../lib/orders.lib";
 

@@ -29,12 +29,21 @@ export const addComments = async (id: string, comments: Comments) => {
 };
 
 export const createNotes = async (notesArray: any) => {
-  console.log("se ejecutoi esto por aca");
-  console.log(notesArray);
+  const updatedNotes = notesArray.map((note: any) => {
+    const total = note.products
+      .reduce((acc: number, product: any) => {
+        return acc + parseFloat(product.priceInSite);
+      }, 0)
+      .toString();
+    return { ...note, checkTotal: total };
+  });
+  console.log(updatedNotes);
   const noteIds = [];
   try {
     for (const note of notesArray) {
       if (!note._id) {
+        console.log("Creacion");
+        console.log(note);
         try {
           const res = await axios.post(
             "https://tomate-server.onrender.com/notes",
@@ -51,10 +60,13 @@ export const createNotes = async (notesArray: any) => {
         }
       } else {
         try {
+          console.log("Actualizacion");
+          console.log(note);
           const res = await axios.put(
             `https://tomate-server.onrender.com/notes/${note._id}`,
             {
-              products: note.products,
+              accountId: null,
+              body: { products: note.products },
             }
           );
           noteIds.push(note._id);
@@ -66,7 +78,6 @@ export const createNotes = async (notesArray: any) => {
     return noteIds;
   } catch (error) {
     console.error(error);
-    return ["es esto"];
   }
 };
 

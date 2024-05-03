@@ -8,7 +8,7 @@ import TableBoard from "../tableBoard/tableBoard";
 import table from "./../../assets/icon/tableFree.svg";
 import { UseActions } from "../../store/moreActions/moreActions.store";
 import { MoveTableDto } from "../../types/moreActions";
-import { ENABLE_STATUS, FREE_STATUS } from "../../lib/tableStatus.lib";
+import { ENABLE_STATUS, FREE_STATUS } from "../../lib/tables.status.lib";
 import { useModal } from "../../shared";
 import { CONFIRM_CHANGES } from "../../lib/modals.lib";
 import ConfirmChanges from "../modals/confirm/confirmChanges";
