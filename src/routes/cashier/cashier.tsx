@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { EXCEPTION_MESSAGES_CASHIER_SESSION_MODAL } from "../../lib/modals.lib";
 import ExceptionMessages from "../../components/modals/exceptionMessages/exceptionMessages";
 import UseCashierException from "../../hooks/exceptions/useCashierException";
+import { useNotesStore } from "../../store/notes.store";
 
 export default function Cashier() {
   //exceptions
@@ -44,10 +45,13 @@ export default function Cashier() {
   const [isLoading, setIsloading] = useState(false);
   const [revolve, setRevolve] = useState<string>("");
 
+  const notesArray = useNotesStore((state) => state.notesArray);
+  const getNotes = useNotesStore((state) => state.getNotes);
   //////////////////////////
   UseCashierException(cashierSessionException.openModal);
 
   useEffect(() => {
+    getNotes();
     getBills();
   }, []);
   return (

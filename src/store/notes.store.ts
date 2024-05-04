@@ -1,11 +1,12 @@
 import { create } from "zustand";
-import { updateNoteService } from "../services/orders/billWithNote.services";
+import { getNotesService } from "../services/notes.services";
 
 interface state {
   isLoading: boolean;
   errors: boolean;
-  message: null | string;
-  updateNote: (id: string, arg: {}) => Promise<void>;
+  message: string | null;
+  notesArray: [];
+  getNotes: () => Promise<{}>;
 }
 
 export const useNotesStore = create<state>((set) => {
@@ -13,33 +14,29 @@ export const useNotesStore = create<state>((set) => {
     isLoading: false,
     errors: false,
     message: null,
-    updateNote: async (id, arg) => {
+    notesArray: [],
+    getNotes: async () => {
       set({ isLoading: true });
       try {
-        const res = await updateNoteService(id, arg);
-
+        const res = await getNotesService();
         if (!res.data) {
           set({
             isLoading: false,
             errors: true,
-            message: "No se actualizo la nota",
+            message: "No se pudieron traer las notas",
           });
+          throw new Error("No se pudieron traer las notas");
         }
-        /*
-        if (res.status === 200) {
-          try {
-            // aca actualizaremos la cuenta
-          } catch (error) {}
-        }
-        */
-        set({ isLoading: false });
+        set({ isLoading: true });
+        return res;
       } catch (error) {
         set({
           isLoading: false,
           errors: true,
-          message: "No se actualizo la nota",
+          message: "Ha ocurrido un error inesperado",
         });
       }
+      throw new Error("Ha ocurrido un error inesperado");
     },
   };
 });

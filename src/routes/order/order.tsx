@@ -32,7 +32,11 @@ import { SELL_TYPES_PATH } from "../../lib/routes.paths.lib";
 import { ON_SITE_ORDER, TO_GO_ORDER } from "../../lib/orders.lib";
 import { useToGoOrders } from "../../store/orders/togoOrder.store";
 import AddModifier from "../../components/modifiers/addModifier";
-import { ADD_MODIFIER_MODAL, CONFIRM_CHANGES } from "../../lib/modals.lib";
+import {
+  ADD_MODIFIER_MODAL,
+  CONFIRM_CHANGES,
+  MAIN_KEYBOARD,
+} from "../../lib/modals.lib";
 import { numsKeys } from "../../lib/components.lib";
 import trashBtn from "../../assets/icon/trashIcon.svg";
 import arrow from "../../assets/icon/selectArrow.svg";
@@ -89,8 +93,7 @@ export default function Order() {
   };
 
   const isWithNotes = tableItem.bill[0]?.notes?.length > 0;
-
-  const mainKeyboard = useModal("mainKeyboard");
+  const mainKeyboard = useModal(MAIN_KEYBOARD);
 
   // ZUSTAND /////////////////
   const billCurrentCommand = useCurrentCommand(
@@ -463,7 +466,7 @@ export default function Order() {
           </section>
         </div>
       </main>
-      {mainKeyboard.isOpen && mainKeyboard.modalName === "mainKeyboard" ? (
+      {mainKeyboard.isOpen && mainKeyboard.modalName === MAIN_KEYBOARD ? (
         <MainKeyboard
           addProduct={handleAddedProducts}
           products={productsArray}

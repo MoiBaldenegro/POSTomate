@@ -248,7 +248,6 @@ export default function SeparateChecks({ item, openModal }: Props) {
         <button
           disabled={!item.bill[0]}
           onClick={() => {
-            console.log("Boton ejecutado");
             console.log(separateNotes, item.bill[0]._id);
             if (separateNotes?.length) {
               openModal();
