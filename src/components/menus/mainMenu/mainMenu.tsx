@@ -28,6 +28,9 @@ import OpeningProcess from "../../sellProcess/openingProcess/openingProcess";
 import AdvanzedClosing from "../../sellProcess/closingProcess/advanzedClosing/advanzedClosing";
 import CashOut from "../../cashOut/cashOut";
 import CloseOperationsPeriod from "../../closeOperations/closePeriod";
+import { useAuthStore } from "../../../shared";
+import { useEffect } from "react";
+import { ADMIN, CASHIER } from "../../tools/confirmPassword/lib";
 
 interface Props {
   isOpen: any;
@@ -36,6 +39,8 @@ interface Props {
 }
 
 export default function MainMenu({ isOpen, onClose, children }: Props) {
+  const authData = useAuthStore((state) => state.authData);
+  const allowRole = authData.payload.user.role.role.name;
   // Modals
   const cashMoves = useModal(CASH_MOVES); // Componente de retiro de propinas
   const disableProducts = useModal(DISABLED_PRODUCTS);
@@ -56,7 +61,10 @@ export default function MainMenu({ isOpen, onClose, children }: Props) {
           <h2>Menú</h2>
         </section>
         <section>
-          <button onClick={cashierOpenSession.openModal}>
+          <button
+            onClick={cashierOpenSession.openModal}
+            disabled={!authData || allowRole != CASHIER}
+          >
             <img src={menuTwo} alt="menu-icon" />
             Apertura de caja
           </button>

@@ -18,8 +18,20 @@ import {
 } from "../../lib/tables.status.lib";
 import { HOSTESS, WAITER } from "../tools/confirmPassword/lib";
 import { ON_SITE_ORDER } from "../../lib/orders.lib";
-
-export default function TableBox({ item, route, openModal, set }: any) {
+interface Props {
+  item: any;
+  route: string;
+  openModal: () => void;
+  set: (arg: any) => void;
+  cashierSession: [];
+}
+export default function TableBox({
+  item,
+  route,
+  openModal,
+  set,
+  cashierSession,
+}: Props) {
   const logOutRequest = useAuthStore((state) => state.logOutRequest);
   const authData = useAuthStore((state) => state.authData);
   const { loading, newAccount }: any = useAccount();
@@ -30,45 +42,47 @@ export default function TableBox({ item, route, openModal, set }: any) {
   const handleclick = () => {
     console.log("Este ees el useEffect dle tablebox");
     console.log(item);
-    if (
-      item.status !== FREE_STATUS &&
-      item.status != PENDING_STATUS &&
-      item.status != ENABLE_STATUS
-    ) {
-      return;
-    }
-    if (userRole === HOSTESS) {
-      // Esto lo vamos a quitar por que, la hostess debe de cambiar desde el panel de mesas no de aca
-      updateTable(PENDING_STATUS, item._id);
-      logOutRequest();
-    }
-    if (userRole === WAITER) {
-      if (item.status === FREE_STATUS || item.status === FOR_PAYMENT_STATUS) {
+    if (cashierSession && cashierSession.length > 0) {
+      if (
+        item.status !== FREE_STATUS &&
+        item.status != PENDING_STATUS &&
+        item.status != ENABLE_STATUS
+      ) {
         return;
       }
-      if (item.status === PENDING_STATUS) {
-        navigate(route, {
-          state: {
-            tableItem: item,
-            _id: item._id,
-            type: ON_SITE_ORDER,
-          },
-        });
+      if (userRole === HOSTESS) {
+        // Esto lo vamos a quitar por que, la hostess debe de cambiar desde el panel de mesas no de aca
+        updateTable(PENDING_STATUS, item._id);
+        logOutRequest();
+      }
+      if (userRole === WAITER) {
+        if (item.status === FREE_STATUS || item.status === FOR_PAYMENT_STATUS) {
+          return;
+        }
+        if (item.status === PENDING_STATUS) {
+          navigate(route, {
+            state: {
+              tableItem: item,
+              _id: item._id,
+              type: ON_SITE_ORDER,
+            },
+          });
+          return;
+        }
+        if (item.status === ENABLE_STATUS) {
+          navigate(route, {
+            state: {
+              tableItem: item,
+              _id: item._id,
+              billCurrent: item.bill[0],
+              type: ON_SITE_ORDER,
+            },
+          });
+          return;
+        }
+      } else {
         return;
       }
-      if (item.status === ENABLE_STATUS) {
-        navigate(route, {
-          state: {
-            tableItem: item,
-            _id: item._id,
-            billCurrent: item.bill[0],
-            type: ON_SITE_ORDER,
-          },
-        });
-        return;
-      }
-    } else {
-      return;
     }
   };
   if (!loading && newAccount?.code === 200) handleclick;

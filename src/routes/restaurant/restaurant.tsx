@@ -27,6 +27,7 @@ import { SELL_TYPES_PATH } from "../../lib/routes.paths.lib";
 import ExceptionMessages from "../../components/modals/exceptionMessages/exceptionMessages";
 import { EXCEPTION_MESSAGES_CASHIER_SESSION_MODAL } from "../../lib/modals.lib";
 import UseCashierException from "../../hooks/exceptions/useCashierException";
+import { useCashierSessionStore } from "../../store/operatingPeriod/cashierSession.store";
 
 export default function Restaurant() {
   const logOutRequest = useAuthStore((state) => state.logOutRequest);
@@ -42,6 +43,13 @@ export default function Restaurant() {
   const isAdmin =
     authData?.payload?.user?.role?.role.value === ADMIN ? true : false;
 
+  const getCashierSession = useCashierSessionStore(
+    (state) => state.getCashierSession
+  );
+  const cashierSession = useCashierSessionStore(
+    (state) => state.cashierSession
+  );
+
   //exceptions
   const cashierSessionException = useModal(
     EXCEPTION_MESSAGES_CASHIER_SESSION_MODAL
@@ -50,6 +58,8 @@ export default function Restaurant() {
   UseCashierException(cashierSessionException.openModal);
 
   useEffect(() => {
+    console.log(cashierSession);
+    getCashierSession();
     getTables();
   }, []);
   return (

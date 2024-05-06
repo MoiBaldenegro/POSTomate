@@ -4,6 +4,7 @@ import crossIcon from "../../../assets/icon/crossButton.svg";
 import { useAuthStore } from "../../../shared";
 import { ADMIN, CASHIER } from "../../tools/confirmPassword/lib";
 import { useEffect } from "react";
+
 interface Props {
   isOpen: any;
   onClose: any;
@@ -19,8 +20,7 @@ export default function ExceptionMessages({
   const authData = useAuthStore((state) => state.authData);
   const logOutRequest = useAuthStore((state) => state.logOutRequest);
   const roleValue = authData?.payload?.user?.role?.role?.value;
-  const isCashier =
-    roleValue === ADMIN ? true : roleValue === CASHIER ? true : false;
+  const isCashier = roleValue === CASHIER ? true : false;
   if (!interactive) {
     setTimeout(() => {
       onClose();

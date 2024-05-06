@@ -78,7 +78,7 @@ export default function SimpleCashierSession({ onClose }: Props) {
             </button>
           </div>
         </div>
-        <button>
+        <button disabled={!value.length || parseFloat(value) < 100}>
           <img src={onlyTill} alt="till-icon" />
           Abrir caja
         </button>
