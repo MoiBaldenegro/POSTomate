@@ -13,6 +13,7 @@ import {
 } from "../../../lib/routes.paths.lib";
 import { keys } from "../../../lib/components.lib";
 import Loader from "../../loader/loader";
+import { useOperationProcess } from "../../../store/operatingPeriod/operatingPeriod.store";
 
 interface Props {
   pin: string;
@@ -34,6 +35,9 @@ export default function ConfirmPassword({
   pin,
   dailyRegisterException,
 }: Props) {
+  const getOperatingPeriod = useOperationProcess(
+    (state) => state.getCurrentPeriod
+  );
   const isLoading = useAuthStore((state) => state.isLoading);
   const loginRequest = useAuthStore((state) => state.loginRequest);
   const logOutRequest = useAuthStore((state) => state.logOutRequest);
@@ -44,6 +48,7 @@ export default function ConfirmPassword({
   const userAuth = { employeeNumber: pin, pinPos: parseFloat(value) };
 
   useEffect(() => {
+    getOperatingPeriod();
     if (isAuth) {
       if (!authData.payload.user.dailyRegister) {
         dailyRegisterException();

@@ -35,7 +35,6 @@ export default function ExceptionMessages({
             <img src={crossIcon} alt="cross-button" />
           </button>
         )}
-
         <img src={exceptionIcon} alt="exception-icon" />
         <h2>{children}</h2>
         {interactive && (

@@ -28,8 +28,14 @@ import ExceptionMessages from "../../components/modals/exceptionMessages/excepti
 import { EXCEPTION_MESSAGES_CASHIER_SESSION_MODAL } from "../../lib/modals.lib";
 import UseCashierException from "../../hooks/exceptions/useCashierException";
 import { useCashierSessionStore } from "../../store/operatingPeriod/cashierSession.store";
+import { useOperationProcess } from "../../store/operatingPeriod/operatingPeriod.store";
 
 export default function Restaurant() {
+  const getOperatingPeriod = useOperationProcess(
+    (state) => state.getCurrentPeriod
+  );
+  const currentPeriod = useOperationProcess((state) => state.operatingPeriod);
+  const cashierSession = currentPeriod[0].sellProcess;
   const logOutRequest = useAuthStore((state) => state.logOutRequest);
   const navigate = useNavigate();
   const authData = useAuthStore((state) => state.authData);
@@ -43,13 +49,6 @@ export default function Restaurant() {
   const isAdmin =
     authData?.payload?.user?.role?.role.value === ADMIN ? true : false;
 
-  const getCashierSession = useCashierSessionStore(
-    (state) => state.getCashierSession
-  );
-  const cashierSession = useCashierSessionStore(
-    (state) => state.cashierSession
-  );
-
   //exceptions
   const cashierSessionException = useModal(
     EXCEPTION_MESSAGES_CASHIER_SESSION_MODAL
@@ -58,8 +57,7 @@ export default function Restaurant() {
   UseCashierException(cashierSessionException.openModal);
 
   useEffect(() => {
-    console.log(cashierSession);
-    getCashierSession();
+    console.log(currentPeriod);
     getTables();
   }, []);
   return (
@@ -78,6 +76,7 @@ export default function Restaurant() {
         {(isAdmin ? tablesArray : avalaibleTables)?.map((item: any) => (
           <div className={styles.grid}>
             <TableBox
+              cashierSession={cashierSession}
               item={item}
               route={"/restaurant-order/:item"}
               openModal={openMoreActions.openModal}

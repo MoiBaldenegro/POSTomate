@@ -1,13 +1,12 @@
-import axios from "axios";
 import { create } from "zustand";
-import { getCashierSession } from "../../services/operatingPeriod/cashierSession.services";
+import { createCashierSession } from "../../services/operatingPeriod/cashierSession.services";
 
 interface state {
   isLoading: boolean;
   errors: boolean;
   message: string | null;
   cashierSession: [];
-  getCashierSession: () => Promise<void>;
+  createSession: (quantity: string) => Promise<{}>;
 }
 
 export const useCashierSessionStore = create<state>((set) => {
@@ -16,15 +15,15 @@ export const useCashierSessionStore = create<state>((set) => {
     errors: false,
     message: null,
     cashierSession: [],
-    getCashierSession: async () => {
+    createSession: async (quantity) => {
+      set({ isLoading: true });
       try {
-        set({ isLoading: true });
-        const res = await getCashierSession();
+        const res = await createCashierSession(quantity);
         if (!res.data) {
           set({
             isLoading: false,
             errors: true,
-            message: "No se recuperaron sessiones activas",
+            message: "No se pudo crear la session",
           });
         }
         set({ isLoading: false });
@@ -32,8 +31,8 @@ export const useCashierSessionStore = create<state>((set) => {
       } catch (error) {
         set({
           isLoading: false,
-          errors: true,
-          message: "Ha ocurrido algo inesperado",
+          errors: false,
+          message: `No se pudo crear la session. mas informacion: ${error}`,
         });
       }
     },

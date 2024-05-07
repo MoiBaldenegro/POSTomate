@@ -6,6 +6,14 @@ import backSpace from "../../../../assets/icon/backspaceIcon.svg";
 import minCheck from "../../../../assets/icon/minCheck.svg";
 import onlyTill from "../../../../assets/icon/onlyTill.svg";
 import { useState } from "react";
+import { useCashierSessionStore } from "../../../../store/operatingPeriod/cashierSession.store";
+import { CONFIRM_CHANGES } from "../../../../lib/modals.lib";
+import { useModal } from "../../../../shared";
+import ConfirmChanges from "../../../modals/confirm/confirmChanges";
+import {
+  CASHIER_PATH,
+  SELL_TYPES_PATH,
+} from "../../../../lib/routes.paths.lib";
 
 interface Props {
   onClose: () => void;
@@ -24,6 +32,10 @@ export default function SimpleCashierSession({ onClose }: Props) {
   );
 
   }*/
+  const createSession = useCashierSessionStore((state) => state.createSession);
+  const isLoading = useCashierSessionStore((state) => state.isLoading);
+  const errors = useCashierSessionStore((state) => state.errors);
+  const confirmChanges = useModal(CONFIRM_CHANGES);
 
   const keys = ["7", "8", "9", "4", "5", "6", "1", "2", "3", "0", ".", "00"];
 
@@ -78,10 +90,28 @@ export default function SimpleCashierSession({ onClose }: Props) {
             </button>
           </div>
         </div>
-        <button disabled={!value.length || parseFloat(value) < 100}>
+        <button
+          disabled={!value.length || parseFloat(value) < 100}
+          onClick={() => {
+            createSession(value);
+            confirmChanges.openModal();
+          }}
+        >
           <img src={onlyTill} alt="till-icon" />
           Abrir caja
         </button>
+        {confirmChanges.isOpen &&
+        confirmChanges.modalName === CONFIRM_CHANGES ? (
+          <>
+            <ConfirmChanges
+              route={`/${CASHIER_PATH}`}
+              isOpen={confirmChanges.isOpen}
+              onClose={confirmChanges.closeModal}
+              loading={isLoading}
+              errors={errors}
+            >{` Caja abierta con exito: $${value}`}</ConfirmChanges>
+          </>
+        ) : null}
       </div>
     </div>
   );

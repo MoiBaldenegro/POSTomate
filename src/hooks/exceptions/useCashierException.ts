@@ -3,19 +3,16 @@ import { useOperationProcess } from "../../store/operatingPeriod/operatingPeriod
 
 export default function UseCashierException(openModal: any) {
   const periodsArray = useOperationProcess((state) => state.operatingPeriod);
-  const currentPeriod = periodsArray ? periodsArray[0] : null;
+  const cashierSession = periodsArray[0]?.sellProcess;
 
   //OperatingPeriod confirm
   const getCurrentPeriod = useOperationProcess(
     (state) => state.getCurrentPeriod
   );
   useEffect(() => {
-    if (!currentPeriod) {
-      getCurrentPeriod();
-      return;
-    }
-    if (!currentPeriod.cashierSession?.length) {
+    getCurrentPeriod();
+    if (!cashierSession || cashierSession?.length === 0) {
       openModal();
     }
-  }, [periodsArray]);
+  }, []);
 }
