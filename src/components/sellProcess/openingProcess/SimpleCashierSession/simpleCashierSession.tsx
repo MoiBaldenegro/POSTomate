@@ -14,6 +14,7 @@ import {
   CASHIER_PATH,
   SELL_TYPES_PATH,
 } from "../../../../lib/routes.paths.lib";
+import { useOperationProcess } from "../../../../store/operatingPeriod/operatingPeriod.store";
 
 interface Props {
   onClose: () => void;
@@ -24,7 +25,9 @@ export default function SimpleCashierSession({ onClose }: Props) {
     "es-ES",
     opcionesFecha
   );
-
+  const getOperatingPeriod = useOperationProcess(
+    (state) => state.getCurrentPeriod
+  );
   const [value, setValue] = useState("");
   /*  const formattedHora = currentDateTime.toLocaleTimeString(
     "es-ES",
@@ -104,7 +107,8 @@ export default function SimpleCashierSession({ onClose }: Props) {
         confirmChanges.modalName === CONFIRM_CHANGES ? (
           <>
             <ConfirmChanges
-              route={`/${CASHIER_PATH}`}
+              actionType={getOperatingPeriod}
+              closeModal={onClose}
               isOpen={confirmChanges.isOpen}
               onClose={confirmChanges.closeModal}
               loading={isLoading}
