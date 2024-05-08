@@ -15,6 +15,7 @@ import { useModal } from "../sells/imports";
 import { EXCEPTION_MESSAGES_CASHIER_SESSION_MODAL } from "../../lib/modals.lib";
 import ExceptionMessages from "../../components/modals/exceptionMessages/exceptionMessages";
 import UseCashierException from "../../hooks/exceptions/useCashierException";
+import { useOperationProcess } from "../../store/operatingPeriod/operatingPeriod.store";
 // Dependecies
 
 export default function Host() {
@@ -22,6 +23,9 @@ export default function Host() {
   const cashierSessionException = useModal(
     EXCEPTION_MESSAGES_CASHIER_SESSION_MODAL
   );
+
+  const operationPeriod = useOperationProcess((state) => state.operatingPeriod);
+  const cashierSession = operationPeriod[0]?.sellProcess;
   UseCashierException(cashierSessionException.openModal);
 
   useEffect(() => {
@@ -34,7 +38,7 @@ export default function Host() {
         {tablesArray?.map((item: any, index: any) => {
           return (
             <div className={styles.grid} key={index}>
-              <TableBox item={item} />
+              <TableBox cashierSession={cashierSession} item={item} />
             </div>
           );
         })}

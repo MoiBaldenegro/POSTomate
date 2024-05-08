@@ -18,12 +18,13 @@ import {
 } from "../../lib/tables.status.lib";
 import { HOSTESS, WAITER } from "../tools/confirmPassword/lib";
 import { ON_SITE_ORDER } from "../../lib/orders.lib";
+import { useEffect } from "react";
 interface Props {
-  item: any;
-  route: string;
-  openModal: () => void;
-  set: (arg: any) => void;
-  cashierSession: [];
+  item?: any;
+  route?: string;
+  openModal?: () => void;
+  set?: (arg: any) => void;
+  cashierSession: any;
 }
 export default function TableBox({
   item,
@@ -40,13 +41,13 @@ export default function TableBox({
   const userRole = authData.payload?.user?.role?.role.value;
 
   const handleclick = () => {
-    console.log("Este ees el useEffect dle tablebox");
-    console.log(item);
+    console.log(userRole);
+    console.log(cashierSession);
     if (cashierSession && cashierSession.length > 0) {
       if (
         item.status !== FREE_STATUS &&
-        item.status != PENDING_STATUS &&
-        item.status != ENABLE_STATUS
+        item.status !== PENDING_STATUS &&
+        item.status !== ENABLE_STATUS
       ) {
         return;
       }
@@ -85,6 +86,9 @@ export default function TableBox({
       }
     }
   };
+  useEffect(() => {
+    console.log(userRole);
+  }, []);
   if (!loading && newAccount?.code === 200) handleclick;
   return (
     <div className={styles.table}>
