@@ -43,6 +43,8 @@ import arrow from "../../assets/icon/selectArrow.svg";
 import { useNotesStore } from "../../store/notes.store";
 import ConfirmChanges from "../../components/modals/confirm/confirmChanges";
 import { ENABLE_STATUS } from "../../lib/tables.status.lib";
+import { useCashierSessionStore } from "../../store/operatingPeriod/cashierSession.store";
+import UseVerify from "../../hooks/verifications/useVerify";
 
 interface ToGoOrder {
   code: string /* esto despues sera automatico, agregar un unique*/;
@@ -69,6 +71,9 @@ export default function Order() {
   const logOutRequest = useAuthStore((state) => state.logOutRequest);
   const createToGoOrder = useToGoOrders((state) => state.createNewOrder);
   const updateToGoOrder = useToGoOrders((state) => state.updateOrder);
+  const addBillForPayment = useCashierSessionStore(
+    (state) => state.addBillForPayment
+  );
 
   //add modifier
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
@@ -81,6 +86,7 @@ export default function Order() {
   const navigate = useNavigate();
   const location = useLocation();
   const { _id, billCurrent, tableItem, type, toGoOrder } = location.state || {};
+  const { currentPeriod } = UseVerify();
 
   const userName = authData?.payload?.user.name;
   const initialOrderTogo: ToGoOrder = {
@@ -210,8 +216,8 @@ export default function Order() {
         ...billCurrentCommand,
         products: [],
       });
-      console.log(billCurrentCommand);
-      console.log(billCurrent); // aca es rollete del bug de volver a v3er los productos.
+      console.log("Aca el auth data");
+      console.log(authData); // aca es rollete del bug de volver a v3er los productos.
     };
   }, []);
   return (
@@ -503,9 +509,21 @@ export default function Order() {
           <img src={dividerBtn} alt="divider-buttons" />
           <button
             onClick={() => {
-              handlePrintBill("billPrint", billCurrentCommand),
-                updateBill("forPayment", billCurrent, billCurrentCommand);
+              {
+                /* handlePrintBill("billPrint", billCurrentCommand),*/
+              }
+              updateBill("forPayment", billCurrent, billCurrentCommand);
               updateTable("forPayment", _id);
+              // vamos a mandar el indice 0 desde el periodo operativo actual
+              const elasticBalnceChargeBills =
+                currentPeriod[0]?.sellProcess?.length < 2
+                  ? currentPeriod[0]?.sellProcess[0]
+                  : currentPeriod[0]?.sellProcess?.length >
+                    currentPeriod[0]?.sellProcess?.length
+                  ? currentPeriod[0]?.sellProcess[1]
+                  : currentPeriod[0]?.sellProcess[0];
+              console.log(elasticBalnceChargeBills);
+              addBillForPayment(elasticBalnceChargeBills, billCurrent._id);
               logOutRequest();
             }}
             disabled={!billCurrent?.products}

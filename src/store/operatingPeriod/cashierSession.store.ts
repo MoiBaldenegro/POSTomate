@@ -1,12 +1,16 @@
 import { create } from "zustand";
-import { createCashierSession } from "../../services/operatingPeriod/cashierSession.services";
+import {
+  createCashierSession,
+  updateBillForPayment,
+} from "../../services/operatingPeriod/cashierSession.services";
 
 interface state {
   isLoading: boolean;
   errors: boolean;
   message: string | null;
   cashierSession: [];
-  createSession: (quantity: string) => Promise<{}>;
+  createSession: (quantity: string, id: string) => Promise<{}>;
+  addBillForPayment: (id: string, body: {}) => Promise<void>;
 }
 
 export const useCashierSessionStore = create<state>((set) => {
@@ -15,10 +19,10 @@ export const useCashierSessionStore = create<state>((set) => {
     errors: false,
     message: null,
     cashierSession: [],
-    createSession: async (quantity) => {
+    createSession: async (quantity, id) => {
       set({ isLoading: true });
       try {
-        const res = await createCashierSession(quantity);
+        const res = await createCashierSession(quantity, id);
         if (!res.data) {
           set({
             isLoading: false,
@@ -31,9 +35,25 @@ export const useCashierSessionStore = create<state>((set) => {
       } catch (error) {
         set({
           isLoading: false,
-          errors: false,
+          errors: true,
           message: `No se pudo crear la session. mas informacion: ${error}`,
         });
+      }
+    },
+    addBillForPayment: async (id, body) => {
+      console.log("ADDBILLFORMPAYMENT");
+      console.log(id);
+      console.log(body);
+      set({ isLoading: true });
+      try {
+        const res = await updateBillForPayment(id, { bills: [body] });
+        if (!res.data) {
+          set({ isLoading: false, errors: true, message: "No se actualizo" });
+        }
+        set({ isLoading: false });
+        return res.data;
+      } catch (error) {
+        set({ isLoading: false, errors: true, message: "No se actualizo" });
       }
     },
   };

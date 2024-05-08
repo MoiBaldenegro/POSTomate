@@ -8,7 +8,7 @@ import onlyTill from "../../../../assets/icon/onlyTill.svg";
 import { useState } from "react";
 import { useCashierSessionStore } from "../../../../store/operatingPeriod/cashierSession.store";
 import { CONFIRM_CHANGES } from "../../../../lib/modals.lib";
-import { useModal } from "../../../../shared";
+import { useAuthStore, useModal } from "../../../../shared";
 import ConfirmChanges from "../../../modals/confirm/confirmChanges";
 import {
   CASHIER_PATH,
@@ -25,6 +25,8 @@ export default function SimpleCashierSession({ onClose }: Props) {
     "es-ES",
     opcionesFecha
   );
+  const authData = useAuthStore((state) => state.authData);
+  const cashierId = authData.payload.user._id;
   const getOperatingPeriod = useOperationProcess(
     (state) => state.getCurrentPeriod
   );
@@ -96,7 +98,7 @@ export default function SimpleCashierSession({ onClose }: Props) {
         <button
           disabled={!value.length || parseFloat(value) < 100}
           onClick={() => {
-            createSession(value);
+            createSession(value, cashierId);
             confirmChanges.openModal();
           }}
         >

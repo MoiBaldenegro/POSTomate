@@ -19,31 +19,26 @@ import {
 import { HOSTESS, WAITER } from "../tools/confirmPassword/lib";
 import { ON_SITE_ORDER } from "../../lib/orders.lib";
 import { useEffect } from "react";
+import UseVerify from "../../hooks/verifications/useVerify";
 interface Props {
   item?: any;
   route?: string;
   openModal?: () => void;
   set?: (arg: any) => void;
-  cashierSession: any;
 }
-export default function TableBox({
-  item,
-  route,
-  openModal,
-  set,
-  cashierSession,
-}: Props) {
+export default function TableBox({ item, route, openModal, set }: Props) {
   const logOutRequest = useAuthStore((state) => state.logOutRequest);
   const authData = useAuthStore((state) => state.authData);
   const { loading, newAccount }: any = useAccount();
   const navigate = useNavigate();
   const { updateTable } = UseTable();
   const userRole = authData.payload?.user?.role?.role.value;
+  const { cashierAvailable } = UseVerify();
 
   const handleclick = () => {
     console.log(userRole);
-    console.log(cashierSession);
-    if (cashierSession && cashierSession.length > 0) {
+    console.log(cashierAvailable);
+    if (cashierAvailable) {
       if (
         item.status !== FREE_STATUS &&
         item.status !== PENDING_STATUS &&
@@ -86,9 +81,7 @@ export default function TableBox({
       }
     }
   };
-  useEffect(() => {
-    console.log(userRole);
-  }, []);
+
   if (!loading && newAccount?.code === 200) handleclick;
   return (
     <div className={styles.table}>

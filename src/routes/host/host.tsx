@@ -27,7 +27,6 @@ export default function Host() {
   const operationPeriod = useOperationProcess((state) => state.operatingPeriod);
   const cashierSession = operationPeriod[0]?.sellProcess;
   UseCashierException(cashierSessionException.openModal);
-
   useEffect(() => {
     getTables();
   }, []);

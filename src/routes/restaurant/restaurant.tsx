@@ -76,7 +76,6 @@ export default function Restaurant() {
         {(isAdmin ? tablesArray : avalaibleTables)?.map((item: any) => (
           <div className={styles.grid}>
             <TableBox
-              cashierSession={cashierSession}
               item={item}
               route={"/restaurant-order/:item"}
               openModal={openMoreActions.openModal}

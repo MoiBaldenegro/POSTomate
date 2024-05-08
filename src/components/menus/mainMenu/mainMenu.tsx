@@ -29,8 +29,8 @@ import AdvanzedClosing from "../../sellProcess/closingProcess/advanzedClosing/ad
 import CashOut from "../../cashOut/cashOut";
 import CloseOperationsPeriod from "../../closeOperations/closePeriod";
 import { useAuthStore } from "../../../shared";
-import { useEffect } from "react";
 import { ADMIN, CASHIER } from "../../tools/confirmPassword/lib";
+import UseVerify from "../../../hooks/verifications/useVerify";
 
 interface Props {
   isOpen: any;
@@ -49,7 +49,7 @@ export default function MainMenu({ isOpen, onClose, children }: Props) {
   const cashOutProcess = useModal(CASH_OUT_PROCESS);
   const closeOperations = useModal(CLOSE_OPERATIONS_PERIOD);
   const navigate = useNavigate();
-
+  const { isCashierEnable } = UseVerify();
   return (
     <div className={styles.screen}>
       <section className={styles.modal}>
@@ -63,7 +63,7 @@ export default function MainMenu({ isOpen, onClose, children }: Props) {
         <section>
           <button
             onClick={cashierOpenSession.openModal}
-            disabled={!authData || allowRole != CASHIER}
+            disabled={!authData || allowRole != CASHIER || isCashierEnable}
           >
             <img src={menuTwo} alt="menu-icon" />
             Apertura de caja
@@ -80,7 +80,10 @@ export default function MainMenu({ isOpen, onClose, children }: Props) {
             <img src={menuTwo} alt="menu-icon" />
             <span>Corte parcial</span>
           </button>
-          <button onClick={cashierCloseSession.openModal}>
+          <button
+            onClick={cashierCloseSession.openModal}
+            disabled={!isCashierEnable}
+          >
             <img src={menuTwo} alt="menu-icon" />
             <span>Cierre de caja</span>
           </button>
