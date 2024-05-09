@@ -518,8 +518,8 @@ export default function Order() {
               const elasticBalnceChargeBills =
                 currentPeriod[0]?.sellProcess?.length < 2
                   ? currentPeriod[0]?.sellProcess[0]
-                  : currentPeriod[0]?.sellProcess?.length >
-                    currentPeriod[0]?.sellProcess?.length
+                  : currentPeriod[0]?.sellProcess[0]?.bills?.length >
+                    currentPeriod[0]?.sellProcess[1]?.bills?.length
                   ? currentPeriod[0]?.sellProcess[1]
                   : currentPeriod[0]?.sellProcess[0];
               console.log(elasticBalnceChargeBills);

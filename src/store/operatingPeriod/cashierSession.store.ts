@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import {
   createCashierSession,
+  getCashierSession,
   updateBillForPayment,
 } from "../../services/operatingPeriod/cashierSession.services";
 
@@ -11,6 +12,7 @@ interface state {
   cashierSession: [];
   createSession: (quantity: string, id: string) => Promise<{}>;
   addBillForPayment: (id: string, body: {}) => Promise<void>;
+  getSessions: () => Promise<void>;
 }
 
 export const useCashierSessionStore = create<state>((set) => {
@@ -54,6 +56,14 @@ export const useCashierSessionStore = create<state>((set) => {
         return res.data;
       } catch (error) {
         set({ isLoading: false, errors: true, message: "No se actualizo" });
+      }
+    },
+    getSessions: async () => {
+      try {
+        const res = await getCashierSession();
+        set({ cashierSession: res.data });
+      } catch (error) {
+        console.error(error);
       }
     },
   };

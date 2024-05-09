@@ -12,3 +12,8 @@ export const updateBillForPayment = async (id: string, body: any) => {
   const response = axios.put(`${URL_PATH}/payment/${id}`, body);
   return response;
 };
+
+export const getCashierSession = async () => {
+  const response = await axios(URL_PATH);
+  return response;
+};

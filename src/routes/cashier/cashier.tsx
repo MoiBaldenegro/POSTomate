@@ -24,6 +24,9 @@ import { EXCEPTION_MESSAGES_CASHIER_SESSION_MODAL } from "../../lib/modals.lib";
 import ExceptionMessages from "../../components/modals/exceptionMessages/exceptionMessages";
 import UseCashierException from "../../hooks/exceptions/useCashierException";
 import { useNotesStore } from "../../store/notes.store";
+import axios from "axios";
+import { useCashierSessionStore } from "../../store/operatingPeriod/cashierSession.store";
+import { FOR_PAYMENT_STATUS } from "../../lib/tables.status.lib";
 
 export default function Cashier() {
   //exceptions
@@ -44,13 +47,20 @@ export default function Cashier() {
   const [errors, setErros] = useState();
   const [isLoading, setIsloading] = useState(false);
   const [revolve, setRevolve] = useState<string>("");
+  const authData = useAuthStore((state) => state.authData);
 
   const notesArray = useNotesStore((state) => state.notesArray);
   const getNotes = useNotesStore((state) => state.getNotes);
   //////////////////////////
   UseCashierException(cashierSessionException.openModal);
+  const getSession = useCashierSessionStore((state) => state.getSessions);
+  const sessionsArray = useCashierSessionStore((state) => state.cashierSession);
+  const filterSession = sessionsArray.filter(
+    (item) => item.user === authData.payload.user._id
+  );
 
   useEffect(() => {
+    getSession();
     getNotes();
     getBills();
   }, []);
@@ -58,8 +68,8 @@ export default function Cashier() {
     <div className={styles.container}>
       <HeaderTwo />
       <main className={styles.mainSection}>
-        {accountArray?.map((item) =>
-          item.status === "forPayment" ? (
+        {filterSession[0]?.bills?.map((item) =>
+          item.status === FOR_PAYMENT_STATUS ? (
             <div>
               <CashierBox
                 setting={setCurrentBill}
@@ -142,4 +152,3 @@ export default function Cashier() {
     </div>
   );
 }
-8;
