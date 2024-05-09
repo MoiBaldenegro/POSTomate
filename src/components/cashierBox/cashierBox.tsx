@@ -7,6 +7,7 @@ export default function CashierBox({
   openModal,
   item,
   setting,
+  isNote,
 }: CashierBoxProps) {
   const handleclick = () => {
     openModal();

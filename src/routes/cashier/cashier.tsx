@@ -69,7 +69,7 @@ export default function Cashier() {
       <HeaderTwo />
       <main className={styles.mainSection}>
         {filterSession[0]?.bills?.map((item) =>
-          item.status === FOR_PAYMENT_STATUS ? (
+          item.status === FOR_PAYMENT_STATUS && !item.notes.length ? (
             <div>
               <CashierBox
                 setting={setCurrentBill}
@@ -79,7 +79,17 @@ export default function Cashier() {
               />
             </div>
           ) : (
-            ""
+            item.notes.map((note, index) => (
+              <div>
+                <CashierBox
+                  setting={setCurrentBill}
+                  openModal={paymentInterface.openModal}
+                  item={item}
+                  isNote={note}
+                  route={"/"}
+                />
+              </div>
+            ))
           )
         )}
         {paymentInterface.isOpen &&

@@ -517,11 +517,11 @@ export default function Order() {
               // vamos a mandar el indice 0 desde el periodo operativo actual
               const elasticBalnceChargeBills =
                 currentPeriod[0]?.sellProcess?.length < 2
-                  ? currentPeriod[0]?.sellProcess[0]
+                  ? currentPeriod[0]?.sellProcess[0]._id
                   : currentPeriod[0]?.sellProcess[0]?.bills?.length >
                     currentPeriod[0]?.sellProcess[1]?.bills?.length
-                  ? currentPeriod[0]?.sellProcess[1]
-                  : currentPeriod[0]?.sellProcess[0];
+                  ? currentPeriod[0]?.sellProcess[1]._id
+                  : currentPeriod[0]?.sellProcess[0]._id;
               console.log(elasticBalnceChargeBills);
               addBillForPayment(elasticBalnceChargeBills, billCurrent._id);
               logOutRequest();

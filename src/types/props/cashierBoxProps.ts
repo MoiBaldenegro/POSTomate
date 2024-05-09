@@ -5,4 +5,5 @@ export interface CashierBoxProps {
   item: Bill;
   route: string;
   setting: React.Dispatch<React.SetStateAction<Bill | undefined>>;
+  isNote?: any;
 }

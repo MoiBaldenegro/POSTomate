@@ -27,7 +27,6 @@ import { SELL_TYPES_PATH } from "../../lib/routes.paths.lib";
 import ExceptionMessages from "../../components/modals/exceptionMessages/exceptionMessages";
 import { EXCEPTION_MESSAGES_CASHIER_SESSION_MODAL } from "../../lib/modals.lib";
 import UseCashierException from "../../hooks/exceptions/useCashierException";
-import { useCashierSessionStore } from "../../store/operatingPeriod/cashierSession.store";
 import { useOperationProcess } from "../../store/operatingPeriod/operatingPeriod.store";
 
 export default function Restaurant() {
@@ -35,7 +34,6 @@ export default function Restaurant() {
     (state) => state.getCurrentPeriod
   );
   const currentPeriod = useOperationProcess((state) => state.operatingPeriod);
-  const cashierSession = currentPeriod[0].sellProcess;
   const logOutRequest = useAuthStore((state) => state.logOutRequest);
   const navigate = useNavigate();
   const authData = useAuthStore((state) => state.authData);
@@ -53,9 +51,7 @@ export default function Restaurant() {
   const cashierSessionException = useModal(
     EXCEPTION_MESSAGES_CASHIER_SESSION_MODAL
   );
-
   UseCashierException(cashierSessionException.openModal);
-
   useEffect(() => {
     console.log(currentPeriod);
     getTables();
