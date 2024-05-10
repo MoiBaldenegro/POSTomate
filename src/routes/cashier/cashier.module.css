@@ -48,10 +48,10 @@
     display: grid;
     height: 100%;
     overflow-y: auto;
-grid-template-columns: repeat(auto-fit, minmax(215px, 215px));
-grid-template-rows: repeat(auto-fit, minmax(215px, 215px));
-overflow-x: hidden;
-padding: 5px;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 215px));
+    grid-template-rows: repeat(auto-fit, minmax(215px, 215px));
+    overflow-x: hidden;
+    padding: 5px;
 }
 
 

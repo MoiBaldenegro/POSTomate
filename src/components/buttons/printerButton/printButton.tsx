@@ -6,13 +6,14 @@ import { Bill } from "../../../types/account";
 import { useEffect } from "react";
 import UsePayment from "../../../hooks/usePayments";
 import { Payment } from "../../../types/payment";
+import { UsePaymentsStore } from "../../../store/payments/paymenNote.store";
 
 interface Props {
   setRevolve: (value: string) => void;
   handleLoading: (value: boolean) => void;
   openModal: () => void;
   onClose: () => void;
-  currentBill: Bill | undefined;
+  currentBill: any;
   diference: number;
   createCurrentPayment: Payment;
 }
@@ -30,6 +31,8 @@ const PrintButton = ({
   const { updateTable, getOneTable, currentTable } = UseTable();
   const { updateBill } = UseAccount();
   const navigate = useNavigate();
+  const paymentNote = UsePaymentsStore((state) => state.paymentNote);
+
   useEffect(() => {
     getOneTable(currentBill?.table);
   }, []);
@@ -38,6 +41,22 @@ const PrintButton = ({
     <button
       disabled={diference > 0}
       onClick={() => {
+        if (currentBill?.note) {
+          console.log("ES NOTA!!!");
+          console.log(currentBill);
+          const constPay = {
+            accountId: currentBill?.note?.accountId,
+            body: {
+              ...createCurrentPayment,
+              difference: (diference * -1).toString(),
+            },
+          };
+
+          console.log(constPay);
+          paymentNote(currentBill.note._id, constPay);
+
+          return;
+        }
         handleLoading(true);
         onClose();
         const constPay = {
@@ -55,7 +74,6 @@ const PrintButton = ({
           updateBill("finished", currentBill),
             handlePrint("ticket", currentBill),
             onClose();
-
           return;
           //navigate("/"); ////////////vERIFICAR LA NAVEGACION
         }

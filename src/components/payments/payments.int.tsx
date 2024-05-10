@@ -102,18 +102,24 @@ export default function PaymentInterface({
       acumulador + parseFloat(elemento.quantity.replace(/,/g, "")),
     0
   );
-  const currentPayment =
-    parseFloat(currentBill?.checkTotal) - totalTransactions;
+  const conditionalTotal = currentBill.note
+    ? currentBill.note.checkTotal
+    : currentBill.checkTotal;
+  const currentPayment = parseFloat(conditionalTotal) - totalTransactions;
 
   useEffect(() => {
+    console.log(
+      "Por aca consologuean el item que llega debe llegar Nota o cuenta"
+    );
+    console.log(currentBill);
     if (!paymentQuantity) setPaymentQuantity("0.00");
     setCreatePayment({
       ...createPayment,
       cashier: "develop",
       check: "exampleCode",
-      paymentDate: "aca la fecha",
-      paymentTotal: currentBill.checkTotal,
-      accountId: currentBill._id,
+      paymentDate: new Date().toISOString(),
+      paymentTotal: currentBill.note.checkTotal ?? currentBill.bill.checkTotal,
+      accountId: currentBill.bill._id ?? currentBill.bill._id,
     });
     return setPaymentQuantity("0.00");
   }, []);
@@ -133,9 +139,17 @@ export default function PaymentInterface({
         </div>
         <div>
           <div>
-            <h3>{`Mesa  0${currentBill?.tableNum}`}</h3>
+            {currentBill.note ? (
+              <h3>{`Mesa  0${currentBill.bill.tableNum}   -   Nota: ${currentBill.note.noteNumber}`}</h3>
+            ) : (
+              <h3>{`Mesa  0${currentBill.tableNum}`}</h3>
+            )}
             <div className={styles.sectionRight}>
-              <h3>{`Total: ${currentBill?.checkTotal}`}</h3>
+              {currentBill.note ? (
+                <h3>{`Total: ${currentBill.note.checkTotal}`}</h3>
+              ) : (
+                <h3>{`Total: ${currentBill?.checkTotal}`}</h3>
+              )}
               <button className={styles.actionBtn}>
                 <img src={ActionsIcon} alt="burguer-menu" />
               </button>

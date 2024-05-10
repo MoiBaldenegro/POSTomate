@@ -16,4 +16,5 @@ export interface Bill {
   payment?: Payment[];
   tableNum?: string;
   table?: string | undefined;
+  accountId?: string;
 }

@@ -11,7 +11,9 @@ export default function CashierBox({
 }: CashierBoxProps) {
   const handleclick = () => {
     openModal();
-    setting(item);
+    const itemWithNote = isNote ? { bill: item, note: isNote } : { bill: item };
+    const itemDataSet = isNote ? itemWithNote : item;
+    setting(itemDataSet);
   };
   return (
     <div className={styles.table} onClick={handleclick}>

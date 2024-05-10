@@ -43,9 +43,6 @@ export const useCashierSessionStore = create<state>((set) => {
       }
     },
     addBillForPayment: async (id, body) => {
-      console.log("ADDBILLFORMPAYMENT");
-      console.log(id);
-      console.log(body);
       set({ isLoading: true });
       try {
         const res = await updateBillForPayment(id, { bills: [body] });

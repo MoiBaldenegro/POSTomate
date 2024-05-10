@@ -40,7 +40,7 @@ export default function Cashier() {
   const paymentInterface = useModal("paymentInterface");
   const confirmPayment = useModal("confirmPayment");
   const { accountArray, getBills } = UseAccount();
-  const [currentBill, setCurrentBill] = useState<Bill>();
+  const [currentBill, setCurrentBill] = useState<{}>();
 
   /////////////////////////////
   // Manejo de errores en el pago
